@@ -1,0 +1,31 @@
+{
+  "name": "mysqlregistration-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js --exec babel-node --presets es2015"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paigen11/mysqlRegistration.git"
+  },
+  "author": "Paige Niedringhaus (paigen11@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paigen11/mysqlRegistration/issues"
+  },
+  "homepage": "https://github.com/paigen11/mysqlRegistration#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.17.5"
+  }
+}
