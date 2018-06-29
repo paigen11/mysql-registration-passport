@@ -1,6 +1,15 @@
 version: '3.1'
 
 services:
+  client:
+    build: .
+    volumes:
+      - "./client:/app"
+    ports:
+      - "3031:3000"
+    depends_on:
+      - api
+
   api:
     build: .
     volumes:
