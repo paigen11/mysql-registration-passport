@@ -28,7 +28,7 @@ class Login extends Component {
     loginUser = (e) => {
         e.preventDefault();
 
-        axios.get('http://localhost:3000/loginUser', {
+        axios.get('http://localhost:3003/loginUser', {
             params: {
                 username: this.state.username,
                 password: this.state.password

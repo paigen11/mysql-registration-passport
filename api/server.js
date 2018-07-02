@@ -27,33 +27,50 @@ const db = mysql.createConnection({
 db.connect((err) => {
     if(err) throw err;
     console.log("Connected to MySQL db");
-    let createUserDb = "CREATE TABLE if not exists usersDb (" +
-        "id INT primary key auto_increment, " +
+    let createUsersDb = "CREATE TABLE if not exists usersDb (" +
+        "id INT not null auto_increment, " +
         "first_name VARCHAR(255), " +
         "last_name VARCHAR(255), " +
         "email VARCHAR(255), " +
         "username VARCHAR(255) not null, " +
-        "password VARCHAR(255) not null " +
+        "password VARCHAR(255) not null, " +
+        "primary key (id) " +
         ")";
 
     // console.log(createUserDb);
 
-    db.query(createUserDb, function(err, results, fields) {
+    db.query(createUsersDb, function(err, results, fields) {
         if(err) console.log(err.message);
-        console.log('userDb created');
-    })
-
+        console.log('usersDb created');
+        // db.end();
+        // console.log('connection closed');
+    });
 });
 
+
 // app.use('/', registerRouter);
-router.post('/registerUser', ( req, res) => {
-    console.log(req.body);
-    db.query('INSERT INTO userDb(first_name, last_name, email, username, password) ' +
-        'VALUES ( ' + req.body.first_name + ' ' + req.body.last_name + ' ' + req.body.email + ' ' + req.body.username + ' ' + req.body.password + ')',
-        function (err, result) {
-            if (err) throw err;
-            res.json('User added to database');
-    })
+app.post('/registerUser', ( req, res) => {
+    var data = {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password
+    };
+    // db.connect((err) => {
+    //     if(err) throw err;
+    //     console.log('connection reopened');
+    console.log(data);
+    var insert = `INSERT INTO usersDb (first_name, last_name, email, username, password) ` +
+        `VALUES (${data.first_name}, ${data.last_name}, ${data.email}, ${data.username}, ${data.password})`;
+    console.log(insert);
+        db.query(insert, data, function (err, result) {
+                if (err) throw err;
+                console.log(result);
+                res.json('User added to database');
+                // db.end();
+            })
+    // });
 });
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
