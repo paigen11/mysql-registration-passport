@@ -22,7 +22,7 @@ class ProfileForm extends Component {
 
     registerUser = (e) => {
         e.preventDefault();
-        axios.post()
+        // axios.post()
     }
 
     render() {
