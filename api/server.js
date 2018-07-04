@@ -3,9 +3,7 @@ import Cors from 'cors';
 import bodyParser from 'body-parser';
 import mysql from 'mysql';
 import logger from 'morgan';
-const router = express.Router()
-
-import registerRouter from './routes/registerUser';
+// import Sequelize from 'sequelize';
 
 const app = express();
 
@@ -23,6 +21,19 @@ const db = mysql.createConnection({
     port: 3306,
     database: "users"
 });
+
+// const sequelize = new Sequelize('users', 'test', 'test1234', {
+//     host: 'db',
+//     dialect: 'mysql'
+// });
+//
+// sequelize.authenticate()
+//     .then(() => {
+//         console.log('Connection to sequelize established');
+//     })
+//     .catch(err => {
+//         console.log('Unable to connect through sequelize ', err );
+//     });
 
 db.connect((err) => {
     if(err) throw err;
@@ -73,7 +84,7 @@ app.get('/loginUser', (req, res) => {
         password: req.body.password
     };
 
-    var login = `SELECT * FROM usersDb WHERE username = "${data.username}" and password = "${data.password}";`;
+    const login = `SELECT * FROM usersDb WHERE username = "${data.username}" and password = "${data.password}";`;
 
     db.query(login, data, (err, result) => {
         if(err) throw err;
@@ -85,18 +96,42 @@ app.get('/loginUser', (req, res) => {
 // find user
 app.get('/findUser', (req, res) => {
     console.log(req.query.username);
-   var find = `SELECT * FROM usersDb WHERE username = "${req.query.username}";`;
+   const find = `SELECT * FROM usersDb WHERE username = "${req.query.username}";`;
 
    db.query(find, req.body, (err, userInfo) => {
        if(err) throw err;
-       // console.log(JSON.stringify(userInfo));
        res.json(userInfo);
    })
 });
 
 // update user
+app.put('/updateUser', (req, res) => {
+    const data = {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password
+    };
+
+    const update = `UPDATE usersDb SET first_name = "${data.first_name}", last_name = "${data.last_name}", email = "${data.email}", username = "${data.password}"` +
+    `WHERE username="${data.username}";`;
+
+    db.query(update, data, (err) => {
+        if(err) throw err;
+        res.json('User updated');
+    })
+});
 
 // delete user
+app.delete('/deleteUser', (req, res) => {
+    const deleteUser = `DELETE FROM usersDb WHERE username="${req.query.username}";`;
+
+    db.query(deleteUser, req.query, (err) => {
+        if(err) throw err;
+        res.json('User deleted');
+    })
+});
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
 
