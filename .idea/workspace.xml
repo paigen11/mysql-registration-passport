@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d1fa1dc-d79a-4b91-8414-05e3480d8390" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/containers/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/Register.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,10 +19,11 @@
       <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/api/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="126" column="14" selection-start-line="126" selection-start-column="14" selection-end-line="126" selection-end-column="14" />
+            <state relative-caret-position="240">
+              <caret line="16" selection-start-line="16" selection-start-column="3" selection-end-line="22" selection-end-column="6" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
+                <element signature="e#124#152#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -276,12 +273,12 @@
       <option name="presentableId" value="Default" />
       <updated>1530219551032</updated>
       <workItem from="1530219552534" duration="338000" />
-      <workItem from="1530219923746" duration="25707000" />
+      <workItem from="1530219923746" duration="26392000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26045000" />
+    <option name="totallyTimeSpent" value="26730000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="840" y="23" width="840" height="951" extended-state="0" />
@@ -467,10 +464,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="126" column="14" selection-start-line="126" selection-start-column="14" selection-end-line="126" selection-end-column="14" />
+        <state relative-caret-position="240">
+          <caret line="16" selection-start-line="16" selection-start-column="3" selection-end-line="22" selection-end-column="6" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#124#152#0" expanded="true" />
           </folding>
         </state>
       </provider>
