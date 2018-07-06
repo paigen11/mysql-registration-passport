@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 app.use(logger('dev'));
 
 require('./routes/registerUser')(app);
+require('./routes/findUsers')(app);
 
 // // create user
 // app.post('/registerUser', ( req, res) => {
