@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d1fa1dc-d79a-4b91-8414-05e3480d8390" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/api/models/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/sequelize.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/routes/registerUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/registerUser.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/server.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,12 +25,41 @@
       <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/api/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" selection-start-line="16" selection-start-column="3" selection-end-line="22" selection-end-column="6" />
+            <state relative-caret-position="210">
+              <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
-                <element signature="e#124#152#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sequelize.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/sequelize.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="13" column="3" lean-forward="true" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#34#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="registerUser.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/routes/registerUser.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" column="2" lean-forward="true" selection-start-line="23" selection-start-column="2" selection-end-line="23" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/models/user.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="13" column="2" lean-forward="true" selection-start-line="13" selection-start-column="2" selection-end-line="13" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -38,7 +73,7 @@
         <entry file="file://$PROJECT_DIR$/docker-compose.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
-              <caret line="22" column="11" lean-forward="true" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="20" />
+              <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -53,18 +88,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="54">
               <caret line="30" column="50" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="50" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProfileForm.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/ProfileForm.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -96,18 +119,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UpdateProfile.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/containers/UpdateProfile.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="63" column="6" selection-start-line="63" selection-start-column="6" selection-end-line="63" selection-end-column="6" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="Git.Settings">
@@ -126,11 +137,16 @@
         <option value="$PROJECT_DIR$/client/src/containers/Home.js" />
         <option value="$PROJECT_DIR$/client/src/containers/Profile.js" />
         <option value="$PROJECT_DIR$/client/src/containers/UpdateProfile.js" />
-        <option value="$PROJECT_DIR$/api/routes/registerUser.js" />
         <option value="$PROJECT_DIR$/client/src/containers/Login.js" />
         <option value="$PROJECT_DIR$/client/src/components/ProfileForm.js" />
         <option value="$PROJECT_DIR$/docker-compose.yml" />
         <option value="$PROJECT_DIR$/client/src/containers/Register.js" />
+        <option value="$PROJECT_DIR$/api/models/User.js" />
+        <option value="$PROJECT_DIR$/api/config/config.json" />
+        <option value="$PROJECT_DIR$/api/config/sequelize.js" />
+        <option value="$PROJECT_DIR$/api/models/user.js" />
+        <option value="$PROJECT_DIR$/api/sequelize.js" />
+        <option value="$PROJECT_DIR$/api/routes/registerUser.js" />
         <option value="$PROJECT_DIR$/api/server.js" />
       </list>
     </option>
@@ -156,7 +172,7 @@
     <option name="x" value="840" />
     <option name="y" value="23" />
     <option name="width" value="840" />
-    <option name="height" value="951" />
+    <option name="height" value="947" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -197,32 +213,13 @@
               <item name="mysql-registration" type="b2602c69:ProjectViewProjectNode" />
               <item name="mysql-registration" type="462c0819:PsiDirectoryNode" />
               <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mysql-registration" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mysql-registration" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mysql-registration" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mysql-registration" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mysql-registration" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mysql-registration" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mysql-registration" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mysql-registration" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mysql-registration" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mysql-registration" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="containers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -244,6 +241,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api" />
       <recent name="$PROJECT_DIR$/client/src/containers" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -273,15 +271,15 @@
       <option name="presentableId" value="Default" />
       <updated>1530219551032</updated>
       <workItem from="1530219552534" duration="338000" />
-      <workItem from="1530219923746" duration="26392000" />
+      <workItem from="1530219923746" duration="31607000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26730000" />
+    <option name="totallyTimeSpent" value="31945000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="840" y="23" width="840" height="951" extended-state="0" />
+    <frame x="840" y="23" width="840" height="947" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -291,7 +289,7 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.32889965" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Mongo Explorer" order="3" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.33574006" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.33736396" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26566416" />
       <window_info anchor="bottom" id="Docker" order="7" weight="0.32889965" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -392,13 +390,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/routes/registerUser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="43" lean-forward="true" selection-start-line="1" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -438,7 +429,7 @@
     <entry file="file://$PROJECT_DIR$/docker-compose.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
-          <caret line="22" column="11" lean-forward="true" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="20" />
+          <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -462,13 +453,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/api/models/user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="2" lean-forward="true" selection-start-line="13" selection-start-column="2" selection-end-line="13" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/sequelize.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="3" lean-forward="true" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/routes/registerUser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="2" lean-forward="true" selection-start-line="23" selection-start-column="2" selection-end-line="23" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/api/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" selection-start-line="16" selection-start-column="3" selection-end-line="22" selection-end-column="6" />
+        <state relative-caret-position="210">
+          <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
-            <element signature="e#124#152#0" expanded="true" />
           </folding>
         </state>
       </provider>

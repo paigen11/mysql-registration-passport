@@ -1,10 +1,7 @@
 import express from 'express';
 import Cors from 'cors';
 import bodyParser from 'body-parser';
-// import mysql from 'mysql';
 import logger from 'morgan';
-import Sequelize from 'sequelize';
-
 const app = express();
 
 const API_PORT = process.env.API_PORT || 3000;
@@ -14,48 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-// const db = mysql.createConnection({
-//     host: "db",
-//     user: "test",
-//     password: "test1234",
-//     port: 3306,
-//     database: "users"
-// });
+require('./routes/registerUser')(app);
 
-const sequelize = new Sequelize('users', 'test', 'test1234', {
-    host: 'db',
-    dialect: 'mysql'
-});
-
-sequelize.authenticate()
-    .then(() => {
-        console.log('Connection to sequelize established');
-    })
-    .catch(err => {
-        console.log('Unable to connect through sequelize ', err );
-    });
-
-// db.connect((err) => {
-//     if(err) throw err;
-//     console.log("Connected to MySQL db");
-//     let createUsersDb = "CREATE TABLE if not exists usersDb (" +
-//         "id INT not null auto_increment, " +
-//         "first_name VARCHAR(255), " +
-//         "last_name VARCHAR(255), " +
-//         "email VARCHAR(255), " +
-//         "username VARCHAR(255) not null, " +
-//         "password VARCHAR(255) not null, " +
-//         "primary key (id) " +
-//         ");";
-//
-//     db.query(createUsersDb, function(err) {
-//         if(err) console.log(err.message);
-//         console.log('usersDb created');
-//
-//     });
-// });
-//
-//
 // // create user
 // app.post('/registerUser', ( req, res) => {
 //     const data = {
