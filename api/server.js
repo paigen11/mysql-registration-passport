@@ -11,8 +11,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
+require('./routes/loginUser')(app);
 require('./routes/registerUser')(app);
 require('./routes/findUsers')(app);
+require('./routes/deleteUser')(app);
+require('./routes/updateUser')(app);
+
 
 // // create user
 // app.post('/registerUser', ( req, res) => {

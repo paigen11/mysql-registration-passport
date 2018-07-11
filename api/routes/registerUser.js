@@ -13,42 +13,28 @@ module.exports = (app) => {
             where: {
                 username: data.username
             }
-        }).then(user  => {
-            if (user != null) {
-                console.log('username already taken');
-                res.json('username already taken');
-            } else {
-                User.create({
-                    first_name: data.first_name,
-                    last_name: data.last_name,
-                    email: data.email,
-                    username: data.username,
-                    password: data.password
-                })
-                    .then(user => {
-                        console.log('user created');
-                        res.json(user)
-                    })
-            }
         })
+            .then(user => {
+                if (user != null) {
+                    console.log('username already taken');
+                    res.json('username already taken');
+                } else {
+                    User.create({
+                        first_name: data.first_name,
+                        last_name: data.last_name,
+                        email: data.email,
+                        username: data.username,
+                        password: data.password
+                    })
+                        .then(() => {
+                            console.log('user created');
+                            res.json('user created');
+                        })
+                }
+            })
+            .catch(err => {
+                console.log('problem communicating with db');
+                res.status(500).json(err);
+            })
     })
-
-
-
-    //     then( response => {
-    //         console.log('username already taken');
-    //         res.json('username already taken');
-    //     })
-    //     User.create({
-    //         first_name: data.first_name,
-    //         last_name: data.last_name,
-    //         email: data.email,
-    //         username: data.username,
-    //         password: data.password
-    //     })
-    //         .then(user => {
-    //             console.log('user created');
-    //             res.json(user)
-    //         })
-    // });
 };

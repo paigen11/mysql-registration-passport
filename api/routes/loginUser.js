@@ -7,9 +7,19 @@ module.exports = (app) => {
                 username: req.query.username,
                 password: req.query.password
             }
-        }).then(() => {
-            console.log('user found');
-            res.json('user found');
         })
+            .then((user) => {
+                if(user != null){
+                    console.log('user found & logged in');
+                    res.json('user found & logged in');
+                } else {
+                    console.log('bad username or password');
+                    res.json('bad username or password');
+                }
+        })
+            .catch(err => {
+                console.log('problem communicating with db');
+                res.status(500).json(err);
+            })
     })
 };
