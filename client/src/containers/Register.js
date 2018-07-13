@@ -90,6 +90,7 @@ class Register extends Component {
                             value={this.state.password}
                             onChange={this.handleChange('password')}
                             placeholder='Password'
+                            type='password'
                         />
                         <Button type='submit' variant='contained' color='primary'>
                             Register
