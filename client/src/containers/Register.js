@@ -19,7 +19,8 @@ class Register extends Component {
             email: '',
             username: '',
             password: '',
-            messageFromServer: ''
+            messageFromServer: '',
+            showError: false
         };
     }
 
@@ -41,9 +42,16 @@ class Register extends Component {
         })
             .then((response) => {
                 console.log(response.data);
-                this.setState({
-                    messageFromServer: response.data
-                })
+                if(response.data === 'username already taken'){
+                    this.setState({
+                        showError: true
+                    })
+                } else {
+                    this.setState({
+                        messageFromServer: response.data,
+                        showError: false
+                    })
+                }
         })
             .catch((error) => {
                 console.log(error.data);
@@ -96,12 +104,20 @@ class Register extends Component {
                             Register
                         </Button>
                     </form>
+                    {this.state.showError === true &&
+                        <div>
+                            <p>That username is already taken. Please choose another or login.</p>
+                            <Button variant='contained' color='primary'>
+                            <Link to='/login'>Go Login</Link>
+                            </Button>
+                        </div>
+                    }
                     <Button variant='contained' color='primary'>
                         <Link to='/'>Go Home</Link>
                     </Button>
                 </div>
             )
-        } else if (this.state.messageFromServer === 'User added to database'){
+        } else if (this.state.messageFromServer === 'user created'){
             return (
                 <div>
                     <HeaderBar title={title}/>

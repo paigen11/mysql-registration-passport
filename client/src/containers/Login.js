@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import HeaderBar from "../components/HeaderBar";
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -15,7 +16,9 @@ class Login extends Component {
 
         this.state={
             username: '',
-            password: ''
+            password: '',
+            loggedIn: false,
+            showError: false
         }
     }
 
@@ -35,7 +38,17 @@ class Login extends Component {
             }
         })
             .then(( response ) => {
-                console.log(response.data)
+                console.log(response.data);
+                if(response.data === 'bad username or password'){
+                    this.setState({
+                        showError: true
+                    })
+                } else {
+                    this.setState({
+                        loggedIn: true,
+                        showError: false
+                    })
+                }
             })
             .catch(( error ) => {
                 console.log(error.data)
@@ -43,34 +56,46 @@ class Login extends Component {
     };
 
     render() {
-        return (
-            <div>
-                <HeaderBar title={title}/>
-                <form className='profile-form' onSubmit={this.loginUser}>
-                    <TextField
-                        id='username'
-                        label='username'
-                        value={this.state.username}
-                        onChange={this.handleChange('username')}
-                        placeholder='Username'
-                    />
-                    <TextField
-                        id='password'
-                        label='password'
-                        value={this.state.password}
-                        onChange={this.handleChange('password')}
-                        placeholder='Password'
-                        type='password'
-                    />
-                    <Button type='submit' variant='contained' color='primary'>
-                        Login
+        if(!this.state.loggedIn){
+            return (
+                <div>
+                    <HeaderBar title={title}/>
+                    <form className='profile-form' onSubmit={this.loginUser}>
+                        <TextField
+                            id='username'
+                            label='username'
+                            value={this.state.username}
+                            onChange={this.handleChange('username')}
+                            placeholder='Username'
+                        />
+                        <TextField
+                            id='password'
+                            label='password'
+                            value={this.state.password}
+                            onChange={this.handleChange('password')}
+                            placeholder='Password'
+                            type='password'
+                        />
+                        <Button type='submit' variant='contained' color='primary'>
+                            Login
+                        </Button>
+                    </form>
+                    { this.state.showError &&
+                        <div>
+                            <p>That username or password isn't recognized. Please try again or register now.</p>
+                            <Button variant='contained' color='primary'>
+                                <Link to='/register'>Go Register</Link>
+                            </Button>
+                        </div>
+                    }
+                    <Button variant='contained' color='primary'>
+                        <Link to='/'>Go Home</Link>
                     </Button>
-                </form>
-                <Button variant='contained' color='primary'>
-                    <Link to='/'>Go Home</Link>
-                </Button>
-            </div>
-        )
+                </div>
+            )
+        } else {
+            return <Redirect to={`/userProfile/${this.state.username}`} />
+        }
     }
 }
 

@@ -1,7 +1,7 @@
 import User from '../sequelize';
 
 module.exports = (app) => {
-    app.post('/loginUser', (req, res) => {
+    app.get('/loginUser', (req, res) => {
         User.findOne({
             where: {
                 username: req.query.username,
