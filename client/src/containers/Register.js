@@ -31,7 +31,6 @@ class Register extends Component {
     };
 
     registerUser = (e) => {
-        console.log(this.state);
         e.preventDefault();
         axios.post('http://localhost:3003/registerUser', {
             first_name: this.state.first_name,
