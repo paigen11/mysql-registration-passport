@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import HeaderBar from "../components/HeaderBar";
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -22,7 +22,8 @@ class Profile extends Component {
             email: '',
             username: '',
             password: '',
-            isLoading: true
+            isLoading: true,
+            deleted: false
         }
     }
 
@@ -33,7 +34,6 @@ class Profile extends Component {
            }
        })
            .then(( response ) => {
-               console.log(response.data);
                this.setState({
                    first_name: response.data.first_name,
                    last_name: response.data.last_name,
@@ -48,14 +48,34 @@ class Profile extends Component {
            })
     }
 
+    deleteUser = (e) => {
+        e.preventDefault();
+        axios.delete('http://localhost:3003/deleteUser', {
+            params: {
+                username: this.props.match.params.username
+            }
+        })
+            .then(( response ) => {
+                console.log(response.data);
+                this.setState({
+                    deleted: true
+                })
+            })
+            .catch(( error ) => {
+                console.log(error.data);
+            })
+    };
+
     render() {
-        if(this.state.isLoading){
+        if(this.state.isLoading) {
             return (
                 <div>
                     <HeaderBar title={title}/>
                     <div>Loading User Data...</div>
                 </div>
             )
+        } else if(this.state.deleted){
+           return <Redirect to='/' />
         } else {
             return (
                 <div>
@@ -84,11 +104,11 @@ class Profile extends Component {
                             </TableRow>
                         </TableBody>
                     </Table>
-                    <Button variant='contained' color='primary'>
-                        <Link to='/deleteUser'>Delete User</Link>
+                    <Button variant='contained' color='primary' onClick={this.deleteUser}>
+                        Delete User
                     </Button>
                     <Button variant='contained' color='primary'>
-                        <Link to='/updateUser'>Update User</Link>
+                        <Link to={`/updateUser/${this.state.username}`} >Update User</Link>
                     </Button>
                 </div>
             )

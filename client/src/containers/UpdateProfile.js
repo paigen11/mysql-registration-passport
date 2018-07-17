@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import HeaderBar from "../components/HeaderBar";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
@@ -19,7 +19,8 @@ class UpdateProfile extends Component {
             email: '',
             username: '',
             password: '',
-            loadingUser: false
+            loadingUser: false,
+            updated: false
         };
     }
 
@@ -27,13 +28,20 @@ class UpdateProfile extends Component {
         this.setState({ loadingUser : true });
         console.log('loading user data');
 
-        axios.get('http://localhost:3003/getUserData', {
+        axios.get('http://localhost:3003/findUser', {
             params: {
                 username: this.props.match.params.username
             }
         })
             .then((response) => {
-                console.log(response.data);
+               this.setState({
+                    loadingUser: false,
+                    first_name: response.data.first_name,
+                    last_name: response.data.last_name,
+                    email: response.data.email,
+                    username: response.data.username,
+                    password: response.data.password
+                })
             })
             .catch((error) => {
                 console.log(error.data);
@@ -48,7 +56,7 @@ class UpdateProfile extends Component {
 
     updateUser = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3003/updateUser', {
+        axios.put('http://localhost:3003/updateUser', {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
             email: this.state.last_name,
@@ -57,6 +65,9 @@ class UpdateProfile extends Component {
         })
             .then((response) => {
                 console.log(response.data);
+                this.setState({
+                    updated: true
+                })
             })
             .catch((error) => {
                 console.log(error.data);
@@ -66,8 +77,14 @@ class UpdateProfile extends Component {
     render() {
         if(this.state.loadingUser !== false){
             return (
-                <div>Loading user data...</div>
+                <div>
+                    <HeaderBar title={title}/>
+                    <p>Loading user data...</p>
+                </div>
             )
+        } else if(this.state.loadingUser === false && this.state.updated === true) {
+            return <Redirect to={`/userProfile/${this.state.username}`} />
+
         }
         else if(this.state.loadingUser === false) {
             return (
@@ -99,8 +116,8 @@ class UpdateProfile extends Component {
                             id='username'
                             label='username'
                             value={this.state.username}
-                            onChange={this.handleChange('username')}
-                            placeholder='Username'
+                            readOnly
+                            disabled
                         />
                         <TextField
                             id='password'
@@ -108,9 +125,10 @@ class UpdateProfile extends Component {
                             value={this.state.password}
                             onChange={this.handleChange('password')}
                             placeholder='Password'
+                            type='password'
                         />
                         <Button type='submit' variant='contained' color='primary'>
-                            Update User
+                            Save Changes
                         </Button>
                     </form>
                     <Button variant='contained' color='primary'>
