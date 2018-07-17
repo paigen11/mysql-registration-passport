@@ -110,6 +110,9 @@ class Profile extends Component {
                     <Button variant='contained' color='primary'>
                         <Link to={`/updateUser/${this.state.username}`} >Update User</Link>
                     </Button>
+                    <Button variant='contained' color='primary'>
+                        <Link to={'/'} >Logout</Link>
+                    </Button>
                 </div>
             )
         }
