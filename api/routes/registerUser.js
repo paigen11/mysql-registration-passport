@@ -1,5 +1,7 @@
 import User from '../sequelize';
+import bcrypt from 'bcrypt';
 
+const BCRYPT_SALT_ROUNDS = 12;
 module.exports = (app) => {
     app.post('/registerUser', (req, res) => {
         const data = {
@@ -19,13 +21,17 @@ module.exports = (app) => {
                     console.log('username already taken');
                     res.json('username already taken');
                 } else {
-                    User.create({
-                        first_name: data.first_name,
-                        last_name: data.last_name,
-                        email: data.email,
-                        username: data.username,
-                        password: data.password
-                    })
+                    bcrypt.hash(data.password, BCRYPT_SALT_ROUNDS)
+                        .then(function(hashedPassword) {
+                            console.log(hashedPassword);
+                            User.create({
+                                first_name: data.first_name,
+                                last_name: data.last_name,
+                                email: data.email,
+                                username: data.username,
+                                password: hashedPassword
+                            })
+                        })
                         .then(() => {
                             console.log('user created');
                             res.json('user created');
