@@ -5,6 +5,38 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
+const linkStyle = {
+    textDecoration: 'none',
+    color: 'white'
+};
+
+const homeButton = {
+    background: 'mediumpurple',
+    padding: '1em',
+    margin: '1em'
+};
+
+const cancelButton = {
+    background: 'magenta',
+    padding: '1em',
+    margin: '1em'
+};
+
+const saveButton = {
+    background: 'green',
+    padding: '1em',
+    margin: '1em'
+};
+
+const loading = {
+    margin: '1em',
+    fontSize: '24px'
+};
+
+const inputStyle = {
+    margin: '.5em'
+};
+
 const title = {
     pageTitle: 'Update User Profile Screen'
 };
@@ -59,7 +91,7 @@ class UpdateProfile extends Component {
         axios.put('http://localhost:3003/updateUser', {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
-            email: this.state.last_name,
+            email: this.state.email,
             username: this.state.username,
             password: this.state.password
         })
@@ -79,7 +111,7 @@ class UpdateProfile extends Component {
             return (
                 <div>
                     <HeaderBar title={title}/>
-                    <p>Loading user data...</p>
+                    <p style={loading}>Loading user data...</p>
                 </div>
             )
         } else if(this.state.loadingUser === false && this.state.updated === true) {
@@ -92,6 +124,7 @@ class UpdateProfile extends Component {
                     <HeaderBar title={title}/>
                     <form className='profile-form' onSubmit={this.updateUser}>
                         <TextField
+                            style={inputStyle}
                             id='first_name'
                             label='first_name'
                             value={this.state.first_name}
@@ -99,6 +132,7 @@ class UpdateProfile extends Component {
                             placeholder='First Name'
                         />
                         <TextField
+                            style={inputStyle}
                             id='last_name'
                             label='last_name'
                             value={this.state.last_name}
@@ -106,6 +140,7 @@ class UpdateProfile extends Component {
                             placeholder='Last Name'
                         />
                         <TextField
+                            style={inputStyle}
                             id='email'
                             label='email'
                             value={this.state.email}
@@ -113,6 +148,7 @@ class UpdateProfile extends Component {
                             placeholder='Email'
                         />
                         <TextField
+                            style={inputStyle}
                             id='username'
                             label='username'
                             value={this.state.username}
@@ -120,6 +156,7 @@ class UpdateProfile extends Component {
                             disabled
                         />
                         <TextField
+                            style={inputStyle}
                             id='password'
                             label='password'
                             value={this.state.password}
@@ -127,12 +164,15 @@ class UpdateProfile extends Component {
                             placeholder='Password'
                             type='password'
                         />
-                        <Button type='submit' variant='contained' color='primary'>
+                        <Button style={saveButton} type='submit' variant='contained' color='primary'>
                             Save Changes
                         </Button>
                     </form>
-                    <Button variant='contained' color='primary'>
-                        <Link to='/'>Go Home</Link>
+                    <Button style={homeButton} variant='contained' color='primary'>
+                        <Link style={linkStyle} to='/'>Go Home</Link>
+                    </Button>
+                    <Button style={cancelButton} variant='contained' color='primary'>
+                        <Link style={linkStyle} to={`/userProfile/${this.state.username}`}>Cancel Changes</Link>
                     </Button>
                 </div>
             )

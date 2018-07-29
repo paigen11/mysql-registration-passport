@@ -5,6 +5,33 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 
+const registerButton = {
+    background: 'green',
+    padding: '1em',
+    margin: '1em'
+};
+
+const homeButton = {
+    background: 'mediumpurple',
+    padding: '1em',
+    margin: '1em'
+};
+
+const loginButton = {
+    background: 'royalblue',
+    padding: '1em',
+    margin: '1em'
+};
+
+const inputStyle = {
+    margin: '.5em'
+};
+
+const linkStyle = {
+    textDecoration: 'none',
+    color: 'white'
+};
+
 const title = {
     pageTitle: 'Register Screen'
 };
@@ -20,7 +47,9 @@ class Register extends Component {
             username: '',
             password: '',
             messageFromServer: '',
-            showError: false
+            showError: false,
+            registerError: false,
+            loginError: false
         };
     }
 
@@ -41,14 +70,24 @@ class Register extends Component {
         })
             .then((response) => {
                 console.log(response.data);
-                if(response.data === 'username already taken'){
+                if(response.data === 'username already taken') {
                     this.setState({
-                        showError: true
+                        showError: true,
+                        loginError: true,
+                        registerError: false
+                    })
+                } else if(response.data === 'username and password required'){
+                    this.setState({
+                        showError: true,
+                        registerError: true,
+                        loginError: false
                     })
                 } else {
                     this.setState({
                         messageFromServer: response.data,
-                        showError: false
+                        showError: false,
+                        loginError: false,
+                        registerError: false
                     })
                 }
         })
@@ -64,6 +103,7 @@ class Register extends Component {
                     <HeaderBar title={title}/>
                     <form className='profile-form' onSubmit={this.registerUser}>
                         <TextField
+                            style={inputStyle}
                             id='first_name'
                             label='first_name'
                             value={this.state.first_name}
@@ -71,6 +111,7 @@ class Register extends Component {
                             placeholder='First Name'
                         />
                         <TextField
+                            style={inputStyle}
                             id='last_name'
                             label='last_name'
                             value={this.state.last_name}
@@ -78,6 +119,7 @@ class Register extends Component {
                             placeholder='Last Name'
                         />
                         <TextField
+                            style={inputStyle}
                             id='email'
                             label='email'
                             value={this.state.email}
@@ -85,6 +127,7 @@ class Register extends Component {
                             placeholder='Email'
                         />
                         <TextField
+                            style={inputStyle}
                             id='username'
                             label='username'
                             value={this.state.username}
@@ -92,6 +135,7 @@ class Register extends Component {
                             placeholder='Username'
                         />
                         <TextField
+                            style={inputStyle}
                             id='password'
                             label='password'
                             value={this.state.password}
@@ -99,20 +143,27 @@ class Register extends Component {
                             placeholder='Password'
                             type='password'
                         />
-                        <Button type='submit' variant='contained' color='primary'>
+                        <Button style={registerButton} type='submit' variant='contained' color='primary'>
                             Register
                         </Button>
                     </form>
                     {this.state.showError === true &&
+                     this.state.registerError === true &&
+                    <div>
+                        <p>Username and password are required fields.</p>
+                    </div>
+                    }
+                    {this.state.showError === true &&
+                     this.state.loginError === true &&
                         <div>
                             <p>That username is already taken. Please choose another or login.</p>
-                            <Button variant='contained' color='primary'>
-                            <Link to='/login'>Go Login</Link>
+                            <Button style={loginButton} variant='contained' color='primary'>
+                            <Link style={linkStyle} to='/login'>Go Login</Link>
                             </Button>
                         </div>
                     }
-                    <Button variant='contained' color='primary'>
-                        <Link to='/'>Go Home</Link>
+                    <Button style={homeButton} variant='contained' color='primary'>
+                        <Link style={linkStyle} to='/'>Go Home</Link>
                     </Button>
                 </div>
             )
@@ -121,8 +172,8 @@ class Register extends Component {
                 <div>
                     <HeaderBar title={title}/>
                     <h3>User successfully registered!</h3>
-                    <Button variant='contained' color='primary'>
-                        <Link to='/login'>Go Login</Link>
+                    <Button style={loginButton} variant='contained' color='primary'>
+                        <Link style={linkStyle} to='/login'>Go Login</Link>
                     </Button>
                 </div>
             )

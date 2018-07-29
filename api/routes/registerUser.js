@@ -11,12 +11,18 @@ module.exports = (app) => {
             username: req.body.username,
             password: req.body.password
         };
+
+        if(data.password === '' || data.username === ''){
+        res.json('username and password required');
+        }
+
         User.findOne({
             where: {
                 username: data.username
             }
         })
             .then(user => {
+                console.log(user);
                 if (user != null) {
                     console.log('username already taken');
                     res.json('username already taken');

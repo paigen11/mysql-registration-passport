@@ -8,6 +8,33 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import axios from 'axios';
 
+const linkStyle = {
+    textDecoration: 'none',
+    color: 'white'
+};
+
+const deleteButton ={
+    background: 'red',
+    padding: '1em',
+    margin: '1em'
+};
+
+const updateButton = {
+    background: 'orange',
+    padding: '1em',
+    margin: '1em'
+};
+
+const logoutButton = {
+    padding: '1em',
+    margin: '1em'
+};
+
+const loading = {
+    margin: '1em',
+    fontSize: '24px'
+};
+
 const title = {
     pageTitle: 'User Profile Screen'
 };
@@ -71,7 +98,7 @@ class Profile extends Component {
             return (
                 <div>
                     <HeaderBar title={title}/>
-                    <div>Loading User Data...</div>
+                    <div style={loading}>Loading User Data...</div>
                 </div>
             )
         } else if(this.state.deleted){
@@ -91,7 +118,7 @@ class Profile extends Component {
                                 <TableCell>{this.state.last_name}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Email Name</TableCell>
+                                <TableCell>Email</TableCell>
                                 <TableCell>{this.state.email}</TableCell>
                             </TableRow>
                             <TableRow>
@@ -104,14 +131,14 @@ class Profile extends Component {
                             </TableRow>
                         </TableBody>
                     </Table>
-                    <Button variant='contained' color='primary' onClick={this.deleteUser}>
+                    <Button style={deleteButton} variant='contained' color='primary' onClick={this.deleteUser}>
                         Delete User
                     </Button>
-                    <Button variant='contained' color='primary'>
-                        <Link to={`/updateUser/${this.state.username}`} >Update User</Link>
+                    <Button style={updateButton} variant='contained' color='primary'>
+                        <Link style={linkStyle} to={`/updateUser/${this.state.username}`} >Update User</Link>
                     </Button>
-                    <Button variant='contained' color='primary'>
-                        <Link to={'/'} >Logout</Link>
+                    <Button style={logoutButton} variant='contained' color='primary'>
+                        <Link style={linkStyle} to={'/'} >Logout</Link>
                     </Button>
                 </div>
             )

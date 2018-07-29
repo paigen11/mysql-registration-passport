@@ -2,4 +2,6 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background: rgb(247,134,86);
+  background: radial-gradient(circle, rgba(247,134,86,0.41220238095238093) 22%, rgba(219,230,40,0.5550595238095238) 55%, rgba(0,176,255,0.28335084033613445) 100%);
 }
