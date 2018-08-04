@@ -13,7 +13,7 @@ module.exports = (app) => {
         };
 
         if(data.password === '' || data.username === ''){
-        res.json('username and password required');
+            res.json('username and password required');
         }
 
         User.findOne({
