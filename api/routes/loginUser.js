@@ -13,7 +13,9 @@ module.exports = app => {
       .then(user => {
         if (req.query.password == false) {
           console.log('password required');
-          res.status(400).json('password required');
+          res
+            .status(400)
+            .send({ auth: false, token: null, message: 'password required' });
         } else if (user === null) {
           console.log('bad username');
           res.status(400).json('bad username');
@@ -31,7 +33,13 @@ module.exports = app => {
                 .send({ auth: true, token, message: 'user found & logged in' });
             } else {
               console.log('passwords do not match');
-              res.status(400).json('passwords do not match');
+              res
+                .status(400)
+                .send({
+                  auth: false,
+                  token: null,
+                  message: 'passwords do not match',
+                });
             }
           });
         }
