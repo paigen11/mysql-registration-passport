@@ -75,7 +75,6 @@ class Login extends Component {
             showError: true,
           });
         } else {
-          console.log(response.data.token);
           localStorage.setItem('jwtToken', response.data.token);
           this.setState({
             loggedIn: true,
