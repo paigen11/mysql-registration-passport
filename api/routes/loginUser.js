@@ -30,22 +30,31 @@ module.exports = app => {
             console.log('bad username');
             res.status(400).json('bad username');
           } else {
-            bcrypt.compare(req.query.password, user.password).then(response => {
-              console.log(response);
-              if (response === true) {
-                console.log('user found & logged in');
-                res
-                  .status(200)
-                  .send({
-                    auth: true,
-                    decoded,
-                    message: 'user found & logged in',
-                  });
-              } else {
-                console.log('passwords do not match');
-                res.status(400).json('passwords do not match');
-              }
-            });
+            if (decoded.id === req.query.username) {
+              bcrypt
+                .compare(req.query.password, user.password)
+                .then(response => {
+                  console.log(response);
+                  if (response === true) {
+                    console.log('user found & logged in');
+                    res.status(200).send({
+                      auth: true,
+                      decoded,
+                      message: 'user found & logged in',
+                    });
+                  } else {
+                    console.log('passwords do not match');
+                    res.status(400).json('passwords do not match');
+                  }
+                });
+            } else {
+              return res
+                .status(500)
+                .send({
+                  auth: false,
+                  message: 'username and token id do not match',
+                });
+            }
           }
         })
         .catch(err => {
