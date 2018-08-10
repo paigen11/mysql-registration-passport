@@ -1,7 +1,5 @@
 import User from '../sequelize';
 import bcrypt from 'bcrypt';
-import config from '../config';
-import jwt from 'jsonwebtoken';
 
 const BCRYPT_SALT_ROUNDS = 12;
 module.exports = app => {
@@ -37,16 +35,9 @@ module.exports = app => {
                 email: data.email,
                 username: data.username,
                 password: hashedPassword,
-              }).then(user => {
-                console.log(user);
-                console.log('here');
-                const token = jwt.sign({ id: user.username }, config.secret, {
-                  expiresIn: 86400,
-                });
-                console.log('user created with token');
-                res
-                  .status(200)
-                  .send({ auth: true, token, message: 'user created' });
+              }).then(() => {
+                console.log('user created in db');
+                res.status(200).send({ message: 'user created' });
               });
             });
         }
