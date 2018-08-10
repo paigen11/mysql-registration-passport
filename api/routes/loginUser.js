@@ -17,35 +17,41 @@ module.exports = app => {
           .status(500)
           .send({ auth: false, message: 'failed to authenticate token' });
       }
-    });
-    User.findOne({
-      where: {
-        username: req.query.username,
-      },
-    })
-      .then(user => {
-        if (user != null) {
-          bcrypt.compare(req.query.password, user.password).then(response => {
-            console.log(response);
-            if (response === true) {
-              console.log('user found & logged in');
-              res
-                .status(200)
-                .send(decoded)
-                .json('user found & logged in');
-            } else {
-              console.log('passwords do not match');
-              res.json('passwords do not match');
-            }
-          });
-        } else {
-          console.log('bad username');
-          res.json('bad username');
-        }
+      User.findOne({
+        where: {
+          username: req.query.username,
+        },
       })
-      .catch(err => {
-        console.log('problem communicating with db');
-        res.status(500).json(err);
-      });
+        .then(user => {
+          if (req.query.password == false) {
+            console.log('password required');
+            res.status(400).json('password required');
+          } else if (user === null) {
+            console.log('bad username');
+            res.status(400).json('bad username');
+          } else {
+            bcrypt.compare(req.query.password, user.password).then(response => {
+              console.log(response);
+              if (response === true) {
+                console.log('user found & logged in');
+                res
+                  .status(200)
+                  .send({
+                    auth: true,
+                    decoded,
+                    message: 'user found & logged in',
+                  });
+              } else {
+                console.log('passwords do not match');
+                res.status(400).json('passwords do not match');
+              }
+            });
+          }
+        })
+        .catch(err => {
+          console.log('problem communicating with db');
+          res.status(500).json(err);
+        });
+    });
   });
 };

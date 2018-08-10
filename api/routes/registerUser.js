@@ -43,11 +43,10 @@ module.exports = app => {
                 const token = jwt.sign({ id: user.username }, config.secret, {
                   expiresIn: 86400,
                 });
-                console.log('user created');
+                console.log('user created with token');
                 res
                   .status(200)
-                  .send({ auth: true, token: token })
-                  .json('user created');
+                  .send({ auth: true, token, message: 'user created' });
               });
             });
         }
