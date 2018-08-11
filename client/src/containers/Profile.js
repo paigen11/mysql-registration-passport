@@ -93,14 +93,24 @@ class Profile extends Component {
   }
 
   deleteUser = e => {
+    let accessString = localStorage.getItem('jwtToken');
+    if (accessString === null) {
+      this.setState({
+        loadingUser: false,
+        error: true,
+      });
+    }
+
     e.preventDefault();
     axios
       .delete('http://localhost:3003/deleteUser', {
         params: {
           username: this.props.match.params.username,
         },
+        headers: { 'x-access-token': accessString },
       })
       .then(response => {
+        console.log(response.data);
         localStorage.removeItem('jwtToken');
         this.setState({
           deleted: true,
