@@ -66,7 +66,6 @@ class Login extends Component {
         },
       })
       .then(response => {
-        console.log(response.data);
         if (
           response.data === 'bad username' ||
           response.data === 'passwords do not match'
@@ -88,7 +87,8 @@ class Login extends Component {
   };
 
   render() {
-    if (!this.state.loggedIn) {
+    const { username, password, showError, loggedIn } = this.state;
+    if (!loggedIn) {
       return (
         <div>
           <HeaderBar title={title} />
@@ -97,7 +97,7 @@ class Login extends Component {
               style={inputStyle}
               id="username"
               label="username"
-              value={this.state.username}
+              value={username}
               onChange={this.handleChange('username')}
               placeholder="Username"
             />
@@ -105,7 +105,7 @@ class Login extends Component {
               style={inputStyle}
               id="password"
               label="password"
-              value={this.state.password}
+              value={password}
               onChange={this.handleChange('password')}
               placeholder="Password"
               type="password"
@@ -119,7 +119,7 @@ class Login extends Component {
               Login
             </Button>
           </form>
-          {this.state.showError && (
+          {showError && (
             <div>
               <p>
                 That username or password isn't recognized. Please try again or
@@ -144,7 +144,7 @@ class Login extends Component {
         </div>
       );
     } else {
-      return <Redirect to={`/userProfile/${this.state.username}`} />;
+      return <Redirect to={`/userProfile/${username}`} />;
     }
   }
 }

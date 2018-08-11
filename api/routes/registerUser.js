@@ -11,11 +11,9 @@ module.exports = app => {
       username: req.body.username,
       password: req.body.password,
     };
-
     if (data.password === '' || data.username === '') {
       res.json('username and password required');
     }
-
     User.findOne({
       where: {
         username: data.username,

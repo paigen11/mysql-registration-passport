@@ -52,13 +52,11 @@ class UpdateProfile extends Component {
     super(props);
 
     this.state = {
-      user: {
-        first_name: '',
-        last_name: '',
-        email: '',
-        username: '',
-        password: '',
-      },
+      first_name: '',
+      last_name: '',
+      email: '',
+      username: '',
+      password: '',
       loadingUser: false,
       updated: false,
       error: false,
@@ -87,13 +85,11 @@ class UpdateProfile extends Component {
         console.log(response.data);
         this.setState({
           loadingUser: false,
-          user: {
-            first_name: response.data.user.first_name,
-            last_name: response.data.user.last_name,
-            email: response.data.user.email,
-            username: response.data.user.username,
-            password: response.data.user.password,
-          },
+          first_name: response.data.first_name,
+          last_name: response.data.last_name,
+          email: response.data.email,
+          username: response.data.username,
+          password: response.data.password,
           error: false,
         });
       })
@@ -123,11 +119,11 @@ class UpdateProfile extends Component {
       .put(
         'http://localhost:3003/updateUser',
         {
-          first_name: this.state.user.first_name,
-          last_name: this.state.user.last_name,
-          email: this.state.user.email,
-          username: this.state.user.username,
-          password: this.state.user.password,
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+          email: this.state.email,
+          username: this.state.username,
+          password: this.state.password,
         },
         {
           headers: { 'x-access-token': accessString },
@@ -146,7 +142,18 @@ class UpdateProfile extends Component {
   };
 
   render() {
-    if (this.state.error) {
+    const {
+      first_name,
+      last_name,
+      email,
+      username,
+      password,
+      updated,
+      error,
+      loadingUser,
+    } = this.state;
+
+    if (error) {
       return (
         <div>
           <HeaderBar title={title} />
@@ -160,19 +167,16 @@ class UpdateProfile extends Component {
           </Button>
         </div>
       );
-    } else if (this.state.loadingUser !== false) {
+    } else if (loadingUser !== false) {
       return (
         <div>
           <HeaderBar title={title} />
           <p style={loading}>Loading user data...</p>
         </div>
       );
-    } else if (
-      this.state.loadingUser === false &&
-      this.state.updated === true
-    ) {
-      return <Redirect to={`/userProfile/${this.state.username}`} />;
-    } else if (this.state.loadingUser === false) {
+    } else if (loadingUser === false && updated === true) {
+      return <Redirect to={`/userProfile/${username}`} />;
+    } else if (loadingUser === false) {
       return (
         <div>
           <HeaderBar title={title} />
@@ -181,7 +185,7 @@ class UpdateProfile extends Component {
               style={inputStyle}
               id="first_name"
               label="first_name"
-              value={this.state.user.first_name}
+              value={first_name}
               onChange={this.handleChange('first_name')}
               placeholder="First Name"
             />
@@ -189,7 +193,7 @@ class UpdateProfile extends Component {
               style={inputStyle}
               id="last_name"
               label="last_name"
-              value={this.state.user.last_name}
+              value={last_name}
               onChange={this.handleChange('last_name')}
               placeholder="Last Name"
             />
@@ -197,7 +201,7 @@ class UpdateProfile extends Component {
               style={inputStyle}
               id="email"
               label="email"
-              value={this.state.user.email}
+              value={email}
               onChange={this.handleChange('email')}
               placeholder="Email"
             />
@@ -205,7 +209,7 @@ class UpdateProfile extends Component {
               style={inputStyle}
               id="username"
               label="username"
-              value={this.state.user.username}
+              value={username}
               readOnly
               disabled
             />
@@ -213,7 +217,7 @@ class UpdateProfile extends Component {
               style={inputStyle}
               id="password"
               label="password"
-              value={this.state.user.password}
+              value={password}
               onChange={this.handleChange('password')}
               placeholder="Password"
               type="password"
@@ -233,10 +237,7 @@ class UpdateProfile extends Component {
             </Link>
           </Button>
           <Button style={cancelButton} variant="contained" color="primary">
-            <Link
-              style={linkStyle}
-              to={`/userProfile/${this.state.user.username}`}
-            >
+            <Link style={linkStyle} to={`/userProfile/${username}`}>
               Cancel Changes
             </Link>
           </Button>

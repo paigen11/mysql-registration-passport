@@ -63,7 +63,6 @@ class Profile extends Component {
 
   async componentDidMount() {
     let accessString = localStorage.getItem('jwtToken');
-    console.log(`Access string ${accessString}`);
     if (accessString === null) {
       this.setState({
         isLoading: false,
@@ -78,13 +77,12 @@ class Profile extends Component {
         headers: { 'x-access-token': accessString },
       })
       .then(response => {
-        console.log(response.data);
         this.setState({
-          first_name: response.data.user.first_name,
-          last_name: response.data.user.last_name,
-          email: response.data.user.email,
-          username: response.data.user.username,
-          password: response.data.user.password,
+          first_name: response.data.first_name,
+          last_name: response.data.last_name,
+          email: response.data.email,
+          username: response.data.username,
+          password: response.data.password,
           isLoading: false,
           error: false,
         });
@@ -103,7 +101,6 @@ class Profile extends Component {
         },
       })
       .then(response => {
-        console.log(response.data);
         localStorage.removeItem('jwtToken');
         this.setState({
           deleted: true,
@@ -120,12 +117,23 @@ class Profile extends Component {
   };
 
   render() {
-    if (this.state.error) {
+    const {
+      first_name,
+      last_name,
+      email,
+      username,
+      password,
+      error,
+      isLoading,
+      deleted,
+    } = this.state;
+
+    if (error) {
       return (
         <div>
           <HeaderBar title={title} />
           <div style={loading}>
-            Problem fetching user data. Please login again
+            Problem fetching user data. Please login again.
           </div>
           <Button style={loginButton} variant="contained" color="primary">
             <Link style={linkStyle} to="/login">
@@ -134,14 +142,14 @@ class Profile extends Component {
           </Button>
         </div>
       );
-    } else if (this.state.isLoading) {
+    } else if (isLoading) {
       return (
         <div>
           <HeaderBar title={title} />
           <div style={loading}>Loading User Data...</div>
         </div>
       );
-    } else if (this.state.deleted) {
+    } else if (deleted) {
       return <Redirect to="/" />;
     } else {
       return (
@@ -151,24 +159,24 @@ class Profile extends Component {
             <TableBody>
               <TableRow>
                 <TableCell>First Name</TableCell>
-                <TableCell>{this.state.first_name}</TableCell>
+                <TableCell>{first_name}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Last Name</TableCell>
-                <TableCell>{this.state.last_name}</TableCell>
+                <TableCell>{last_name}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Email</TableCell>
-                <TableCell>{this.state.email}</TableCell>
+                <TableCell>{email}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>User Name</TableCell>
-                <TableCell>{this.state.username}</TableCell>
+                <TableCell>{username}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Password</TableCell>
                 <TableCell style={{ WebkitTextSecurity: 'disc' }}>
-                  {this.state.password}
+                  {password}
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -182,7 +190,7 @@ class Profile extends Component {
             Delete User
           </Button>
           <Button style={updateButton} variant="contained" color="primary">
-            <Link style={linkStyle} to={`/updateUser/${this.state.username}`}>
+            <Link style={linkStyle} to={`/updateUser/${username}`}>
               Update User
             </Link>
           </Button>

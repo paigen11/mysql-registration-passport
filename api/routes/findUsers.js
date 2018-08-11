@@ -1,6 +1,4 @@
 import User from '../sequelize';
-import config from '../config';
-import jwt from 'jsonwebtoken';
 import verifyToken from '../auth/verifyToken';
 
 module.exports = app => {
@@ -14,9 +12,15 @@ module.exports = app => {
         .then(user => {
           if (user != null) {
             console.log('user found in db');
-            res
-              .status(200)
-              .send({ auth: true, user, message: 'user found in db' });
+            res.status(200).send({
+              auth: true,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              email: user.email,
+              username: user.username,
+              password: user.password,
+              message: 'user found in db',
+            });
           } else {
             console.log('user not found in db');
             res
@@ -24,7 +28,6 @@ module.exports = app => {
               .send({ auth: false, message: 'no user with that username' });
           }
         })
-
         .catch(err => {
           console.log('problem communicating with db');
           res.status(500).json(err);

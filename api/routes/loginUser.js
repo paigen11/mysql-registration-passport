@@ -21,25 +21,21 @@ module.exports = app => {
           res.status(400).json('bad username');
         } else {
           bcrypt.compare(req.query.password, user.password).then(response => {
-            console.log(response);
             if (response === true) {
               const token = jwt.sign({ id: user.username }, config.secret, {
                 expiresIn: 86400,
               });
-
               console.log('user found & logged in');
               res
                 .status(200)
                 .send({ auth: true, token, message: 'user found & logged in' });
             } else {
               console.log('passwords do not match');
-              res
-                .status(400)
-                .send({
-                  auth: false,
-                  token: null,
-                  message: 'passwords do not match',
-                });
+              res.status(400).send({
+                auth: false,
+                token: null,
+                message: 'passwords do not match',
+              });
             }
           });
         }

@@ -5,8 +5,7 @@ import verifyToken from '../auth/verifyToken';
 const BCRYPT_SALT_ROUNDS = 12;
 module.exports = app => {
   app.put('/updateUser', verifyToken, (req, res, next) => {
-    console.log('Update' + JSON.stringify(req.body));
-    if (req.userId === req.query.username) {
+    if (req.userId === req.body.username) {
       User.findOne({
         where: {
           username: req.body.username,
@@ -17,7 +16,7 @@ module.exports = app => {
             console.log('user found in db');
             bcrypt
               .hash(req.body.password, BCRYPT_SALT_ROUNDS)
-              .then(function(hashedPassword) {
+              .then(hashedPassword => {
                 user.update({
                   first_name: req.body.first_name,
                   last_name: req.body.last_name,
