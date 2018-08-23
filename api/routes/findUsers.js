@@ -1,8 +1,15 @@
 import User from '../sequelize';
 import verifyToken from '../auth/verifyToken';
 
+// import passport from 'passport';
+// require('../config/passport')(passport);
+
 module.exports = app => {
   app.get('/findUser', verifyToken, (req, res, next) => {
+    // app.get(
+    //   '/findUser',
+    //   passport.authenticate('jwt', { session: false }),
+    //   (req, res) => {
     if (req.userId === req.query.username) {
       User.findOne({
         where: {

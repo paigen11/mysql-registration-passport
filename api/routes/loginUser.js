@@ -1,6 +1,6 @@
 import User from '../sequelize';
 import bcrypt from 'bcrypt';
-import config from '../config';
+import jwtSecret from '../config/jwtConfig';
 import jwt from 'jsonwebtoken';
 
 module.exports = app => {
@@ -22,7 +22,7 @@ module.exports = app => {
         } else {
           bcrypt.compare(req.query.password, user.password).then(response => {
             if (response === true) {
-              const token = jwt.sign({ id: user.username }, config.secret, {
+              const token = jwt.sign({ id: user.username }, jwtSecret.secret, {
                 expiresIn: 86400,
               });
               console.log('user found & logged in');
