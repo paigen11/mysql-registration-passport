@@ -18,7 +18,6 @@ passport.use(
       session: false,
     },
     (username, password, done) => {
-      console.log(username, password);
       try {
         User.findOne({
           where: {
@@ -32,11 +31,8 @@ passport.use(
             bcrypt
               .hash(password, BCRYPT_SALT_ROUNDS)
               .then(function(hashedPassword) {
-                console.log('here');
-                // console.log(username, hashedPassword);
                 User.create({ username, password: hashedPassword }).then(
                   user => {
-                    console.log(user);
                     return done(null, user);
                   },
                 );
@@ -44,7 +40,6 @@ passport.use(
           }
         });
       } catch (err) {
-        console.log('error catching');
         done(err);
       }
     },
@@ -57,6 +52,7 @@ passport.use(
     {
       usernameField: 'username',
       passwordField: 'password',
+      session: false,
     },
     (username, password, done) => {
       try {

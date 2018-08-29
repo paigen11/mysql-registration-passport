@@ -77,6 +77,7 @@ class Register extends Component {
           password: this.state.password,
         })
         .then(response => {
+          console.log('Response:');
           console.log(response.data);
           if (response.data === 'username already taken') {
             this.setState({
@@ -86,7 +87,7 @@ class Register extends Component {
             });
           } else {
             this.setState({
-              messageFromServer: response.data,
+              messageFromServer: response.data.message,
               showError: false,
               loginError: false,
               registerError: false,
