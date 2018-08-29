@@ -30,6 +30,7 @@
     "nodemon": "^1.18.3",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.0.0"
   }
