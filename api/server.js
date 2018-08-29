@@ -13,6 +13,7 @@ app.use(Cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
+app.use(passport.initialize());
 
 require('./routes/loginUser')(app);
 require('./routes/registerUser')(app);
