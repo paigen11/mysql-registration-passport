@@ -61,40 +61,42 @@ class Register extends Component {
 
   registerUser = e => {
     e.preventDefault();
-    axios
-      .post('http://localhost:3003/registerUser', {
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        email: this.state.email,
-        username: this.state.username,
-        password: this.state.password,
-      })
-      .then(response => {
-        console.log(response.data);
-        if (response.data === 'username already taken') {
-          this.setState({
-            showError: true,
-            loginError: true,
-            registerError: false,
-          });
-        } else if (response.data === 'username and password required') {
-          this.setState({
-            showError: true,
-            registerError: true,
-            loginError: false,
-          });
-        } else {
-          this.setState({
-            messageFromServer: response.data,
-            showError: false,
-            loginError: false,
-            registerError: false,
-          });
-        }
-      })
-      .catch(error => {
-        console.log(error.data);
+    if (this.state.username === '' || this.state.password === '') {
+      this.setState({
+        showError: true,
+        loginError: false,
+        registerError: true,
       });
+    } else {
+      axios
+        .post('http://localhost:3003/registerUser', {
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+          email: this.state.email,
+          username: this.state.username,
+          password: this.state.password,
+        })
+        .then(response => {
+          console.log(response.data);
+          if (response.data === 'username already taken') {
+            this.setState({
+              showError: true,
+              loginError: true,
+              registerError: false,
+            });
+          } else {
+            this.setState({
+              messageFromServer: response.data,
+              showError: false,
+              loginError: false,
+              registerError: false,
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+    }
   };
 
   render() {

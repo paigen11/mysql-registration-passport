@@ -57,7 +57,6 @@ class Login extends Component {
 
   loginUser = e => {
     e.preventDefault();
-
     axios
       .get('http://localhost:3003/loginUser', {
         params: {

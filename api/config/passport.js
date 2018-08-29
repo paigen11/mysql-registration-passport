@@ -20,10 +20,6 @@ passport.use(
     (username, password, done) => {
       console.log(username, password);
       try {
-        if (password === '' || username === '') {
-          console.log('username or password required');
-          return done(error, false, { message: 'username or password needed' });
-        }
         User.findOne({
           where: {
             username: username,
@@ -31,7 +27,7 @@ passport.use(
         }).then(user => {
           if (user != null) {
             console.log('username already taken');
-            done({ err: 'username already taken' });
+            return done(null, false, { message: 'username already taken' });
           } else {
             bcrypt
               .hash(password, BCRYPT_SALT_ROUNDS)
@@ -48,6 +44,7 @@ passport.use(
           }
         });
       } catch (err) {
+        console.log('error catching');
         done(err);
       }
     },
