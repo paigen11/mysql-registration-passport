@@ -46,6 +46,7 @@ class Login extends Component {
       password: '',
       loggedIn: false,
       showError: false,
+      showNullError: false,
     };
   }
 
@@ -57,36 +58,54 @@ class Login extends Component {
 
   loginUser = e => {
     e.preventDefault();
-    axios
-      .get('http://localhost:3003/loginUser', {
-        params: {
-          username: this.state.username,
-          password: this.state.password,
-        },
-      })
-      .then(response => {
-        if (
-          response.data === 'bad username' ||
-          response.data === 'passwords do not match'
-        ) {
-          this.setState({
-            showError: true,
-          });
-        } else {
-          localStorage.setItem('jwtToken', response.data.token);
-          this.setState({
-            loggedIn: true,
-            showError: false,
-          });
-        }
-      })
-      .catch(error => {
-        console.log(error.data);
+    console.log(this.state.username);
+    console.log(this.state.password);
+    if (this.state.username === '' || this.state.password === '') {
+      this.setState({
+        showError: false,
+        showNullError: true,
+        loggedIn: false,
       });
+    } else {
+      axios
+        .get('http://localhost:3003/loginUser', {
+          params: {
+            username: this.state.username,
+            password: this.state.password,
+          },
+        })
+        .then(response => {
+          if (
+            response.data === 'bad username' ||
+            response.data === 'passwords do not match'
+          ) {
+            this.setState({
+              showError: true,
+              showNullError: false,
+            });
+          } else {
+            localStorage.setItem('jwtToken', response.data.token);
+            this.setState({
+              loggedIn: true,
+              showError: false,
+              showENullrror: false,
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+    }
   };
 
   render() {
-    const { username, password, showError, loggedIn } = this.state;
+    const {
+      username,
+      password,
+      showError,
+      loggedIn,
+      showNullError,
+    } = this.state;
     if (!loggedIn) {
       return (
         <div>
@@ -118,6 +137,11 @@ class Login extends Component {
               Login
             </Button>
           </form>
+          {showNullError && (
+            <div>
+              <p>The username or password cannot be null.</p>
+            </div>
+          )}
           {showError && (
             <div>
               <p>

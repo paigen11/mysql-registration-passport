@@ -3,7 +3,7 @@ import passport from 'passport';
 
 module.exports = app => {
   app.post('/registerUser', function(req, res, next) {
-    passport.authenticate('register', function(err, user, info) {
+    passport.authenticate('register', (err, user, info) => {
       if (err) {
         console.log(err);
       }
@@ -11,7 +11,7 @@ module.exports = app => {
         console.log(info.message);
         res.send(info.message);
       } else {
-        req.logIn(user, function(err) {
+        req.logIn(user, err => {
           const data = {
             first_name: req.body.first_name,
             last_name: req.body.last_name,

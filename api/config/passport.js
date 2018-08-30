@@ -33,6 +33,7 @@ passport.use(
               .then(function(hashedPassword) {
                 User.create({ username, password: hashedPassword }).then(
                   user => {
+                    console.log('user created');
                     return done(null, user);
                   },
                 );
@@ -55,39 +56,38 @@ passport.use(
       session: false,
     },
     (username, password, done) => {
-      try {
-        const user = User.findOne({
-          where: {
-            username: username,
-          },
-        });
-
-        if (!user) {
-          return done(null, false, { message: 'User not found from passport' });
+      console.log(username, password);
+      User.findOne({
+        where: {
+          username: username,
+        },
+      }).then(user => {
+        if (user === null) {
+          return done(null, false, { message: 'bad username' });
+        } else {
+          bcrypt.compare(password, user.password).then(response => {
+            if (response !== true) {
+              console.log('passwords do not match');
+              return done(null, false, { message: 'passwords do not match' });
+            }
+            return done(null, user, { message: 'user found & logged in' });
+          });
         }
-
-        bcrypt.compare(password, user.password).then(response => {
-          if (response !== true) {
-            console.log('passwords do not match');
-            return done(null, false, { message: 'passwords do not match' });
-          }
-          return done(null, user, { message: 'user found & logged in' });
-        });
-      } catch (err) {
-        return done(err);
-      }
+      });
     },
   ),
 );
 
 passport.use(
+  'jwt',
   new JWTstrategy(
     {
-      secretOrKey: jwtSecret,
-      jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token'),
+      secretOrKey: jwtSecret.secret,
+      jwtFromRequest: ExtractJWT.fromHeader('x-access-token'),
     },
     (token, done) => {
       try {
+        console.log(token);
         return done(null, token.user);
       } catch (error) {
         done(error);

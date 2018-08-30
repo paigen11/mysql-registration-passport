@@ -1,19 +1,29 @@
 import User from '../sequelize';
 import verifyToken from '../auth/verifyToken';
 
-// import passport from 'passport';
-// require('../config/passport')(passport);
+import passport from 'passport';
 
 module.exports = app => {
   app.get('/findUser', (req, res, next) => {
-    res.status(200).send({
-      token: req.query.secret_token,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      username: user.username,
-      password: user.password,
-      message: 'user found in db',
+    passport.authenticate('jwt', { session: false }, (err, user, info) => {
+      if (err) {
+        console.log(err);
+      }
+      if (info != undefined) {
+        console.log(info.message);
+        res.send(info.message);
+      } else {
+        console.log(req.body);
+        res.status(200).send({
+          token: req.query.secret_token,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email,
+          username: user.username,
+          password: user.password,
+          message: 'user found in db',
+        });
+      }
     });
     // if (req.userId === req.query.username) {
     //   User.findOne({

@@ -7,21 +7,29 @@ import passport from 'passport';
 module.exports = app => {
   app.get('/loginUser', (req, res, next) => {
     passport.authenticate('login', (err, user, info) => {
-      try {
-        if (err || !user) {
-          const error = new Error('An error occured');
-          return next(error);
-        }
-        req.login(user, { session: false }, error => {
-          if (error) return next(error);
-
-          const token = jwt.sign({ id: user.username }, jwtSecret.secret);
-          return res
-            .status(200)
-            .send({ auth: true, token, message: 'user found & logged in' });
+      if (err) {
+        console.log(err);
+      }
+      if (info != undefined) {
+        console.log(info.message);
+        res.send(info.message);
+      } else {
+        req.logIn(user, err => {
+          console.log(user);
+          console.log(user.username);
+          User.findOne({
+            where: {
+              username: user.username,
+            },
+          }).then(user => {
+            const token = jwt.sign({ id: req.user.username }, jwtSecret.secret);
+            console.log('token');
+            console.log(token);
+            return res
+              .status(200)
+              .send({ auth: true, token, message: 'user found & logged in' });
+          });
         });
-      } catch (error) {
-        return next(error);
       }
     })(req, res, next);
     // User.findOne({
@@ -30,11 +38,6 @@ module.exports = app => {
     //   },
     // })
     //   .then(user => {
-    //     if (req.query.password == false) {
-    //       console.log('password required');
-    //       res
-    //         .status(400)
-    //         .send({ auth: false, token: null, message: 'password required' });
     //     } else if (user === null) {
     //       console.log('bad username');
     //       res.status(400).json('bad username');
