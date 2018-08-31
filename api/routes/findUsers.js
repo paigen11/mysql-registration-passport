@@ -4,27 +4,26 @@ import verifyToken from '../auth/verifyToken';
 import passport from 'passport';
 
 module.exports = app => {
-  app.get('/findUser', (req, res, next) => {
-    passport.authenticate('jwt', { session: false }, (err, user, info) => {
-      if (err) {
-        console.log(err);
-      }
-      if (info != undefined) {
-        console.log(info.message);
-        res.send(info.message);
-      } else {
-        console.log(req.body);
-        res.status(200).send({
-          token: req.query.secret_token,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          email: user.email,
-          username: user.username,
-          password: user.password,
-          message: 'user found in db',
-        });
-      }
-    });
+  app.get(
+    '/findUser',
+    (req, res, next) => {
+      // , (err, user, info) => {
+      //   if (err) {
+      //     console.log(err);
+      //   }
+      //   if (info != undefined) {
+      //     console.log(info.message);
+      //     res.send(info.message);
+      //   } else {
+      console.log('res');
+      console.log(res);
+      console.log('req');
+      console.log(req);
+      res.send({
+        message: 'authenticated',
+      });
+    },
+    // });
     // if (req.userId === req.query.username) {
     //   User.findOne({
     //     where: {
@@ -60,5 +59,6 @@ module.exports = app => {
     //     message: 'username and token id do not match',
     //   });
     // }
-  });
+    // }
+  );
 };

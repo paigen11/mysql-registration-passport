@@ -22,7 +22,11 @@ module.exports = app => {
             const token = jwt.sign({ id: user.username }, jwtSecret.secret);
             res
               .status(200)
-              .send({ auth: true, token, message: 'user found & logged in' });
+              .send({
+                auth: true,
+                token: `JWT ${token}`,
+                message: 'user found & logged in',
+              });
           });
         });
       }

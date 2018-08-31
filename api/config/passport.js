@@ -52,7 +52,6 @@ passport.use(
       session: false,
     },
     (username, password, done) => {
-      console.log(username, password);
       try {
         User.findOne({
           where: {
@@ -63,7 +62,6 @@ passport.use(
             return done(null, false, { message: 'bad username' });
           } else {
             bcrypt.compare(password, user.password).then(response => {
-              console.log(response);
               if (response !== true) {
                 console.log('passwords do not match');
                 return done(null, false, { message: 'passwords do not match' });
@@ -80,20 +78,35 @@ passport.use(
   ),
 );
 
+const opts = {
+  jwtFromRequest: ExtractJWT.fromAuthHeaderWithScheme('JWT'),
+  secretOrKey: jwtSecret.secret,
+};
+
 passport.use(
   'jwt',
-  new JWTstrategy(
-    {
-      secretOrKey: jwtSecret.secret,
-      jwtFromRequest: ExtractJWT.fromHeader('x-access-token'),
-    },
-    (token, done) => {
-      try {
-        console.log(token);
-        return done(null, token.user);
-      } catch (error) {
-        done(error);
+  new JWTstrategy(opts, (jwt_payload, done) => {
+    console.log('payload received');
+    console.log(jwt_payload.id);
+    // try {
+    User.findOne({
+      where: {
+        username: jwt_payload.id,
+      },
+    }).then(user => {
+      console.log('user');
+      console.log(user);
+      if (user) {
+        console.log(user);
+        console.log('user found in db in passport');
+        return done(null, user);
+      } else {
+        console.log('user not found in db');
+        return done(null, false);
       }
-    },
-  ),
+    });
+    // } catch (err) {
+    //   done(err);
+    // }
+  }),
 );
