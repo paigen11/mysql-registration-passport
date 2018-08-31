@@ -28,16 +28,12 @@ passport.use(
             console.log('username already taken');
             return done(null, false, { message: 'username already taken' });
           } else {
-            bcrypt
-              .hash(password, BCRYPT_SALT_ROUNDS)
-              .then(function(hashedPassword) {
-                User.create({ username, password: hashedPassword }).then(
-                  user => {
-                    console.log('user created');
-                    return done(null, user);
-                  },
-                );
+            bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(hashedPassword => {
+              User.create({ username, password: hashedPassword }).then(user => {
+                console.log('user created');
+                return done(null, user);
               });
+            });
           }
         });
       } catch (err) {
@@ -57,23 +53,29 @@ passport.use(
     },
     (username, password, done) => {
       console.log(username, password);
-      User.findOne({
-        where: {
-          username: username,
-        },
-      }).then(user => {
-        if (user === null) {
-          return done(null, false, { message: 'bad username' });
-        } else {
-          bcrypt.compare(password, user.password).then(response => {
-            if (response !== true) {
-              console.log('passwords do not match');
-              return done(null, false, { message: 'passwords do not match' });
-            }
-            return done(null, user, { message: 'user found & logged in' });
-          });
-        }
-      });
+      try {
+        User.findOne({
+          where: {
+            username: username,
+          },
+        }).then(user => {
+          if (user === null) {
+            return done(null, false, { message: 'bad username' });
+          } else {
+            bcrypt.compare(password, user.password).then(response => {
+              console.log(response);
+              if (response !== true) {
+                console.log('passwords do not match');
+                return done(null, false, { message: 'passwords do not match' });
+              }
+              console.log('user found & authenticated');
+              return done(null, user);
+            });
+          }
+        });
+      } catch (err) {
+        done(err);
+      }
     },
   ),
 );

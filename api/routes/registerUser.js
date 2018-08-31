@@ -2,7 +2,7 @@ import User from '../sequelize';
 import passport from 'passport';
 
 module.exports = app => {
-  app.post('/registerUser', function(req, res, next) {
+  app.post('/registerUser', (req, res, next) => {
     passport.authenticate('register', (err, user, info) => {
       if (err) {
         console.log(err);
@@ -18,7 +18,6 @@ module.exports = app => {
             email: req.body.email,
             username: user.username,
           };
-          console.log(data);
           User.findOne({
             where: {
               username: data.username,

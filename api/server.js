@@ -17,9 +17,7 @@ app.use(passport.initialize());
 
 require('./routes/loginUser')(app);
 require('./routes/registerUser')(app);
-require('./routes/findUsers', passport.authenticate('jwt', { session: false }))(
-  app,
-);
+require('./routes/findUsers')(app);
 require('./routes/deleteUser')(app);
 require('./routes/updateUser')(app);
 
