@@ -20,13 +20,11 @@ module.exports = app => {
             },
           }).then(user => {
             const token = jwt.sign({ id: user.username }, jwtSecret.secret);
-            res
-              .status(200)
-              .send({
-                auth: true,
-                token: `JWT ${token}`,
-                message: 'user found & logged in',
-              });
+            res.status(200).send({
+              auth: true,
+              token: token,
+              message: 'user found & logged in',
+            });
           });
         });
       }

@@ -1,11 +1,9 @@
-import User from '../sequelize';
-import verifyToken from '../auth/verifyToken';
-
 import passport from 'passport';
 
 module.exports = app => {
-  app.get(
+  app.use(
     '/findUser',
+    passport.authenticate('jwt', { session: false }),
     (req, res, next) => {
       // , (err, user, info) => {
       //   if (err) {
@@ -15,12 +13,15 @@ module.exports = app => {
       //     console.log(info.message);
       //     res.send(info.message);
       //   } else {
-      console.log('res');
-      console.log(res);
-      console.log('req');
-      console.log(req);
-      res.send({
-        message: 'authenticated',
+      console.log('user found in db from route');
+      res.status(200).send({
+        auth: true,
+        first_name: req.user.first_name,
+        last_name: req.user.last_name,
+        email: req.user.email,
+        username: req.user.username,
+        password: req.user.password,
+        message: 'user found in db',
       });
     },
     // });
