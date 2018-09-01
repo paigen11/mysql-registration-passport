@@ -84,7 +84,7 @@ class Login extends Component {
               showNullError: false,
             });
           } else {
-            localStorage.setItem('jwtToken', response.data.token);
+            localStorage.setItem('JWT', response.data.token);
             this.setState({
               loggedIn: true,
               showError: false,

@@ -1,10 +1,10 @@
 import passport from 'passport';
 
 module.exports = app => {
-  app.use(
+  app.get(
     '/findUser',
     passport.authenticate('jwt', { session: false }),
-    (req, res, next) => {
+    (req, res) => {
       // , (err, user, info) => {
       //   if (err) {
       //     console.log(err);

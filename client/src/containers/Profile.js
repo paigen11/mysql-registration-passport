@@ -62,7 +62,7 @@ class Profile extends Component {
   }
 
   async componentDidMount() {
-    let accessString = localStorage.getItem('jwtToken');
+    let accessString = localStorage.getItem('JWT');
     if (accessString === null) {
       this.setState({
         isLoading: false,
@@ -74,7 +74,7 @@ class Profile extends Component {
         params: {
           username: this.props.match.params.username,
         },
-        headers: { 'x-access-token': accessString },
+        headers: { Authorization: `JWT ${accessString}` },
       })
       .then(response => {
         this.setState({
@@ -93,7 +93,7 @@ class Profile extends Component {
   }
 
   deleteUser = e => {
-    let accessString = localStorage.getItem('jwtToken');
+    let accessString = localStorage.getItem('JWT');
     if (accessString === null) {
       this.setState({
         loadingUser: false,
@@ -107,11 +107,11 @@ class Profile extends Component {
         params: {
           username: this.props.match.params.username,
         },
-        headers: { 'x-access-token': accessString },
+        headers: { JWT: accessString },
       })
       .then(response => {
         console.log(response.data);
-        localStorage.removeItem('jwtToken');
+        localStorage.removeItem('JWT');
         this.setState({
           deleted: true,
         });
@@ -123,7 +123,7 @@ class Profile extends Component {
 
   logout = e => {
     e.preventDefault();
-    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('JWT');
   };
 
   render() {
