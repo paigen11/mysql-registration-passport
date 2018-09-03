@@ -66,7 +66,7 @@ class UpdateProfile extends Component {
   componentDidMount() {
     this.setState({ loadingUser: true });
 
-    let accessString = localStorage.getItem('jwtToken');
+    let accessString = localStorage.getItem('JWT');
     if (accessString === null) {
       this.setState({
         loadingUser: false,
@@ -79,7 +79,7 @@ class UpdateProfile extends Component {
         params: {
           username: this.props.match.params.username,
         },
-        headers: { 'x-access-token': accessString },
+        headers: { Authorization: `JWT ${accessString}` },
       })
       .then(response => {
         console.log(response.data);
@@ -105,7 +105,7 @@ class UpdateProfile extends Component {
   };
 
   updateUser = e => {
-    let accessString = localStorage.getItem('jwtToken');
+    let accessString = localStorage.getItem('JWT');
     console.log(this.state.user);
     if (accessString === null) {
       this.setState({
@@ -126,7 +126,7 @@ class UpdateProfile extends Component {
           password: this.state.password,
         },
         {
-          headers: { 'x-access-token': accessString },
+          headers: { Authorization: `JWT ${accessString}` },
         },
       )
       .then(response => {
