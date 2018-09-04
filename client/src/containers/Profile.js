@@ -107,7 +107,7 @@ class Profile extends Component {
         params: {
           username: this.props.match.params.username,
         },
-        headers: { JWT: accessString },
+        headers: { Authorization: `JWT ${accessString}` },
       })
       .then(response => {
         console.log(response.data);
