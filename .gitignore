@@ -1,2 +1,4 @@
 **/node_modules/
 docker/data/db/**
+.vscode/
+.idea/
