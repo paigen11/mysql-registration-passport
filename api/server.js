@@ -18,12 +18,6 @@ app.use(passport.initialize());
 require('./routes/loginUser')(app);
 require('./routes/registerUser')(app);
 require('./routes/findUsers')(app);
-// const findUsersRoute = require('./routes/findUsers');
-// app.use(
-//   '/findUser',
-//   passport.authenticate('jwt', { session: false }),
-//   findUsersRoute,
-// );
 require('./routes/deleteUser')(app);
 require('./routes/updateUser')(app);
 

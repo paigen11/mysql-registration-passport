@@ -106,7 +106,6 @@ class UpdateProfile extends Component {
 
   updateUser = e => {
     let accessString = localStorage.getItem('JWT');
-    console.log(this.state.user);
     if (accessString === null) {
       this.setState({
         loadingUser: false,
