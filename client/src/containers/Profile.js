@@ -1,40 +1,20 @@
 import React, { Component } from 'react';
-import HeaderBar from '../components/HeaderBar';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { Link, Redirect } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import axios from 'axios';
 
-const linkStyle = {
-  textDecoration: 'none',
-  color: 'white',
-};
-
-const deleteButton = {
-  background: 'red',
-  padding: '1em',
-  margin: '1em',
-};
-
-const updateButton = {
-  background: 'orange',
-  padding: '1em',
-  margin: '1em',
-};
-
-const loginButton = {
-  background: 'royalblue',
-  padding: '1em',
-  margin: '1em',
-};
-
-const logoutButton = {
-  padding: '1em',
-  margin: '1em',
-};
+import {
+  linkStyle,
+  deleteButton,
+  updateButton,
+  loginButton,
+  logoutButton,
+  HeaderBar,
+} from '../components';
 
 const loading = {
   margin: '1em',

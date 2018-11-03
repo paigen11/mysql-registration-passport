@@ -1,37 +1,18 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import HeaderBar from '../components/HeaderBar';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 
-const registerButton = {
-  background: 'green',
-  padding: '1em',
-  margin: '1em',
-};
-
-const linkStyle = {
-  textDecoration: 'none',
-  color: 'white',
-};
-
-const homeButton = {
-  background: 'mediumpurple',
-  padding: '1em',
-  margin: '1em',
-};
-
-const loginButton = {
-  background: 'royalblue',
-  padding: '1em',
-  margin: '1em',
-};
-
-const inputStyle = {
-  margin: '.5em',
-};
+import {
+  registerButton,
+  linkStyle,
+  homeButton,
+  loginButton,
+  inputStyle,
+  HeaderBar,
+} from '../components';
 
 const title = {
   pageTitle: 'Login Screen',

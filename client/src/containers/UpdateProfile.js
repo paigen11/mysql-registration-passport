@@ -1,46 +1,22 @@
 import React, { Component } from 'react';
-import HeaderBar from '../components/HeaderBar';
 import { Link, Redirect } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
-const linkStyle = {
-  textDecoration: 'none',
-  color: 'white',
-};
-
-const homeButton = {
-  background: 'mediumpurple',
-  padding: '1em',
-  margin: '1em',
-};
-
-const cancelButton = {
-  background: 'magenta',
-  padding: '1em',
-  margin: '1em',
-};
-
-const saveButton = {
-  background: 'green',
-  padding: '1em',
-  margin: '1em',
-};
-
-const loginButton = {
-  background: 'royalblue',
-  padding: '1em',
-  margin: '1em',
-};
+import {
+  HeaderBar,
+  linkStyle,
+  homeButton,
+  cancelButton,
+  saveButton,
+  loginButton,
+  inputStyle,
+} from '../components';
 
 const loading = {
   margin: '1em',
   fontSize: '24px',
-};
-
-const inputStyle = {
-  margin: '.5em',
 };
 
 const title = {
@@ -122,7 +98,6 @@ class UpdateProfile extends Component {
           last_name: this.state.last_name,
           email: this.state.email,
           username: this.state.username,
-          password: this.state.password,
         },
         {
           headers: { Authorization: `JWT ${accessString}` },
@@ -217,8 +192,8 @@ class UpdateProfile extends Component {
               id="password"
               label="password"
               value={password}
-              onChange={this.handleChange('password')}
-              placeholder="Password"
+              readOnly
+              disabled
               type="password"
             />
             <Button

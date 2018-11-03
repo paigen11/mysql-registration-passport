@@ -20,17 +20,18 @@ module.exports = app => {
         }).then(user => {
           if (user != null) {
             console.log('user found in db');
-            bcrypt
-              .hash(user.password, BCRYPT_SALT_ROUNDS)
-              .then(hashedPassword => {
-                user.update({
-                  first_name: req.body.first_name,
-                  last_name: req.body.last_name,
-                  email: req.body.email,
-                  username: req.body.username,
-                  password: hashedPassword,
-                });
+            // bcrypt
+            //   .hash(user.password, BCRYPT_SALT_ROUNDS)
+            //   .then(hashedPassword => {
+            user
+              .update({
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                email: req.body.email,
+                username: req.body.username,
+                // password: hashedPassword,
               })
+              // })
               .then(() => {
                 console.log('user updated');
                 res.status(200).send({ auth: true, message: 'user updated' });
