@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Table from '@material-ui/core/Table';
 import Button from '@material-ui/core/Button';
 import { Link, Redirect } from 'react-router-dom';
-import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
 import {
-  linkStyle,
+  Buttons,
   deleteButton,
   updateButton,
   loginButton,
   logoutButton,
   HeaderBar,
+  linkStyle,
 } from '../components';
 
 const loading = {
@@ -125,11 +126,11 @@ class Profile extends Component {
           <div style={loading}>
             Problem fetching user data. Please login again.
           </div>
-          <Button style={loginButton} variant="contained" color="primary">
-            <Link style={linkStyle} to="/login">
-              Go Login
-            </Link>
-          </Button>
+          <Buttons
+            buttonText={`Login`}
+            buttonStyle={loginButton}
+            link={'/login'}
+          />
         </div>
       );
     } else if (isLoading) {
@@ -179,11 +180,11 @@ class Profile extends Component {
           >
             Delete User
           </Button>
-          <Button style={updateButton} variant="contained" color="primary">
-            <Link style={linkStyle} to={`/updateUser/${username}`}>
-              Update User
-            </Link>
-          </Button>
+          <Buttons
+            buttonStyle={updateButton}
+            buttonText={'Update User'}
+            link={`/updateUser/${username}`}
+          />
           <Button
             style={logoutButton}
             variant="contained"

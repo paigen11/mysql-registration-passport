@@ -1,6 +1,7 @@
-import Buttons from './Buttons';
+import ButtonStyles from './ButtonStyles';
 import HeaderBar from './HeaderBar';
+import Buttons from './Buttons';
 
-export * from './Buttons';
+export * from './ButtonStyles';
 
-export { Buttons, HeaderBar };
+export { Buttons, HeaderBar, ButtonStyles };

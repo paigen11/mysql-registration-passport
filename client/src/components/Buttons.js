@@ -1,68 +1,24 @@
-export const deleteButton = {
-  background: 'red',
-  padding: '1em',
-  margin: '1em',
-};
+import React, { Component, Fragment } from 'react';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
-export const updateButton = {
-  background: 'orange',
-  padding: '1em',
-  margin: '1em',
-};
+import { linkStyle } from './ButtonStyles';
 
-export const loginButton = {
-  background: 'royalblue',
-  padding: '1em',
-  margin: '1em',
-};
+export default class Buttons extends Component {
+  static defaultProps = {
+    link: '/',
+  };
 
-export const logoutButton = {
-  padding: '1em',
-  margin: '1em',
-};
-
-export const linkStyle = {
-  textDecoration: 'none',
-  color: 'white',
-};
-
-export const registerButton = {
-  background: 'green',
-  padding: '1em',
-  margin: '1em',
-};
-
-export const homeButton = {
-  background: 'mediumpurple',
-  padding: '1em',
-  margin: '1em',
-};
-
-export const saveButton = {
-  background: 'green',
-  padding: '1em',
-  margin: '1em',
-};
-
-export const cancelButton = {
-  background: 'magenta',
-  padding: '1em',
-  margin: '1em',
-};
-
-export const inputStyle = {
-  margin: '.5em',
-};
-
-export default {
-  deleteButton,
-  updateButton,
-  loginButton,
-  logoutButton,
-  linkStyle,
-  registerButton,
-  homeButton,
-  inputStyle,
-  saveButton,
-  cancelButton,
-};
+  render() {
+    const { buttonText, buttonStyle, link } = this.props;
+    return (
+      <Fragment>
+        <Button variant="contained" color="primary" style={buttonStyle}>
+          <Link style={linkStyle} to={link}>
+            {buttonText}
+          </Link>
+        </Button>
+      </Fragment>
+    );
+  }
+}

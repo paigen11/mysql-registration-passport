@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
 
 import {
+  Buttons,
   registerButton,
   homeButton,
   loginButton,
   inputStyle,
-  linkStyle,
   HeaderBar,
 } from '../components';
 
@@ -58,7 +57,6 @@ class Register extends Component {
           password: this.state.password,
         })
         .then(response => {
-          console.log('Response:');
           console.log(response.data);
           if (response.data === 'username already taken') {
             this.setState({
@@ -162,18 +160,14 @@ class Register extends Component {
                   That username is already taken. Please choose another or
                   login.
                 </p>
-                <Button style={loginButton} variant="contained" color="primary">
-                  <Link style={linkStyle} to="/login">
-                    Go Login
-                  </Link>
-                </Button>
+                <Buttons
+                  buttonText={`Login`}
+                  buttonStyle={loginButton}
+                  link={'/login'}
+                />
               </div>
             )}
-          <Button style={homeButton} variant="contained" color="primary">
-            <Link style={linkStyle} to="/">
-              Go Home
-            </Link>
-          </Button>
+          <Buttons buttonText={`Go Home`} buttonStyle={homeButton} link={'/'} />
         </div>
       );
     } else if (messageFromServer === 'user created') {
@@ -181,11 +175,11 @@ class Register extends Component {
         <div>
           <HeaderBar title={title} />
           <h3>User successfully registered!</h3>
-          <Button style={loginButton} variant="contained" color="primary">
-            <Link style={linkStyle} to="/login">
-              Go Login
-            </Link>
-          </Button>
+          <Buttons
+            buttonText={`Go Login`}
+            buttonStyle={loginButton}
+            link={`/login`}
+          />
         </div>
       );
     }

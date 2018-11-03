@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
 import {
+  Buttons,
   HeaderBar,
-  linkStyle,
   homeButton,
   cancelButton,
   saveButton,
@@ -58,7 +58,7 @@ class UpdateProfile extends Component {
         headers: { Authorization: `JWT ${accessString}` },
       })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({
           loadingUser: false,
           first_name: response.data.first_name,
@@ -104,7 +104,7 @@ class UpdateProfile extends Component {
         },
       )
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({
           updated: true,
           error: false,
@@ -134,11 +134,7 @@ class UpdateProfile extends Component {
           <p style={loading}>
             There was a problem accessing your data. Please go login again.
           </p>
-          <Button style={loginButton} variant="contained" color="primary">
-            <Link style={linkStyle} to="/login">
-              Go Login
-            </Link>
-          </Button>
+          <Buttons style={loginButton} buttonText={'Go Login'} link="/login" />
         </div>
       );
     } else if (loadingUser !== false) {
@@ -205,16 +201,12 @@ class UpdateProfile extends Component {
               Save Changes
             </Button>
           </form>
-          <Button style={homeButton} variant="contained" color="primary">
-            <Link style={linkStyle} to="/">
-              Go Home
-            </Link>
-          </Button>
-          <Button style={cancelButton} variant="contained" color="primary">
-            <Link style={linkStyle} to={`/userProfile/${username}`}>
-              Cancel Changes
-            </Link>
-          </Button>
+          <Buttons buttonStyle={homeButton} buttonText={'Go Home'} link={'/'} />
+          <Buttons
+            buttonStyle={cancelButton}
+            buttonText={'Cancel Changes'}
+            link={`/userProfile/${username}`}
+          />
         </div>
       );
     }

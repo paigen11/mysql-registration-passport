@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 
 import {
+  Buttons,
   registerButton,
-  linkStyle,
   homeButton,
   loginButton,
   inputStyle,
@@ -39,8 +38,6 @@ class Login extends Component {
 
   loginUser = e => {
     e.preventDefault();
-    console.log(this.state.username);
-    console.log(this.state.password);
     if (this.state.username === '' || this.state.password === '') {
       this.setState({
         showError: false,
@@ -56,6 +53,7 @@ class Login extends Component {
           },
         })
         .then(response => {
+          // console.log(response.data);
           if (
             response.data === 'bad username' ||
             response.data === 'passwords do not match'
@@ -129,22 +127,14 @@ class Login extends Component {
                 That username or password isn't recognized. Please try again or
                 register now.
               </p>
-              <Button
-                style={registerButton}
-                variant="contained"
-                color="primary"
-              >
-                <Link style={linkStyle} to="/register">
-                  Go Register
-                </Link>
-              </Button>
+              <Buttons
+                buttonText={`Register`}
+                buttonStyle={registerButton}
+                link={'/register'}
+              />
             </div>
           )}
-          <Button style={homeButton} variant="contained" color="primary">
-            <Link style={linkStyle} to="/">
-              Go Home
-            </Link>
-          </Button>
+          <Buttons buttonText={`Go Home`} buttonStyle={homeButton} link={'/'} />
         </div>
       );
     } else {

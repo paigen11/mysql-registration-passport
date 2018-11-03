@@ -11,12 +11,13 @@ const headerStyle = {
 
 class HeaderBar extends Component {
   render() {
+    const { title } = this.props;
     return (
       <div className="header">
         <AppBar position="static" color="default" style={headerStyle}>
           <Toolbar>
             <Typography variant="title" color="inherit">
-              {this.props.title.pageTitle}
+              {title.pageTitle}
             </Typography>
           </Toolbar>
         </AppBar>
