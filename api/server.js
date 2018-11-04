@@ -3,6 +3,8 @@ import Cors from 'cors';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import passport from 'passport';
+const nodemailer = require('nodemailer');
+
 const app = express();
 
 const API_PORT = process.env.API_PORT || 3000;

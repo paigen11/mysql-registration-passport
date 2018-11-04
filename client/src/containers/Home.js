@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { HeaderBar, Buttons, loginButton, registerButton } from '../components';
+import {
+  HeaderBar,
+  LinkButtons,
+  loginButton,
+  registerButton,
+} from '../components';
 
 const title = {
   pageTitle: 'Home Screen',
@@ -10,12 +15,12 @@ class Home extends Component {
     return (
       <div className="home-page">
         <HeaderBar title={title} />
-        <Buttons
+        <LinkButtons
           buttonText={`Register`}
           buttonStyle={registerButton}
           link={`/register`}
         />
-        <Buttons
+        <LinkButtons
           buttonText={`Login`}
           buttonStyle={loginButton}
           link={`/login`}

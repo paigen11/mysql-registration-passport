@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 
 import {
-  Buttons,
+  LinkButtons,
+  SubmitButtons,
   registerButton,
   homeButton,
   loginButton,
+  forgotButton,
   inputStyle,
   HeaderBar,
 } from '../components';
@@ -107,14 +108,7 @@ class Login extends Component {
               placeholder="Password"
               type="password"
             />
-            <Button
-              style={loginButton}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Login
-            </Button>
+            <SubmitButtons buttonStyle={loginButton} buttonText={'Login'} />
           </form>
           {showNullError && (
             <div>
@@ -127,14 +121,23 @@ class Login extends Component {
                 That username or password isn't recognized. Please try again or
                 register now.
               </p>
-              <Buttons
+              <LinkButtons
                 buttonText={`Register`}
                 buttonStyle={registerButton}
                 link={'/register'}
               />
             </div>
           )}
-          <Buttons buttonText={`Go Home`} buttonStyle={homeButton} link={'/'} />
+          <LinkButtons
+            buttonText={`Go Home`}
+            buttonStyle={homeButton}
+            link={'/'}
+          />
+          <LinkButtons
+            buttonStyle={forgotButton}
+            buttonText={'Forgot Password?'}
+            link={'/forgotPassword'}
+          />
         </div>
       );
     } else {

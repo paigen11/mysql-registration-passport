@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
 import {
-  Buttons,
+  LinkButtons,
+  SubmitButtons,
   HeaderBar,
   homeButton,
   cancelButton,
@@ -134,7 +134,11 @@ class UpdateProfile extends Component {
           <p style={loading}>
             There was a problem accessing your data. Please go login again.
           </p>
-          <Buttons style={loginButton} buttonText={'Go Login'} link="/login" />
+          <LinkButtons
+            style={loginButton}
+            buttonText={'Go Login'}
+            link="/login"
+          />
         </div>
       );
     } else if (loadingUser !== false) {
@@ -192,17 +196,17 @@ class UpdateProfile extends Component {
               disabled
               type="password"
             />
-            <Button
-              style={saveButton}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Save Changes
-            </Button>
+            <SubmitButtons
+              buttonStyle={saveButton}
+              buttonText={'Save Changes'}
+            />
           </form>
-          <Buttons buttonStyle={homeButton} buttonText={'Go Home'} link={'/'} />
-          <Buttons
+          <LinkButtons
+            buttonStyle={homeButton}
+            buttonText={'Go Home'}
+            link={'/'}
+          />
+          <LinkButtons
             buttonStyle={cancelButton}
             buttonText={'Cancel Changes'}
             link={`/userProfile/${username}`}

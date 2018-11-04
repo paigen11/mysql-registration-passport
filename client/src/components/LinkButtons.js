@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { linkStyle } from './ButtonStyles';
 
-export default class Buttons extends Component {
+export default class LinkButtons extends Component {
   static defaultProps = {
     link: '/',
   };

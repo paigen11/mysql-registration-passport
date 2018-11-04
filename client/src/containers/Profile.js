@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
 import {
-  Buttons,
+  LinkButtons,
   deleteButton,
   updateButton,
   loginButton,
@@ -126,7 +126,7 @@ class Profile extends Component {
           <div style={loading}>
             Problem fetching user data. Please login again.
           </div>
-          <Buttons
+          <LinkButtons
             buttonText={`Login`}
             buttonStyle={loginButton}
             link={'/login'}
@@ -180,7 +180,7 @@ class Profile extends Component {
           >
             Delete User
           </Button>
-          <Buttons
+          <LinkButtons
             buttonStyle={updateButton}
             buttonText={'Update User'}
             link={`/updateUser/${username}`}

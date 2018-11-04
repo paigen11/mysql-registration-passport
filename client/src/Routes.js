@@ -5,6 +5,7 @@ import Register from './containers/Register';
 import Login from './containers/Login';
 import Profile from './containers/Profile';
 import UpdateProfile from './containers/UpdateProfile';
+import ForgotPassword from './containers/ForgotPassword';
 
 class Routes extends Component {
   render() {
@@ -14,6 +15,7 @@ class Routes extends Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/forgotPassword" component={ForgotPassword} />
           <Route exact path="/userProfile/:username" component={Profile} />
           <Route exact path="/updateUser/:username" component={UpdateProfile} />
         </Switch>

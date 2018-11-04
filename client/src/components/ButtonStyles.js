@@ -50,6 +50,12 @@ export const cancelButton = {
   margin: '1em',
 };
 
+export const forgotButton = {
+  background: 'purple',
+  padding: '1em',
+  margin: '1em',
+};
+
 export const inputStyle = {
   margin: '.5em',
 };
@@ -59,6 +65,7 @@ export default {
   updateButton,
   loginButton,
   logoutButton,
+  forgotButton,
   linkStyle,
   registerButton,
   homeButton,

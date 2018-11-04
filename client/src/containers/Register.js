@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
 
 import {
-  Buttons,
+  LinkButtons,
+  SubmitButtons,
   registerButton,
   homeButton,
   loginButton,
@@ -138,14 +138,10 @@ class Register extends Component {
               placeholder="Password"
               type="password"
             />
-            <Button
-              style={registerButton}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Register
-            </Button>
+            <SubmitButtons
+              buttonStyle={registerButton}
+              buttonText={'Register'}
+            />
           </form>
           {showError === true &&
             registerError === true && (
@@ -160,14 +156,18 @@ class Register extends Component {
                   That username is already taken. Please choose another or
                   login.
                 </p>
-                <Buttons
+                <LinkButtons
                   buttonText={`Login`}
                   buttonStyle={loginButton}
                   link={'/login'}
                 />
               </div>
             )}
-          <Buttons buttonText={`Go Home`} buttonStyle={homeButton} link={'/'} />
+          <LinkButtons
+            buttonText={`Go Home`}
+            buttonStyle={homeButton}
+            link={'/'}
+          />
         </div>
       );
     } else if (messageFromServer === 'user created') {
@@ -175,7 +175,7 @@ class Register extends Component {
         <div>
           <HeaderBar title={title} />
           <h3>User successfully registered!</h3>
-          <Buttons
+          <LinkButtons
             buttonText={`Go Login`}
             buttonStyle={loginButton}
             link={`/login`}
