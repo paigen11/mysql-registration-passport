@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 
@@ -42,23 +41,20 @@ class ForgotPassword extends Component {
       });
     } else {
       axios
-        .post('http://localhost:3003/sendEmail', {
+        .post('http://localhost:3003/forgotPassword', {
           email: this.state.email,
         })
         .then(response => {
           console.log(response.data);
-          if (
-            response.data === 'bad username' ||
-            response.data === 'passwords do not match'
-          ) {
+          if (response.data === 'email not in db') {
             this.setState({
               showError: true,
               messageFromServer: '',
             });
-          } else if (response.data === 'email sent') {
+          } else if (response.data === 'recovery email sent') {
             this.setState({
               showError: false,
-              messageFromServer: 'email sent',
+              messageFromServer: 'recovery email sent',
             });
           }
         })
@@ -93,7 +89,7 @@ class ForgotPassword extends Component {
             <p>The email address cannot be null.</p>
           </div>
         )}
-        {messageFromServer === 'email sent' && (
+        {messageFromServer === 'recovery email sent' && (
           <div>
             <h3>Password Reset Email Successfully Sent!</h3>
           </div>

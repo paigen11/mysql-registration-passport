@@ -3,7 +3,6 @@ import Cors from 'cors';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import passport from 'passport';
-const nodemailer = require('nodemailer');
 
 const app = express();
 
@@ -19,6 +18,7 @@ app.use(passport.initialize());
 
 require('./routes/loginUser')(app);
 require('./routes/registerUser')(app);
+require('./routes/forgotPassword.js')(app);
 require('./routes/findUsers')(app);
 require('./routes/deleteUser')(app);
 require('./routes/updateUser')(app);
