@@ -16,5 +16,6 @@ module.exports = (sequelize, type) => {
       type: type.STRING,
       allowNull: false,
     },
+    resetPasswordToken: type.STRING,
   });
 };

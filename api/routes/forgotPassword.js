@@ -1,5 +1,5 @@
 import User from '../sequelize';
-// import passport from 'passport';
+import crypto from 'crypto';
 
 const nodemailer = require('nodemailer');
 
@@ -18,6 +18,12 @@ module.exports = app => {
         console.log('email not in database');
         res.json('email not in db');
       } else {
+        const token = crypto.randomBytes(20).toString('hex');
+        console.log(token);
+        user.update({
+          resetPasswordToken: token,
+        });
+
         const transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
@@ -27,11 +33,14 @@ module.exports = app => {
         });
 
         const mailOptions = {
-          from: `<PLACEHOLDER>`,
+          from: `mysqlregistration@demo.com`,
           to: `${user.email}`,
           subject: `Link To Reset Password`,
-          text: `<URL TO RESET PASSWORD IN APP>`,
-          replyTo: `<PLACEHOLDER>`,
+          text:
+            `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n` +
+            `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+            `http://localhost:3031/reset/${token}\n\n` +
+            `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
         };
 
         console.log('sending mail');
