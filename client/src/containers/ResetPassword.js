@@ -27,6 +27,7 @@ export default class ResetPassword extends Component {
     super();
 
     this.state = {
+      username: '',
       password: '',
       confirmPassword: '',
       update: false,
@@ -47,6 +48,7 @@ export default class ResetPassword extends Component {
         console.log(response);
         if (response.data.message === 'password reset link a-ok') {
           this.setState({
+            username: response.data.username,
             update: false,
             isLoading: false,
             error: false,
@@ -74,14 +76,22 @@ export default class ResetPassword extends Component {
     e.preventDefault();
     axios
       .put('http://localhost:3003/updatePassword', {
+        username: this.state.username,
         password: this.state.password,
       })
       .then(response => {
         console.log(response.data);
-        this.setState({
-          updated: true,
-          error: false,
-        });
+        if (response.data.message === 'password updated') {
+          this.setState({
+            updated: true,
+            error: false,
+          });
+        } else {
+          this.setState({
+            updated: false,
+            error: true,
+          });
+        }
       })
       .catch(error => {
         console.log(error.data);
@@ -96,7 +106,7 @@ export default class ResetPassword extends Component {
         <div>
           <HeaderBar title={title} />
           <div style={loading}>
-            Problem reseting password. Please send another reset link.
+            <h3>Problem reseting password. Please send another reset link.</h3>
             <LinkButtons
               buttonStyle={forgotButton}
               buttonText={'Forgot Password?'}

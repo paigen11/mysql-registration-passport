@@ -20,6 +20,7 @@ require('./routes/loginUser')(app);
 require('./routes/registerUser')(app);
 require('./routes/forgotPassword')(app);
 require('./routes/resetPassword')(app);
+require('./routes/updatePassword')(app);
 require('./routes/findUsers')(app);
 require('./routes/deleteUser')(app);
 require('./routes/updateUser')(app);
