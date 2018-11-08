@@ -1,5 +1,6 @@
 import User from '../sequelize';
 import crypto from 'crypto';
+require('dotenv').config();
 
 const nodemailer = require('nodemailer');
 
@@ -24,11 +25,13 @@ module.exports = app => {
           resetPasswordToken: token,
         });
 
+        console.log(process.env.EMAIL_ADDRESS);
+
         const transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
-            user: '<PLACEHOLDER>',
-            pass: '<PLACEHOLDER>',
+            user: `${process.env.EMAIL_ADDRESS}`,
+            pass: `${process.env.EMAIL_PASSWORD}`,
           },
         });
 

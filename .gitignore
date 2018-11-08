@@ -2,3 +2,4 @@
 docker/data/db/**
 .vscode/
 .idea/
+.env
