@@ -7,6 +7,7 @@ import Profile from './containers/Profile';
 import UpdateProfile from './containers/UpdateProfile';
 import ForgotPassword from './containers/ForgotPassword';
 import ResetPassword from './containers/ResetPassword';
+import UpdatePassword from './containers/UpdatePassword';
 
 class Routes extends Component {
   render() {
@@ -20,6 +21,11 @@ class Routes extends Component {
           <Route exact path="/forgotPassword" component={ForgotPassword} />
           <Route exact path="/userProfile/:username" component={Profile} />
           <Route exact path="/updateUser/:username" component={UpdateProfile} />
+          <Route
+            exact
+            path="/updatePassword/:username"
+            component={UpdatePassword}
+          />
         </Switch>
       </div>
     );

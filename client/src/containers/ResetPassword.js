@@ -75,7 +75,7 @@ export default class ResetPassword extends Component {
   updatePassword = e => {
     e.preventDefault();
     axios
-      .put('http://localhost:3003/updatePassword', {
+      .put('http://localhost:3003/updatePasswordViaEmail', {
         username: this.state.username,
         password: this.state.password,
       })
