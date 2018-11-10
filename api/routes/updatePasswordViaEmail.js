@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 const BCRYPT_SALT_ROUNDS = 12;
 module.exports = app => {
-  app.put('/updatePassword', (req, res, next) => {
+  app.put('/updatePasswordViaEmail', (req, res, next) => {
     User.findOne({
       where: {
         username: req.body.username,
@@ -17,6 +17,7 @@ module.exports = app => {
             user.update({
               password: hashedPassword,
               resetPasswordToken: null,
+              resetPasswordExpires: null,
             });
           })
           .then(() => {

@@ -23,9 +23,8 @@ module.exports = app => {
         console.log(token);
         user.update({
           resetPasswordToken: token,
+          resetPasswordExpires: Date.now() + 360000,
         });
-
-        console.log(process.env.EMAIL_ADDRESS);
 
         const transporter = nodemailer.createTransport({
           service: 'gmail',
@@ -41,7 +40,7 @@ module.exports = app => {
           subject: `Link To Reset Password`,
           text:
             `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n` +
-            `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+            `Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n` +
             `http://localhost:3031/reset/${token}\n\n` +
             `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
         };

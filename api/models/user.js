@@ -17,5 +17,6 @@ module.exports = (sequelize, type) => {
       allowNull: false,
     },
     resetPasswordToken: type.STRING,
+    resetPasswordExpires: type.DATE,
   });
 };

@@ -106,7 +106,12 @@ export default class ResetPassword extends Component {
         <div>
           <HeaderBar title={title} />
           <div style={loading}>
-            <h3>Problem reseting password. Please send another reset link.</h3>
+            <h4>Problem resetting password. Please send another reset link.</h4>
+            <LinkButtons
+              buttonText={`Go Home`}
+              buttonStyle={homeButton}
+              link={'/'}
+            />
             <LinkButtons
               buttonStyle={forgotButton}
               buttonText={'Forgot Password?'}
