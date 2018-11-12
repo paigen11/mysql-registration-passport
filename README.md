@@ -14,6 +14,8 @@ Each request from the client to the server must include the JWT as one of its au
 
 If a user logs out or deletes their user profile, the JWT is removed from local storage and the user is dropped back at the home screen again.
 
+There's also a password reset email that can be sent if a user forgets their password. Nodemailer is the package that enables sending, and the email contains a link with a 1 hour expiration date that users can use to reset their password. They can also update their password once logged in to the app as well from a separate update password screen.
+
 ## Running This App
 
 From the home folder, run the following commands:
