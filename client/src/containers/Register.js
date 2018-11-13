@@ -143,26 +143,23 @@ class Register extends Component {
               buttonText={'Register'}
             />
           </form>
-          {showError === true &&
-            registerError === true && (
-              <div>
-                <p>Username and password are required fields.</p>
-              </div>
-            )}
-          {showError === true &&
-            loginError === true && (
-              <div>
-                <p>
-                  That username is already taken. Please choose another or
-                  login.
-                </p>
-                <LinkButtons
-                  buttonText={`Login`}
-                  buttonStyle={loginButton}
-                  link={'/login'}
-                />
-              </div>
-            )}
+          {showError === true && registerError === true && (
+            <div>
+              <p>Username and password are required fields.</p>
+            </div>
+          )}
+          {showError === true && loginError === true && (
+            <div>
+              <p>
+                That username is already taken. Please choose another or login.
+              </p>
+              <LinkButtons
+                buttonText={`Login`}
+                buttonStyle={loginButton}
+                link={'/login'}
+              />
+            </div>
+          )}
           <LinkButtons
             buttonText={`Go Home`}
             buttonStyle={homeButton}
