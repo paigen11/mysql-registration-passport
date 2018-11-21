@@ -47,11 +47,9 @@ class Login extends Component {
       });
     } else {
       axios
-        .get('http://localhost:3003/loginUser', {
-          params: {
-            username: this.state.username,
-            password: this.state.password,
-          },
+        .post('http://localhost:3003/loginUser', {
+          username: this.state.username,
+          password: this.state.password,
         })
         .then(response => {
           // console.log(response.data);

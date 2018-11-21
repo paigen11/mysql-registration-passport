@@ -41,7 +41,11 @@ class Register extends Component {
 
   registerUser = e => {
     e.preventDefault();
-    if (this.state.username === '' || this.state.password === '') {
+    if (
+      this.state.username === '' ||
+      this.state.password === '' ||
+      this.state.email === ''
+    ) {
       this.setState({
         showError: true,
         loginError: false,
@@ -58,7 +62,7 @@ class Register extends Component {
         })
         .then(response => {
           console.log(response.data);
-          if (response.data === 'username already taken') {
+          if (response.data === 'username or email already taken') {
             this.setState({
               showError: true,
               loginError: true,
@@ -145,13 +149,14 @@ class Register extends Component {
           </form>
           {showError === true && registerError === true && (
             <div>
-              <p>Username and password are required fields.</p>
+              <p>Username, password and email are required fields.</p>
             </div>
           )}
           {showError === true && loginError === true && (
             <div>
               <p>
-                That username is already taken. Please choose another or login.
+                That username or email is already taken. Please choose another
+                or login.
               </p>
               <LinkButtons
                 buttonText={`Login`}

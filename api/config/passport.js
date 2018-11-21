@@ -1,7 +1,9 @@
 import jwtSecret from './jwtConfig';
 import bcrypt from 'bcrypt';
+import Sequelize from 'sequelize';
 
 const BCRYPT_SALT_ROUNDS = 12;
+const Op = Sequelize.Op;
 
 const passport = require('passport'),
   localStrategy = require('passport-local').Strategy,
@@ -15,21 +17,33 @@ passport.use(
     {
       usernameField: 'username',
       passwordField: 'password',
+      passReqToCallback: true,
       session: false,
     },
-    (username, password, done) => {
+    (req, username, password, done) => {
       try {
         User.findOne({
           where: {
-            username: username,
+            [Op.or]: [
+              {
+                username: username,
+              },
+              { email: req.body.email },
+            ],
           },
         }).then(user => {
           if (user != null) {
-            console.log('username already taken');
-            return done(null, false, { message: 'username already taken' });
+            console.log('username or email already taken');
+            return done(null, false, {
+              message: 'username or email already taken',
+            });
           } else {
             bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(hashedPassword => {
-              User.create({ username, password: hashedPassword }).then(user => {
+              User.create({
+                username,
+                password: hashedPassword,
+                email: req.body.email,
+              }).then(user => {
                 console.log('user created');
                 return done(null, user);
               });

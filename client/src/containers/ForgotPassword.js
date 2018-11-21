@@ -5,6 +5,7 @@ import axios from 'axios';
 import {
   LinkButtons,
   SubmitButtons,
+  registerButton,
   homeButton,
   forgotButton,
   inputStyle,
@@ -65,7 +66,7 @@ class ForgotPassword extends Component {
   };
 
   render() {
-    const { email, messageFromServer, showNullError } = this.state;
+    const { email, messageFromServer, showNullError, showError } = this.state;
 
     return (
       <div>
@@ -87,6 +88,19 @@ class ForgotPassword extends Component {
         {showNullError && (
           <div>
             <p>The email address cannot be null.</p>
+          </div>
+        )}
+        {showError && (
+          <div>
+            <p>
+              That email address isn't recognized. Please try again or register
+              for a new account.
+            </p>
+            <LinkButtons
+              buttonText={`Register`}
+              buttonStyle={registerButton}
+              link={'/register'}
+            />
           </div>
         )}
         {messageFromServer === 'recovery email sent' && (
