@@ -1,13 +1,13 @@
 import User from '../sequelize';
+const Op = Sequelize.Op;
 
 module.exports = app => {
   app.get('/reset', (req, res, next) => {
-    console.log(Date.now());
     User.findOne({
       where: {
         resetPasswordToken: req.query.resetPasswordToken,
         resetPasswordExpires: {
-          $gt: Date.now(),
+          [Op.gt]: Date.now(),
         },
       },
     }).then(user => {

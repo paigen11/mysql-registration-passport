@@ -20,7 +20,6 @@ module.exports = app => {
         res.json('email not in db');
       } else {
         const token = crypto.randomBytes(20).toString('hex');
-        console.log(token);
         user.update({
           resetPasswordToken: token,
           resetPasswordExpires: Date.now() + 360000,
