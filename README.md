@@ -33,3 +33,13 @@ To stop the services:
 
 To kill the services:
 * ``` CTRL + C  ``` and then ``` $ docker compose-down ```
+
+## Troubleshooting:
+
+You may have an error when trying to install all the node modules for the first time from the `bcrypt` package. The error will look something like: `npm ERR! path /app/node_modules/bcrypt/node_modules/abbrev` when the api app attempts to start up.
+
+If you encounter this, open a new terminal and type `docker ps` to get the api's container ID.
+
+Access the container: `docker exec -t -i <containerId> /bin/bash`
+
+Then run `npm install bcrypt`. It's not a nice way to do it, but it should work. I don't know why Mac bcrypt and Docker Linux bcrypt can't work together nicely sometimes, but they can't.

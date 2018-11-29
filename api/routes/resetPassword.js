@@ -1,4 +1,5 @@
 import User from '../sequelize';
+import Sequelize from 'sequelize';
 const Op = Sequelize.Op;
 
 module.exports = app => {
