@@ -66,7 +66,7 @@ class Login extends Component {
             this.setState({
               loggedIn: true,
               showError: false,
-              showENullrror: false,
+              showNullError: false,
             });
           }
         })
