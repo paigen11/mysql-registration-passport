@@ -24,6 +24,7 @@ class ForgotPassword extends Component {
       email: '',
       showError: false,
       messageFromServer: '',
+      showNullError: false,
     };
   }
 
@@ -39,6 +40,7 @@ class ForgotPassword extends Component {
       this.setState({
         showError: false,
         messageFromServer: '',
+        showNullError: true,
       });
     } else {
       axios
@@ -51,11 +53,13 @@ class ForgotPassword extends Component {
             this.setState({
               showError: true,
               messageFromServer: '',
+              showNullError: false,
             });
           } else if (response.data === 'recovery email sent') {
             this.setState({
               showError: false,
               messageFromServer: 'recovery email sent',
+              showNullError: false,
             });
           }
         })
