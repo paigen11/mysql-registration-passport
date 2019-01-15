@@ -1,6 +1,29 @@
 import User from '../sequelize';
 import passport from 'passport';
 
+/**
+ * @swagger
+ *
+ * /registerUser:
+ *   post:
+ *     description: Register a user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - first_name: user
+ *         description: User object
+ *         in:  body
+ *         required: true
+ *         type: string
+ *         schema:
+ *           $ref: '#/definitions/User'
+ *     responses:
+ *       200:
+ *         description: users
+ *         schema:
+ *           $ref: '#/definitions/User'
+ */
+
 module.exports = app => {
   app.post('/registerUser', (req, res, next) => {
     passport.authenticate('register', (err, user, info) => {

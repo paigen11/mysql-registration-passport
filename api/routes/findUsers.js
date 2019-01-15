@@ -1,5 +1,42 @@
 import passport from 'passport';
+/**
+ * @swagger
+ * definitions:
+ *   User:
+ *     properties:
+ *       id:
+ *         type: integer
+ *       first_name:
+ *         type: string
+ *       last_name:
+ *         type: integer
+ *       email:
+ *         type: string
+ *       username:
+ *         type: string
+ *       password:
+ *         type: string
+ *       resetPasswordToken:
+ *         type: string
+ *       resetPasswordExpires:
+ *         type: date
+ */
 
+/**
+ * @swagger
+ * /api/findUser:
+ *   get:
+ *     tags:
+ *       - Users
+ *     description: Finds a user
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: A single user object
+ *         schema:
+ *           $ref: '#/definitions/User'
+ */
 module.exports = app => {
   app.get('/findUser', (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
