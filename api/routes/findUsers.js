@@ -1,41 +1,31 @@
 import passport from 'passport';
 /**
  * @swagger
- * definitions:
- *   User:
- *     properties:
- *       id:
- *         type: integer
- *       first_name:
- *         type: string
- *       last_name:
- *         type: integer
- *       email:
- *         type: string
- *       username:
- *         type: string
- *       password:
- *         type: string
- *       resetPasswordToken:
- *         type: string
- *       resetPasswordExpires:
- *         type: date
- */
-
-/**
- * @swagger
- * /api/findUser:
+ * /findUser:
  *   get:
  *     tags:
  *       - Users
  *     description: Finds a user
+ *     security:
+ *       - bearerAuth: []
+ *     consumes:
+ *       - application/json
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: username
+ *         schema:
+ *           type: string
+ *         description: Username
+ *         required: true
  *     responses:
  *       200:
  *         description: A single user object
  *         schema:
  *           $ref: '#/definitions/User'
+ *       401:
+ *         description: No auth token
  */
 module.exports = app => {
   app.get('/findUser', (req, res, next) => {
@@ -45,7 +35,7 @@ module.exports = app => {
       }
       if (info != undefined) {
         console.log(info.message);
-        res.send(info.message);
+        res.status(401).send(info.message);
       } else {
         console.log('user found in db from findUsers');
         res.status(200).send({

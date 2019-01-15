@@ -16,8 +16,16 @@ const swaggerDefinition = {
     version: '1.0.0',
     description: 'Endpoints to test the user registration routes',
   },
-  host: 'localhost:3000',
+  host: 'localhost:3003',
   basePath: '/',
+  securityDefinitions: {
+    bearerAuth: {
+      type: 'apiKey',
+      name: 'Authorization',
+      scheme: 'bearer',
+      in: 'header',
+    },
+  },
 };
 
 const options = {
