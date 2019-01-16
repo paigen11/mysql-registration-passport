@@ -3,10 +3,6 @@
  * definitions:
  *   User:
  *     type: object
- *     required:
- *       - email
- *       - username
- *       - password
  *     properties:
  *       id:
  *         type: integer
@@ -24,7 +20,12 @@
  *       resetPasswordToken:
  *         type: string
  *       resetPasswordExpires:
- *         type: date
+ *         type: string
+ *         format: date-time
+ *       required:
+ *         - email
+ *         - username
+ *         - password
  */
 
 module.exports = (sequelize, type) => {

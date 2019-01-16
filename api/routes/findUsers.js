@@ -5,7 +5,8 @@ import passport from 'passport';
  *   get:
  *     tags:
  *       - Users
- *     description: Finds a user
+ *     name: Find user
+ *     summary: Finds a user
  *     security:
  *       - bearerAuth: []
  *     consumes:
@@ -17,8 +18,8 @@ import passport from 'passport';
  *         name: username
  *         schema:
  *           type: string
- *         description: Username
- *         required: true
+ *         required:
+ *           - username
  *     responses:
  *       200:
  *         description: A single user object
