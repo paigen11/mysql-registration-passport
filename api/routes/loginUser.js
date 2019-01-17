@@ -57,7 +57,7 @@ module.exports = app => {
         req.logIn(user, err => {
           User.findOne({
             where: {
-              username: user.username,
+              username: req.body.username,
             },
           }).then(user => {
             const token = jwt.sign({ id: user.username }, jwtSecret.secret);

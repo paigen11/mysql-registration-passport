@@ -28,6 +28,10 @@ import passport from 'passport';
  *               type: string
  *             email:
  *               type: string
+ *             username:
+ *               type: string
+ *             required:
+ *               - username
  *     responses:
  *       200:
  *         description: User info updated
@@ -47,7 +51,7 @@ module.exports = app => {
       } else {
         User.findOne({
           where: {
-            username: user.username,
+            username: req.body.username,
           },
         }).then(user => {
           if (user != null) {

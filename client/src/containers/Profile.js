@@ -104,7 +104,7 @@ class Profile extends Component {
         });
       })
       .catch(error => {
-        console.log(error.data.response);
+        console.log(error.response.data);
         this.setState({
           error: true,
         });

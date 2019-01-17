@@ -1,3 +1,4 @@
+import User from '../sequelize';
 import passport from 'passport';
 /**
  * @swagger
@@ -30,7 +31,7 @@ import passport from 'passport';
  */
 module.exports = app => {
   app.get('/findUser', (req, res, next) => {
-    passport.authenticate('jwt', { session: false }, (err, user, info) => {
+    passport.authenticate('jwt', { session: false }, (err, user2, info) => {
       if (err) {
         console.log(err);
       }
@@ -38,15 +39,26 @@ module.exports = app => {
         console.log(info.message);
         res.status(401).send(info.message);
       } else {
-        console.log('user found in db from findUsers');
-        res.status(200).send({
-          auth: true,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          email: user.email,
-          username: user.username,
-          password: user.password,
-          message: 'user found in db',
+        User.findOne({
+          where: {
+            username: req.query.username,
+          },
+        }).then(user => {
+          if (user != null) {
+            console.log('user found in db from findUsers');
+            res.status(200).send({
+              auth: true,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              email: user.email,
+              username: user.username,
+              password: user.password,
+              message: 'user found in db',
+            });
+          } else {
+            console.log('no user exists in db with that username');
+            res.status(401).send('no user exists in db with that username');
+          }
         });
       }
     })(req, res, next);
