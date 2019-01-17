@@ -1,6 +1,40 @@
 import User from '../sequelize';
 import passport from 'passport';
 
+/**
+ * @swagger
+ * /updateUser:
+ *   put:
+ *     tags:
+ *       - Users
+ *     name: Update User
+ *     summary: Update user info
+ *     security:
+ *       - bearerAuth: []
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         schema:
+ *           $ref: '#/definitions/User'
+ *           type: object
+ *           properties:
+ *             first_name:
+ *               type: string
+ *             last_name:
+ *               type: string
+ *             email:
+ *               type: string
+ *     responses:
+ *       200:
+ *         description: User info updated
+ *       403:
+ *         description: No authorization / user not found
+ */
+
 module.exports = app => {
   app.put('/updateUser', (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
@@ -9,7 +43,7 @@ module.exports = app => {
       }
       if (info != undefined) {
         console.log(info.message);
-        res.send(info.message);
+        res.status(403).send(info.message);
       } else {
         User.findOne({
           where: {
@@ -30,7 +64,7 @@ module.exports = app => {
               });
           } else {
             console.log('no user exists in db to update');
-            res.status(404).json('no user exists in db to update');
+            res.status(401).send('no user exists in db to update');
           }
         });
       }

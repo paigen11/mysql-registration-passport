@@ -70,7 +70,7 @@ class UpdateProfile extends Component {
         });
       })
       .catch(error => {
-        console.log(error.data);
+        console.log(error.response.data);
       });
   }
 
@@ -111,7 +111,11 @@ class UpdateProfile extends Component {
         });
       })
       .catch(error => {
-        console.log(error.data);
+        console.log(error.response.data);
+        this.setState({
+          loadingUser: false,
+          error: true,
+        });
       });
   };
 
