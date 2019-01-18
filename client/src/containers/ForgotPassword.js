@@ -49,13 +49,7 @@ class ForgotPassword extends Component {
         })
         .then(response => {
           console.log(response.data);
-          if (response.data === 'email not in db') {
-            this.setState({
-              showError: true,
-              messageFromServer: '',
-              showNullError: false,
-            });
-          } else if (response.data === 'recovery email sent') {
+          if (response.data === 'recovery email sent') {
             this.setState({
               showError: false,
               messageFromServer: 'recovery email sent',
@@ -64,7 +58,14 @@ class ForgotPassword extends Component {
           }
         })
         .catch(error => {
-          console.log(error.data);
+          console.log(error.response.data);
+          if (error.response.data === 'email not in db') {
+            this.setState({
+              showError: true,
+              messageFromServer: '',
+              showNullError: false,
+            });
+          }
         });
     }
   };

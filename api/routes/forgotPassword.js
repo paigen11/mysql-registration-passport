@@ -2,12 +2,43 @@ import User from '../sequelize';
 import crypto from 'crypto';
 require('dotenv').config();
 
+/**
+ * @swagger
+ * /forgotPassword:
+ *   post:
+ *     tags:
+ *       - Users
+ *     name: Forgot Password
+ *     summary: Sends an email with a reset password link when a user inevitably forgets their password
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *      - name: body
+ *        in: body
+ *        schema:
+ *          $ref: '#/definitions/User'
+ *          type: object
+ *          properties:
+ *            email:
+ *              type: string
+ *            required:
+ *             - email
+ *     responses:
+ *       200:
+ *         description: Reset email sent
+ *       400:
+ *         description: Email required
+ *       403:
+ *         description: Email not found in db
+ *
+ */
+
 const nodemailer = require('nodemailer');
 
 module.exports = app => {
   app.post('/forgotPassword', (req, res, next) => {
     if (req.body.email === '') {
-      res.json('email required');
+      res.status(400).send('email required');
     }
     console.log(req.body.email);
     User.findOne({
@@ -17,7 +48,7 @@ module.exports = app => {
     }).then(user => {
       if (user === null) {
         console.log('email not in database');
-        res.json('email not in db');
+        res.status(403).send('email not in db');
       } else {
         const token = crypto.randomBytes(20).toString('hex');
         user.update({

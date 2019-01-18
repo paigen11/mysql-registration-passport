@@ -60,7 +60,7 @@ module.exports = app => {
               username: req.body.username,
             },
           }).then(user => {
-            const token = jwt.sign({ id: user.username }, jwtSecret.secret);
+            const token = jwt.sign({ id: user.id }, jwtSecret.secret);
             res.status(200).send({
               auth: true,
               token: token,
