@@ -53,25 +53,24 @@ class Login extends Component {
         })
         .then(response => {
           // console.log(response.data);
+          localStorage.setItem('JWT', response.data.token);
+          this.setState({
+            loggedIn: true,
+            showError: false,
+            showNullError: false,
+          });
+        })
+        .catch(error => {
+          console.log(error.response.data);
           if (
-            response.data === 'bad username' ||
-            response.data === 'passwords do not match'
+            error.response.data === 'bad username' ||
+            error.response.data === 'passwords do not match'
           ) {
             this.setState({
               showError: true,
               showNullError: false,
             });
-          } else {
-            localStorage.setItem('JWT', response.data.token);
-            this.setState({
-              loggedIn: true,
-              showError: false,
-              showNullError: false,
-            });
           }
-        })
-        .catch(error => {
-          console.log(error.data);
         });
     }
   };

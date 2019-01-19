@@ -62,23 +62,22 @@ class Register extends Component {
         })
         .then(response => {
           console.log(response.data);
-          if (response.data === 'username or email already taken') {
+          this.setState({
+            messageFromServer: response.data.message,
+            showError: false,
+            loginError: false,
+            registerError: false,
+          });
+        })
+        .catch(error => {
+          console.log(error.response.data);
+          if (error.response.data === 'username or email already taken') {
             this.setState({
               showError: true,
               loginError: true,
               registerError: false,
             });
-          } else {
-            this.setState({
-              messageFromServer: response.data.message,
-              showError: false,
-              loginError: false,
-              registerError: false,
-            });
           }
-        })
-        .catch(error => {
-          console.log(error.data);
         });
     }
   };

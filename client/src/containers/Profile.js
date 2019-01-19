@@ -45,7 +45,7 @@ class Profile extends Component {
 
   async componentDidMount() {
     let accessString = localStorage.getItem('JWT');
-    console.log(accessString);
+    // console.log(accessString);
     if (accessString == null) {
       this.setState({
         isLoading: false,
@@ -71,7 +71,10 @@ class Profile extends Component {
           });
         })
         .catch(error => {
-          console.log(error.data);
+          console.log(error.response.data);
+          this.setState({
+            error: true,
+          });
         });
     }
   }
@@ -101,7 +104,10 @@ class Profile extends Component {
         });
       })
       .catch(error => {
-        console.log(error.data);
+        console.log(error.response.data);
+        this.setState({
+          error: true,
+        });
       });
   };
 
