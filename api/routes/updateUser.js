@@ -30,12 +30,12 @@ import passport from 'passport';
  *               type: string
  *             username:
  *               type: string
- *             required:
- *               - username
+ *         required:
+ *           - username
  *     responses:
- *       200:
+ *       '200':
  *         description: User info updated
- *       403:
+ *       '403':
  *         description: No authorization / user not found
  */
 

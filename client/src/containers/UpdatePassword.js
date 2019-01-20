@@ -63,7 +63,11 @@ class UpdatePassword extends Component {
           });
         })
         .catch(error => {
-          console.log(error.data);
+          console.log(error.response.data);
+          this.setState({
+            loadingUser: false,
+            error: true,
+          });
         });
     }
   }
@@ -104,7 +108,12 @@ class UpdatePassword extends Component {
           }
         })
         .catch(error => {
-          console.log(error.data);
+          console.log(error.response.data);
+          this.setState({
+            updated: false,
+            error: true,
+            loadingUser: false,
+          });
         });
     }
   };

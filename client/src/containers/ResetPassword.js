@@ -52,16 +52,15 @@ export default class ResetPassword extends Component {
             isLoading: false,
             error: false,
           });
-        } else {
-          this.setState({
-            update: false,
-            isLoading: false,
-            error: true,
-          });
         }
       })
       .catch(error => {
-        console.log(error.data);
+        console.log(error.response.data);
+        this.setState({
+          update: false,
+          isLoading: false,
+          error: true,
+        });
       });
   }
 

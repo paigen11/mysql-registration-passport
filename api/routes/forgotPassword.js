@@ -21,14 +21,14 @@ require('dotenv').config();
  *          properties:
  *            email:
  *              type: string
- *            required:
- *             - email
+ *        required:
+ *          - email
  *     responses:
- *       200:
+ *       '200':
  *         description: Reset email sent
- *       400:
+ *       '400':
  *         description: Email required
- *       403:
+ *       '403':
  *         description: Email not found in db
  *
  */

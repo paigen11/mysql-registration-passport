@@ -1,6 +1,39 @@
 import User from '../sequelize';
 import bcrypt from 'bcrypt';
 
+/**
+ * @swagger
+ * /updatePasswordViaEmail:
+ *   put:
+ *     tags:
+ *       - Users
+ *     name: Update user's password
+ *     summary: Update user's password after they've forgotten it
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: body
+ *         schema:
+ *           $ref: '#/definitions/User'
+ *           type: object
+ *           properties:
+ *             username:
+ *               type: string
+ *             password:
+ *               type: string
+ *         required:
+ *           - username
+ *           - password
+ *     responses:
+ *       '200':
+ *         description: User's password successfully updated
+ *       '401':
+ *         description: No user found in the database to update
+ */
+
 const BCRYPT_SALT_ROUNDS = 12;
 module.exports = app => {
   app.put('/updatePasswordViaEmail', (req, res, next) => {
@@ -26,7 +59,7 @@ module.exports = app => {
           });
       } else {
         console.log('no user exists in db to update');
-        res.status(404).json('no user exists in db to update');
+        res.status(401).json('no user exists in db to update');
       }
     });
   });
