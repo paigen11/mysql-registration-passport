@@ -31,14 +31,14 @@ import passport from 'passport';
  *             password:
  *               type: string
  *               format: password
- *             required:
- *               - username
- *               - email
- *               - password
+ *         required:
+ *           - username
+ *           - email
+ *           - password
  *     responses:
- *       200:
+ *       '200':
  *         description: User created
- *       403:
+ *       '403':
  *         description: Username or email already taken
  */
 

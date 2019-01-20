@@ -27,15 +27,15 @@ import bcrypt from 'bcrypt';
  *               type: string
  *             password:
  *               type: string
- *             required:
- *               - username
- *               - password
+ *         required:
+ *           - username
+ *           - password
  *     responses:
- *       200:
+ *       '200':
  *         description: User's password successfully updated
- *       403:
+ *       '403':
  *         description: User is not authorized to change their password
- *       404:
+ *       '404':
  *         description: User is not found in db to update
  *
  */

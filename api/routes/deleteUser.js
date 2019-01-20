@@ -24,13 +24,13 @@ import passport from 'passport';
  *         required:
  *           - username
  *     responses:
- *       200:
+ *       '200':
  *         description: User deleted from db
- *       403:
+ *       '403':
  *         description: Authentication error
- *       404:
+ *       '404':
  *         description: No user in db with that name
- *       500:
+ *       '500':
  *         description: Problem communicating with db
  */
 

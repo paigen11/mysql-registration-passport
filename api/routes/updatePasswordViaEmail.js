@@ -24,13 +24,13 @@ import bcrypt from 'bcrypt';
  *               type: string
  *             password:
  *               type: string
- *             required:
- *               - username
- *               - password
+ *         required:
+ *           - username
+ *           - password
  *     responses:
- *       200:
+ *       '200':
  *         description: User's password successfully updated
- *       401:
+ *       '401':
  *         description: No user found in the database to update
  */
 

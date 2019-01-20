@@ -20,9 +20,9 @@ const Op = Sequelize.Op;
  *         required:
  *           - resetPasswordToken
  *     responses:
- *       200:
+ *       '200':
  *         description: User's password reset link is valid
- *       403:
+ *       '403':
  *         description: Password reset link is invalid or has expired
  */
 
