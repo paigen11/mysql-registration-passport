@@ -16,7 +16,9 @@ If a user logs out or deletes their user profile, the JWT is removed from local 
 
 There's also a password reset email that can be sent if a user forgets their password. Nodemailer is the package that enables sending, and the email contains a link with a 1 hour expiration date that users can use to reset their password. They can also update their password once logged in to the app as well from a separate update password screen.
 
-<!-- TODO: Add bit about swagger -->
+I've added Swagger documentation to the API side of the application for easer, in browser API testing. The Swagger UI can be accessed by running the application then going to `http://localhost:3003/api-docs/`. From there all of the server-side routes can be accessed and tested, just as if you were using the client side interface. Required properties and params are specified and secured routes requiring a JWT token are noted with the little lock at the top right hand corner of the route.
+
+To add a correctly formatted JWT token into the input box, generate the token with the `/loginUser` route, copy the `token` property's value, and paste it into the input with `JWT <token string>`; the "JWT " is required to format the header authorization correctly.
 
 ## Running This App
 
@@ -30,7 +32,7 @@ Every time after that:
 
 - `$ docker-compose up`
 
-Your api server should be running at `http://localhost:3003`, your client server will be running at `http://localhost:3031` and your MySQL database will be running at: `127.0.0.1:3307`
+Your API server should be running at `http://localhost:3003`, your client server will be running at `http://localhost:3031` and your MySQL database will be running at: `127.0.0.1:3307`
 
 To stop the services:
 
