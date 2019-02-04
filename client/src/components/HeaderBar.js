@@ -9,7 +9,11 @@ const headerStyle = {
   color: 'white',
 };
 
-class HeaderBar extends Component {
+export default class HeaderBar extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const { title } = this.props;
     return (
@@ -17,7 +21,7 @@ class HeaderBar extends Component {
         <AppBar position="static" color="default" style={headerStyle}>
           <Toolbar>
             <Typography variant="title" color="inherit">
-              {title.pageTitle}
+              {title.pageTitle || 'Page Title Placeholder'}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -25,5 +29,3 @@ class HeaderBar extends Component {
     );
   }
 }
-
-export default HeaderBar;
