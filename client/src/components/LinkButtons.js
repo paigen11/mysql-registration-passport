@@ -13,11 +13,11 @@ export default class LinkButtons extends Component {
     const { buttonText, buttonStyle, link } = this.props;
     return (
       <Fragment>
-        <Button variant="contained" color="primary" style={buttonStyle}>
-          <Link style={linkStyle} to={link}>
+        <Link style={linkStyle} to={link}>
+          <Button variant="contained" color="primary" style={buttonStyle}>
             {buttonText}
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </Fragment>
     );
   }
