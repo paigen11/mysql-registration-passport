@@ -1,24 +1,29 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-
 import { linkStyle } from './ButtonStyles';
 
-export default class LinkButtons extends Component {
-  static defaultProps = {
-    link: '/',
-  };
+const LinkButtons = ({ buttonText, buttonStyle, link }) => (
+  <Fragment>
+    <Link style={linkStyle} to={link}>
+      <Button variant="contained" color="primary" style={buttonStyle}>
+        {buttonText}
+      </Button>
+    </Link>
+  </Fragment>
+);
 
-  render() {
-    const { buttonText, buttonStyle, link } = this.props;
-    return (
-      <Fragment>
-        <Link style={linkStyle} to={link}>
-          <Button variant="contained" color="primary" style={buttonStyle}>
-            {buttonText}
-          </Button>
-        </Link>
-      </Fragment>
-    );
-  }
-}
+LinkButtons.propTypes = {
+  buttonText: PropTypes.string,
+  buttonStyle: PropTypes.string,
+  link: PropTypes.string,
+};
+
+LinkButtons.defaultProps = {
+  link: '/',
+  buttonText: 'Default Button Text',
+  buttonStyle: 'home button',
+};
+
+export default LinkButtons;

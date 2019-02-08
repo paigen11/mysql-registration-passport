@@ -1,7 +1,8 @@
-import User from '../sequelize';
-import jwtSecret from '../config/jwtConfig';
+/* eslint-disable no-console */
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
+import jwtSecret from '../config/jwtConfig';
+import User from '../sequelize';
 
 /**
  * @swagger
@@ -39,14 +40,14 @@ import passport from 'passport';
  *         description: Username and password don't match
  */
 
-module.exports = app => {
+module.exports = (app) => {
   app.post('/loginUser', (req, res, next) => {
-    passport.authenticate('login', (err, user, info) => {
+    passport.authenticate('login', (err, users, info) => {
       if (err) {
         console.log('error');
         console.log(err);
       }
-      if (info != undefined) {
+      if (info !== undefined) {
         console.log(info.message);
         if (info.message === 'bad username') {
           res.status(401).send(info.message);
@@ -54,16 +55,16 @@ module.exports = app => {
           res.status(403).send(info.message);
         }
       } else {
-        req.logIn(user, err => {
+        req.logIn(users, () => {
           User.findOne({
             where: {
               username: req.body.username,
             },
-          }).then(user => {
+          }).then((user) => {
             const token = jwt.sign({ id: user.id }, jwtSecret.secret);
             res.status(200).send({
               auth: true,
-              token: token,
+              token,
               message: 'user found & logged in',
             });
           });

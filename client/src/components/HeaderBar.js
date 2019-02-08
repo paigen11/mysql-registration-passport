@@ -23,7 +23,15 @@ const HeaderBar = ({ title }) => (
 );
 
 HeaderBar.propTypes = {
-  title: PropTypes.object(PropType.string),
+  title: PropTypes.shape({
+    pageTitle: PropTypes.string.isRequired,
+  }),
+};
+
+HeaderBar.defaultProps = {
+  title: {
+    pageTitle: 'Page Title Placeholder',
+  },
 };
 
 export default HeaderBar;

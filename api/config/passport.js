@@ -1,19 +1,20 @@
-import jwtSecret from './jwtConfig';
+/* eslint-disable no-console */
 import bcrypt from 'bcrypt';
 import Sequelize from 'sequelize';
+import jwtSecret from './jwtConfig';
 
 const BCRYPT_SALT_ROUNDS = 12;
-const Op = Sequelize.Op;
+const { Op } = Sequelize.Op;
 
-const passport = require('passport'),
-  localStrategy = require('passport-local').Strategy,
-  User = require('../sequelize'),
-  JWTstrategy = require('passport-jwt').Strategy,
-  ExtractJWT = require('passport-jwt').ExtractJwt;
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const JWTstrategy = require('passport-jwt').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
+const User = require('../sequelize');
 
 passport.use(
   'register',
-  new localStrategy(
+  new LocalStrategy(
     {
       usernameField: 'username',
       passwordField: 'password',
@@ -26,29 +27,28 @@ passport.use(
           where: {
             [Op.or]: [
               {
-                username: username,
+                username,
               },
               { email: req.body.email },
             ],
           },
-        }).then(user => {
+        }).then((user) => {
           if (user != null) {
             console.log('username or email already taken');
             return done(null, false, {
               message: 'username or email already taken',
             });
-          } else {
-            bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(hashedPassword => {
-              User.create({
-                username,
-                password: hashedPassword,
-                email: req.body.email,
-              }).then(user => {
-                console.log('user created');
-                return done(null, user);
-              });
-            });
           }
+          bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then((hashedPassword) => {
+            User.create({
+              username,
+              password: hashedPassword,
+              email: req.body.email,
+            }).then((user) => {
+              console.log('user created');
+              return done(null, user);
+            });
+          });
         });
       } catch (err) {
         done(err);
@@ -59,7 +59,7 @@ passport.use(
 
 passport.use(
   'login',
-  new localStrategy(
+  new LocalStrategy(
     {
       usernameField: 'username',
       passwordField: 'password',
@@ -69,21 +69,20 @@ passport.use(
       try {
         User.findOne({
           where: {
-            username: username,
+            username,
           },
-        }).then(user => {
+        }).then((user) => {
           if (user === null) {
             return done(null, false, { message: 'bad username' });
-          } else {
-            bcrypt.compare(password, user.password).then(response => {
-              if (response !== true) {
-                console.log('passwords do not match');
-                return done(null, false, { message: 'passwords do not match' });
-              }
-              console.log('user found & authenticated');
-              return done(null, user);
-            });
           }
+          bcrypt.compare(password, user.password).then((response) => {
+            if (response !== true) {
+              console.log('passwords do not match');
+              return done(null, false, { message: 'passwords do not match' });
+            }
+            console.log('user found & authenticated');
+            return done(null, user);
+          });
         });
       } catch (err) {
         done(err);
@@ -105,7 +104,7 @@ passport.use(
         where: {
           id: jwt_payload.id,
         },
-      }).then(user => {
+      }).then((user) => {
         if (user) {
           console.log('user found in db in passport');
           done(null, user);

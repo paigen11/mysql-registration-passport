@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /**
  * @swagger
  * definitions:
@@ -28,8 +29,7 @@
  *         - password
  */
 
-module.exports = (sequelize, type) => {
-  return sequelize.define('user', {
+module.exports = (sequelize, type) => sequelize.define('user', {
     id: {
       type: type.INTEGER,
       primaryKey: true,
@@ -52,4 +52,3 @@ module.exports = (sequelize, type) => {
     resetPasswordToken: type.STRING,
     resetPasswordExpires: type.DATE,
   });
-};

@@ -1,5 +1,6 @@
-import User from '../sequelize';
+/* eslint-disable no-console */
 import passport from 'passport';
+import User from '../sequelize';
 
 /**
  * @swagger
@@ -34,13 +35,13 @@ import passport from 'passport';
  *         description: Problem communicating with db
  */
 
-module.exports = app => {
+module.exports = (app) => {
   app.delete('/deleteUser', (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) {
         console.log(err);
       }
-      if (info != undefined) {
+      if (info !== undefined) {
         console.log(info.message);
         res.status(403).send(info.message);
       } else {
@@ -49,7 +50,7 @@ module.exports = app => {
             username: req.query.username,
           },
         })
-          .then(user => {
+          .then((user) => {
             if (user === 1) {
               console.log('user deleted from db');
               res.status(200).send('user deleted from db');
@@ -58,7 +59,7 @@ module.exports = app => {
               res.status(404).send('no user with that username to delete');
             }
           })
-          .catch(err => {
+          .catch((err) => {
             console.log('problem communicating with db');
             res.status(500).send(err);
           });
