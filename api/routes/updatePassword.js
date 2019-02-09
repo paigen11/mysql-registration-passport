@@ -1,6 +1,7 @@
-import User from '../sequelize';
+/* eslint-disable no-console */
 import passport from 'passport';
 import bcrypt from 'bcrypt';
+import User from '../sequelize';
 
 /**
  * @swagger
@@ -41,27 +42,27 @@ import bcrypt from 'bcrypt';
  */
 
 const BCRYPT_SALT_ROUNDS = 12;
-module.exports = app => {
+module.exports = (app) => {
   app.put('/updatePassword', (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
-      if (info != undefined) {
-        console.log(info.message);
+      if (info !== undefined) {
+        console.error(info.message);
         res.status(403).send(info.message);
       } else {
         User.findOne({
           where: {
             username: req.body.username,
           },
-        }).then(user => {
-          if (user != null) {
+        }).then((userInfo) => {
+          if (userInfo != null) {
             console.log('user found in db');
             bcrypt
               .hash(req.body.password, BCRYPT_SALT_ROUNDS)
-              .then(hashedPassword => {
-                user.update({
+              .then((hashedPassword) => {
+                userInfo.update({
                   password: hashedPassword,
                 });
               })
@@ -72,7 +73,7 @@ module.exports = app => {
                   .send({ auth: true, message: 'password updated' });
               });
           } else {
-            console.log('no user exists in db to update');
+            console.error('no user exists in db to update');
             res.status(404).json('no user exists in db to update');
           }
         });

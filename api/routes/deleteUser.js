@@ -39,10 +39,10 @@ module.exports = (app) => {
   app.delete('/deleteUser', (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
       if (info !== undefined) {
-        console.log(info.message);
+        console.error(info.message);
         res.status(403).send(info.message);
       } else {
         User.destroy({
@@ -50,18 +50,18 @@ module.exports = (app) => {
             username: req.query.username,
           },
         })
-          .then((user) => {
-            if (user === 1) {
+          .then((userInfo) => {
+            if (userInfo === 1) {
               console.log('user deleted from db');
               res.status(200).send('user deleted from db');
             } else {
-              console.log('user not found in db');
+              console.error('user not found in db');
               res.status(404).send('no user with that username to delete');
             }
           })
-          .catch((err) => {
-            console.log('problem communicating with db');
-            res.status(500).send(err);
+          .catch((error) => {
+            console.error('problem communicating with db');
+            res.status(500).send(error);
           });
       }
     })(req, res, next);

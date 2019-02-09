@@ -44,11 +44,10 @@ module.exports = (app) => {
   app.post('/loginUser', (req, res, next) => {
     passport.authenticate('login', (err, users, info) => {
       if (err) {
-        console.log('error');
-        console.log(err);
+        console.error(`error ${err}`);
       }
       if (info !== undefined) {
-        console.log(info.message);
+        console.error(info.message);
         if (info.message === 'bad username') {
           res.status(401).send(info.message);
         } else {

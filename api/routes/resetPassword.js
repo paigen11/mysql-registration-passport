@@ -1,5 +1,8 @@
-import User from '../sequelize';
+/* eslint-disable no-console */
+/* eslint-disable max-len */
 import Sequelize from 'sequelize';
+import User from '../sequelize';
+
 const Op = Sequelize.Op;
 
 /**
@@ -26,8 +29,8 @@ const Op = Sequelize.Op;
  *         description: Password reset link is invalid or has expired
  */
 
-module.exports = app => {
-  app.get('/reset', (req, res, next) => {
+module.exports = (app) => {
+  app.get('/reset', (req, res) => {
     User.findOne({
       where: {
         resetPasswordToken: req.query.resetPasswordToken,
@@ -35,9 +38,9 @@ module.exports = app => {
           [Op.gt]: Date.now(),
         },
       },
-    }).then(user => {
+    }).then((user) => {
       if (user == null) {
-        console.log('password reset link is invalid or has expired');
+        console.error('password reset link is invalid or has expired');
         res.status(403).send('password reset link is invalid or has expired');
       } else {
         res.status(200).send({

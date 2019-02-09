@@ -48,25 +48,25 @@ module.exports = (app) => {
           where: {
             username: req.query.username,
           },
-        }).then((user) => {
-          if (user != null) {
+        }).then((userInfo) => {
+          if (userInfo != null) {
             console.log('user found in db from findUsers');
             res.status(200).send({
               auth: true,
-              first_name: user.first_name,
-              last_name: user.last_name,
-              email: user.email,
-              username: user.username,
-              password: user.password,
+              first_name: userInfo.first_name,
+              last_name: userInfo.last_name,
+              email: userInfo.email,
+              username: userInfo.username,
+              password: userInfo.password,
               message: 'user found in db',
             });
           } else {
-            console.log('no user exists in db with that username');
+            console.error('no user exists in db with that username');
             res.status(401).send('no user exists in db with that username');
           }
         });
       } else {
-        console.log('jwt id and username do not match');
+        console.error('jwt id and username do not match');
         res.status(403).send('username and jwt token do not match');
       }
     })(req, res, next);

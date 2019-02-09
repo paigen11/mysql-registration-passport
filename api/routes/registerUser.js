@@ -47,13 +47,13 @@ module.exports = (app) => {
   app.post('/registerUser', (req, res, next) => {
     passport.authenticate('register', (err, user, info) => {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
       if (info !== undefined) {
-        console.log(info.message);
+        console.error(info.message);
         res.status(403).send(info.message);
       } else {
-        req.logIn((user, err) => {
+        req.logIn((user, error) => {
           const data = {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
@@ -64,8 +64,8 @@ module.exports = (app) => {
             where: {
               username: data.username,
             },
-          }).then((user) => {
-            user
+          }).then((userInfo) => {
+            userInfo
               .update({
                 first_name: data.first_name,
                 last_name: data.last_name,

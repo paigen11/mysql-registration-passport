@@ -1,20 +1,23 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 
-export default class SubmitButtons extends Component {
-  render() {
-    const { buttonText, buttonStyle } = this.props;
-    return (
-      <Fragment>
-        <Button
-          style={buttonStyle}
-          type="submit"
-          variant="contained"
-          color="primary"
-        >
-          {buttonText}
-        </Button>
-      </Fragment>
-    );
-  }
-}
+const SubmitButtons = ({ buttonText, buttonStyle }) => (
+  <Fragment>
+    <Button
+      style={buttonStyle}
+      type="submit"
+      variant="contained"
+      color="primary"
+    >
+      {buttonText}
+    </Button>
+  </Fragment>
+);
+
+SubmitButtons.propTypes = {
+  buttonText: PropTypes.string.isRequired,
+  buttonStyle: PropTypes.string.isRequired,
+};
+
+export default SubmitButtons;

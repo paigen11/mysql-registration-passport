@@ -1,5 +1,6 @@
-import User from '../sequelize';
+/* eslint-disable no-console */
 import bcrypt from 'bcrypt';
+import User from '../sequelize';
 
 /**
  * @swagger
@@ -35,18 +36,18 @@ import bcrypt from 'bcrypt';
  */
 
 const BCRYPT_SALT_ROUNDS = 12;
-module.exports = app => {
-  app.put('/updatePasswordViaEmail', (req, res, next) => {
+module.exports = (app) => {
+  app.put('/updatePasswordViaEmail', (req, res) => {
     User.findOne({
       where: {
         username: req.body.username,
       },
-    }).then(user => {
+    }).then((user) => {
       if (user != null) {
         console.log('user exists in db');
         bcrypt
           .hash(req.body.password, BCRYPT_SALT_ROUNDS)
-          .then(hashedPassword => {
+          .then((hashedPassword) => {
             user.update({
               password: hashedPassword,
               resetPasswordToken: null,
@@ -58,7 +59,7 @@ module.exports = app => {
             res.status(200).send({ message: 'password updated' });
           });
       } else {
-        console.log('no user exists in db to update');
+        console.error('no user exists in db to update');
         res.status(401).json('no user exists in db to update');
       }
     });
