@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
@@ -31,15 +32,16 @@ class Login extends Component {
     };
   }
 
-  handleChange = name => event => {
+  handleChange = name => (event) => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-  loginUser = e => {
+  loginUser = (e) => {
     e.preventDefault();
-    if (this.state.username === '' || this.state.password === '') {
+    const { username, password } = this.state;
+    if (username === '' || password === '') {
       this.setState({
         showError: false,
         showNullError: true,
@@ -48,10 +50,10 @@ class Login extends Component {
     } else {
       axios
         .post('http://localhost:3003/loginUser', {
-          username: this.state.username,
-          password: this.state.password,
+          username,
+          password,
         })
-        .then(response => {
+        .then((response) => {
           // console.log(response.data);
           localStorage.setItem('JWT', response.data.token);
           this.setState({
@@ -60,11 +62,11 @@ class Login extends Component {
             showNullError: false,
           });
         })
-        .catch(error => {
-          console.log(error.response.data);
+        .catch((error) => {
+          console.error(error.response.data);
           if (
-            error.response.data === 'bad username' ||
-            error.response.data === 'passwords do not match'
+            error.response.data === 'bad username'
+            || error.response.data === 'passwords do not match'
           ) {
             this.setState({
               showError: true,
@@ -105,7 +107,7 @@ class Login extends Component {
               placeholder="Password"
               type="password"
             />
-            <SubmitButtons buttonStyle={loginButton} buttonText={'Login'} />
+            <SubmitButtons buttonStyle={loginButton} buttonText="Login" />
           </form>
           {showNullError && (
             <div>
@@ -115,31 +117,26 @@ class Login extends Component {
           {showError && (
             <div>
               <p>
-                That username or password isn't recognized. Please try again or
-                register now.
+                That username or password isn&apos;t recognized. Please try
+                again or register now.
               </p>
               <LinkButtons
-                buttonText={`Register`}
+                buttonText="Register"
                 buttonStyle={registerButton}
-                link={'/register'}
+                link="/register"
               />
             </div>
           )}
-          <LinkButtons
-            buttonText={`Go Home`}
-            buttonStyle={homeButton}
-            link={'/'}
-          />
+          <LinkButtons buttonText="Go Home" buttonStyle={homeButton} link="/" />
           <LinkButtons
             buttonStyle={forgotButton}
-            buttonText={'Forgot Password?'}
-            link={'/forgotPassword'}
+            buttonText="Forgot Password?"
+            link="/forgotPassword"
           />
         </div>
       );
-    } else {
-      return <Redirect to={`/userProfile/${username}`} />;
     }
+    return <Redirect to={`/userProfile/${username}`} />;
   }
 }
 

@@ -1,4 +1,8 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Table from '@material-ui/core/Table';
 import Button from '@material-ui/core/Button';
@@ -44,8 +48,7 @@ class Profile extends Component {
   }
 
   async componentDidMount() {
-    let accessString = localStorage.getItem('JWT');
-    // console.log(accessString);
+    const accessString = localStorage.getItem('JWT');
     if (accessString == null) {
       this.setState({
         isLoading: false,
@@ -59,7 +62,7 @@ class Profile extends Component {
           },
           headers: { Authorization: `JWT ${accessString}` },
         })
-        .then(response => {
+        .then((response) => {
           this.setState({
             first_name: response.data.first_name,
             last_name: response.data.last_name,
@@ -70,8 +73,8 @@ class Profile extends Component {
             error: false,
           });
         })
-        .catch(error => {
-          console.log(error.response.data);
+        .catch((error) => {
+          console.error(error.response.data);
           this.setState({
             error: true,
           });
@@ -79,11 +82,11 @@ class Profile extends Component {
     }
   }
 
-  deleteUser = e => {
-    let accessString = localStorage.getItem('JWT');
+  deleteUser = (e) => {
+    const accessString = localStorage.getItem('JWT');
     if (accessString === null) {
       this.setState({
-        loadingUser: false,
+        isLoading: false,
         error: true,
       });
     }
@@ -96,22 +99,22 @@ class Profile extends Component {
         },
         headers: { Authorization: `JWT ${accessString}` },
       })
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         localStorage.removeItem('JWT');
         this.setState({
           deleted: true,
         });
       })
-      .catch(error => {
-        console.log(error.response.data);
+      .catch((error) => {
+        console.error(error.response.data);
         this.setState({
           error: true,
         });
       });
   };
 
-  logout = e => {
+  logout = (e) => {
     e.preventDefault();
     localStorage.removeItem('JWT');
   };
@@ -136,83 +139,93 @@ class Profile extends Component {
             Problem fetching user data. Please login again.
           </div>
           <LinkButtons
-            buttonText={`Login`}
+            buttonText="Login"
             buttonStyle={loginButton}
-            link={'/login'}
+            link="/login"
           />
         </div>
       );
-    } else if (isLoading) {
+    }
+    if (isLoading) {
       return (
         <div>
           <HeaderBar title={title} />
           <div style={loading}>Loading User Data...</div>
         </div>
       );
-    } else if (deleted) {
-      return <Redirect to="/" />;
-    } else {
-      return (
-        <div>
-          <HeaderBar title={title} />
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell>First Name</TableCell>
-                <TableCell>{first_name}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Last Name</TableCell>
-                <TableCell>{last_name}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Email</TableCell>
-                <TableCell>{email}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>User Name</TableCell>
-                <TableCell>{username}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Password</TableCell>
-                <TableCell style={{ WebkitTextSecurity: 'disc' }}>
-                  {password}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-          <Button
-            style={deleteButton}
-            variant="contained"
-            color="primary"
-            onClick={this.deleteUser}
-          >
-            Delete User
-          </Button>
-          <LinkButtons
-            buttonStyle={updateButton}
-            buttonText={'Update User'}
-            link={`/updateUser/${username}`}
-          />
-          <LinkButtons
-            buttonStyle={forgotButton}
-            buttonText={'Update Password'}
-            link={`/updatePassword/${username}`}
-          />
-          <Button
-            style={logoutButton}
-            variant="contained"
-            color="primary"
-            onClick={this.logout}
-          >
-            <Link style={linkStyle} to={'/'}>
-              Logout
-            </Link>
-          </Button>
-        </div>
-      );
     }
+    if (deleted) {
+      return <Redirect to="/" />;
+    }
+    return (
+      <div>
+        <HeaderBar title={title} />
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>First Name</TableCell>
+              <TableCell>{first_name}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Last Name</TableCell>
+              <TableCell>{last_name}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Email</TableCell>
+              <TableCell>{email}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>User Name</TableCell>
+              <TableCell>{username}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Password</TableCell>
+              <TableCell style={{ WebkitTextSecurity: 'disc' }}>
+                {password}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+        <Button
+          style={deleteButton}
+          variant="contained"
+          color="primary"
+          onClick={this.deleteUser}
+        >
+          Delete User
+        </Button>
+        <LinkButtons
+          buttonStyle={updateButton}
+          buttonText="Update User"
+          link={`/updateUser/${username}`}
+        />
+        <LinkButtons
+          buttonStyle={forgotButton}
+          buttonText="Update Password"
+          link={`/updatePassword/${username}`}
+        />
+        <Button
+          style={logoutButton}
+          variant="contained"
+          color="primary"
+          onClick={this.logout}
+        >
+          <Link style={linkStyle} to="/">
+            Logout
+          </Link>
+        </Button>
+      </div>
+    );
   }
 }
+
+Profile.propTypes = {
+  // eslint-disable-next-line react/require-default-props
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+    }),
+  }),
+};
 
 export default Profile;

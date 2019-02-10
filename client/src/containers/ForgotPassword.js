@@ -1,7 +1,7 @@
+/* eslint-disable no-console */
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
-
 import {
   LinkButtons,
   SubmitButtons,
@@ -28,15 +28,16 @@ class ForgotPassword extends Component {
     };
   }
 
-  handleChange = name => event => {
+  handleChange = name => (event) => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-  sendEmail = e => {
+  sendEmail = (e) => {
     e.preventDefault();
-    if (this.state.email === '') {
+    const { email } = this.state;
+    if (email === '') {
       this.setState({
         showError: false,
         messageFromServer: '',
@@ -45,9 +46,9 @@ class ForgotPassword extends Component {
     } else {
       axios
         .post('http://localhost:3003/forgotPassword', {
-          email: this.state.email,
+          email,
         })
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
           if (response.data === 'recovery email sent') {
             this.setState({
@@ -57,8 +58,8 @@ class ForgotPassword extends Component {
             });
           }
         })
-        .catch(error => {
-          console.log(error.response.data);
+        .catch((error) => {
+          console.error(error.response.data);
           if (error.response.data === 'email not in db') {
             this.setState({
               showError: true,
@@ -71,7 +72,9 @@ class ForgotPassword extends Component {
   };
 
   render() {
-    const { email, messageFromServer, showNullError, showError } = this.state;
+    const {
+ email, messageFromServer, showNullError, showError 
+} = this.state;
 
     return (
       <div>
@@ -87,7 +90,7 @@ class ForgotPassword extends Component {
           />
           <SubmitButtons
             buttonStyle={forgotButton}
-            buttonText={'Send Password Reset Email'}
+            buttonText="Send Password Reset Email"
           />
         </form>
         {showNullError && (
@@ -98,13 +101,13 @@ class ForgotPassword extends Component {
         {showError && (
           <div>
             <p>
-              That email address isn't recognized. Please try again or register
-              for a new account.
+              That email address isn&apos;t recognized. Please try again or
+              register for a new account.
             </p>
             <LinkButtons
-              buttonText={`Register`}
+              buttonText="Register"
               buttonStyle={registerButton}
-              link={'/register'}
+              link="/register"
             />
           </div>
         )}
@@ -113,11 +116,7 @@ class ForgotPassword extends Component {
             <h3>Password Reset Email Successfully Sent!</h3>
           </div>
         )}
-        <LinkButtons
-          buttonText={`Go Home`}
-          buttonStyle={homeButton}
-          link={'/'}
-        />
+        <LinkButtons buttonText="Go Home" buttonStyle={homeButton} link="/" />
       </div>
     );
   }

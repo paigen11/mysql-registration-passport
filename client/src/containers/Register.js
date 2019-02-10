@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable camelcase */
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
@@ -33,19 +35,18 @@ class Register extends Component {
     };
   }
 
-  handleChange = name => event => {
+  handleChange = name => (event) => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-  registerUser = e => {
+  registerUser = (e) => {
     e.preventDefault();
-    if (
-      this.state.username === '' ||
-      this.state.password === '' ||
-      this.state.email === ''
-    ) {
+    const {
+ first_name, last_name, username, password, email 
+} = this.state;
+    if (username === '' || password === '' || email === '') {
       this.setState({
         showError: true,
         loginError: false,
@@ -54,13 +55,13 @@ class Register extends Component {
     } else {
       axios
         .post('http://localhost:3003/registerUser', {
-          first_name: this.state.first_name,
-          last_name: this.state.last_name,
-          email: this.state.email,
-          username: this.state.username,
-          password: this.state.password,
+          first_name,
+          last_name,
+          email,
+          username,
+          password,
         })
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
           this.setState({
             messageFromServer: response.data.message,
@@ -69,8 +70,8 @@ class Register extends Component {
             registerError: false,
           });
         })
-        .catch(error => {
-          console.log(error.response.data);
+        .catch((error) => {
+          console.error(error.response.data);
           if (error.response.data === 'username or email already taken') {
             this.setState({
               showError: true,
@@ -82,6 +83,7 @@ class Register extends Component {
     }
   };
 
+  // eslint-disable-next-line consistent-return
   render() {
     const {
       first_name,
@@ -141,10 +143,7 @@ class Register extends Component {
               placeholder="Password"
               type="password"
             />
-            <SubmitButtons
-              buttonStyle={registerButton}
-              buttonText={'Register'}
-            />
+            <SubmitButtons buttonStyle={registerButton} buttonText="Register" />
           </form>
           {showError === true && registerError === true && (
             <div>
@@ -158,28 +157,25 @@ class Register extends Component {
                 or login.
               </p>
               <LinkButtons
-                buttonText={`Login`}
+                buttonText="Login"
                 buttonStyle={loginButton}
-                link={'/login'}
+                link="/login"
               />
             </div>
           )}
-          <LinkButtons
-            buttonText={`Go Home`}
-            buttonStyle={homeButton}
-            link={'/'}
-          />
+          <LinkButtons buttonText="Go Home" buttonStyle={homeButton} link="/" />
         </div>
       );
-    } else if (messageFromServer === 'user created') {
+    }
+    if (messageFromServer === 'user created') {
       return (
         <div>
           <HeaderBar title={title} />
           <h3>User successfully registered!</h3>
           <LinkButtons
-            buttonText={`Go Login`}
+            buttonText="Go Login"
             buttonStyle={loginButton}
-            link={`/login`}
+            link="/login"
           />
         </div>
       );
