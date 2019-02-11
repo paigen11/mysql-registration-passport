@@ -1,4 +1,8 @@
+/* eslint-disable no-console */
+/* eslint-disable react/destructuring-assignment */
+
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
@@ -39,7 +43,7 @@ class UpdatePassword extends Component {
   componentDidMount() {
     this.setState({ loadingUser: true });
 
-    let accessString = localStorage.getItem('JWT');
+    const accessString = localStorage.getItem('JWT');
     if (accessString === null) {
       this.setState({
         loadingUser: false,
@@ -53,7 +57,7 @@ class UpdatePassword extends Component {
           },
           headers: { Authorization: `JWT ${accessString}` },
         })
-        .then(response => {
+        .then((response) => {
           // console.log(response.data);
           this.setState({
             loadingUser: false,
@@ -62,7 +66,7 @@ class UpdatePassword extends Component {
             error: false,
           });
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error.response.data);
           this.setState({
             loadingUser: false,
@@ -72,14 +76,14 @@ class UpdatePassword extends Component {
     }
   }
 
-  handleChange = name => event => {
+  handleChange = name => (event) => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-  updatePassword = e => {
-    let accessString = localStorage.getItem('JWT');
+  updatePassword = (e) => {
+    const accessString = localStorage.getItem('JWT');
     if (accessString === null) {
       this.setState({
         loadingUser: false,
@@ -98,7 +102,7 @@ class UpdatePassword extends Component {
             headers: { Authorization: `JWT ${accessString}` },
           },
         )
-        .then(response => {
+        .then((response) => {
           if (response.data.message === 'password updated') {
             this.setState({
               updated: true,
@@ -107,7 +111,7 @@ class UpdatePassword extends Component {
             });
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error.response.data);
           this.setState({
             updated: false,
@@ -118,8 +122,11 @@ class UpdatePassword extends Component {
     }
   };
 
+  // eslint-disable-next-line consistent-return
   render() {
-    const { username, password, updated, error, loadingUser } = this.state;
+    const {
+ username, password, updated, error, loadingUser 
+} = this.state;
 
     if (error) {
       return (
@@ -130,21 +137,24 @@ class UpdatePassword extends Component {
           </p>
           <LinkButtons
             style={loginButton}
-            buttonText={'Go Login'}
+            buttonText="Go Login"
             link="/login"
           />
         </div>
       );
-    } else if (loadingUser !== false) {
+    }
+    if (loadingUser !== false) {
       return (
         <div>
           <HeaderBar title={title} />
           <p style={loading}>Loading user data...</p>
         </div>
       );
-    } else if (loadingUser === false && updated === true) {
+    }
+    if (loadingUser === false && updated === true) {
       return <Redirect to={`/userProfile/${username}`} />;
-    } else if (loadingUser === false) {
+    }
+    if (loadingUser === false) {
       return (
         <div>
           <HeaderBar title={title} />
@@ -159,17 +169,17 @@ class UpdatePassword extends Component {
             />
             <SubmitButtons
               buttonStyle={saveButton}
-              buttonText={'Save Changes'}
+              buttonText="Save Changes"
             />
           </form>
           <LinkButtons
             buttonStyle={homeButton}
-            buttonText={'Go Home'}
-            link={'/'}
+            buttonText="Go Home"
+            link="/"
           />
           <LinkButtons
             buttonStyle={cancelButton}
-            buttonText={'Cancel Changes'}
+            buttonText="Cancel Changes"
             link={`/userProfile/${username}`}
           />
         </div>
@@ -177,5 +187,14 @@ class UpdatePassword extends Component {
     }
   }
 }
+
+UpdatePassword.propTypes = {
+  // eslint-disable-next-line react/require-default-props
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+    }),
+  }),
+};
 
 export default UpdatePassword;

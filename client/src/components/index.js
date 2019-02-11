@@ -8,5 +8,9 @@ import SubmitButtons from './SubmitButtons';
 export * from './ButtonStyles';
 
 export {
- LinkButtons, SubmitButtons, HeaderBar, ButtonStyles 
+  // eslint-disable-next-line indent
+  LinkButtons,
+  SubmitButtons,
+  HeaderBar,
+  ButtonStyles,
 };

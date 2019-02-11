@@ -17,7 +17,8 @@ const SubmitButtons = ({ buttonText, buttonStyle }) => (
 
 SubmitButtons.propTypes = {
   buttonText: PropTypes.string.isRequired,
-  buttonStyle: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  buttonStyle: PropTypes.object.isRequired,
 };
 
 export default SubmitButtons;

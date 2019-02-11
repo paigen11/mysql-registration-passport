@@ -4,7 +4,7 @@ import Sequelize from 'sequelize';
 import jwtSecret from './jwtConfig';
 
 const BCRYPT_SALT_ROUNDS = 12;
-const { Op } = Sequelize.Op;
+const Op = Sequelize.Op;
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -22,6 +22,9 @@ passport.use(
       session: false,
     },
     (req, username, password, done) => {
+      console.log(username);
+      console.log(req.body.email);
+
       try {
         User.findOne({
           where: {
@@ -51,7 +54,7 @@ passport.use(
           });
         });
       } catch (err) {
-        done(err);
+        return done(err);
       }
     },
   ),

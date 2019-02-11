@@ -1,4 +1,8 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
@@ -42,7 +46,7 @@ class UpdateProfile extends Component {
   componentDidMount() {
     this.setState({ loadingUser: true });
 
-    let accessString = localStorage.getItem('JWT');
+    const accessString = localStorage.getItem('JWT');
     if (accessString === null) {
       this.setState({
         loadingUser: false,
@@ -57,31 +61,31 @@ class UpdateProfile extends Component {
         },
         headers: { Authorization: `JWT ${accessString}` },
       })
-      .then(response => {
+      .then((response) => {
         // console.log(response.data);
         this.setState({
           loadingUser: false,
-          first_name: response.data.first_name,
-          last_name: response.data.last_name,
+          first_name: response.data.first_name ? response.data.first_name : '',
+          last_name: response.data.last_name ? response.data.last_name : '',
           email: response.data.email,
           username: response.data.username,
           password: response.data.password,
           error: false,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error.response.data);
       });
   }
 
-  handleChange = name => event => {
+  handleChange = name => (event) => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-  updateUser = e => {
-    let accessString = localStorage.getItem('JWT');
+  updateUser = (e) => {
+    const accessString = localStorage.getItem('JWT');
     if (accessString === null) {
       this.setState({
         loadingUser: false,
@@ -103,14 +107,15 @@ class UpdateProfile extends Component {
           headers: { Authorization: `JWT ${accessString}` },
         },
       )
-      .then(response => {
+      // eslint-disable-next-line no-unused-vars
+      .then((response) => {
         // console.log(response.data);
         this.setState({
           updated: true,
           error: false,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error.response.data);
         this.setState({
           loadingUser: false,
@@ -119,6 +124,7 @@ class UpdateProfile extends Component {
       });
   };
 
+  // eslint-disable-next-line consistent-return
   render() {
     const {
       first_name,
@@ -140,21 +146,24 @@ class UpdateProfile extends Component {
           </p>
           <LinkButtons
             style={loginButton}
-            buttonText={'Go Login'}
+            buttonText="Go Login"
             link="/login"
           />
         </div>
       );
-    } else if (loadingUser !== false) {
+    }
+    if (loadingUser !== false) {
       return (
         <div>
           <HeaderBar title={title} />
           <p style={loading}>Loading user data...</p>
         </div>
       );
-    } else if (loadingUser === false && updated === true) {
+    }
+    if (loadingUser === false && updated === true) {
       return <Redirect to={`/userProfile/${username}`} />;
-    } else if (loadingUser === false) {
+    }
+    if (loadingUser === false) {
       return (
         <div>
           <HeaderBar title={title} />
@@ -200,19 +209,12 @@ class UpdateProfile extends Component {
               disabled
               type="password"
             />
-            <SubmitButtons
-              buttonStyle={saveButton}
-              buttonText={'Save Changes'}
-            />
+            <SubmitButtons buttonStyle={saveButton} buttonText="Save Changes" />
           </form>
-          <LinkButtons
-            buttonStyle={homeButton}
-            buttonText={'Go Home'}
-            link={'/'}
-          />
+          <LinkButtons buttonStyle={homeButton} buttonText="Go Home" link="/" />
           <LinkButtons
             buttonStyle={cancelButton}
-            buttonText={'Cancel Changes'}
+            buttonText="Cancel Changes"
             link={`/userProfile/${username}`}
           />
         </div>
@@ -220,5 +222,14 @@ class UpdateProfile extends Component {
     }
   }
 }
+
+UpdateProfile.propTypes = {
+  // eslint-disable-next-line react/require-default-props
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+    }),
+  }),
+};
 
 export default UpdateProfile;

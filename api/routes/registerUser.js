@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 /* eslint-disable no-console */
 import passport from 'passport';
 import User from '../sequelize';
@@ -43,7 +44,7 @@ import User from '../sequelize';
  *         description: Username or email already taken
  */
 
-module.exports = (app) => {
+module.exports = app => {
   app.post('/registerUser', (req, res, next) => {
     passport.authenticate('register', (err, user, info) => {
       if (err) {
@@ -53,19 +54,23 @@ module.exports = (app) => {
         console.error(info.message);
         res.status(403).send(info.message);
       } else {
-        req.logIn((user, error) => {
+        // eslint-disable-next-line no-unused-vars
+        req.logIn(user, error => {
+          console.log(user);
           const data = {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             email: req.body.email,
             username: user.username,
           };
+          console.log(data);
           User.findOne({
             where: {
               username: data.username,
             },
-          }).then((userInfo) => {
-            userInfo
+          }).then(user => {
+            console.log(user);
+            user
               .update({
                 first_name: data.first_name,
                 last_name: data.last_name,

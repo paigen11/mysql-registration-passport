@@ -16,14 +16,14 @@ const LinkButtons = ({ buttonText, buttonStyle, link }) => (
 
 LinkButtons.propTypes = {
   buttonText: PropTypes.string,
-  buttonStyle: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  buttonStyle: PropTypes.object.isRequired,
   link: PropTypes.string,
 };
 
 LinkButtons.defaultProps = {
   link: '/',
   buttonText: 'Default Button Text',
-  buttonStyle: 'home button',
 };
 
 export default LinkButtons;

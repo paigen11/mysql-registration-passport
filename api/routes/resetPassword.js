@@ -3,6 +3,7 @@
 import Sequelize from 'sequelize';
 import User from '../sequelize';
 
+// eslint-disable-next-line prefer-destructuring
 const Op = Sequelize.Op;
 
 /**
