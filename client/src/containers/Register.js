@@ -35,17 +35,15 @@ class Register extends Component {
     };
   }
 
-  handleChange = name => (event) => {
+  handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-  registerUser = (e) => {
+  registerUser = e => {
     e.preventDefault();
-    const {
- first_name, last_name, username, password, email 
-} = this.state;
+    const { first_name, last_name, username, password, email } = this.state;
     if (username === '' || password === '' || email === '') {
       this.setState({
         showError: true,
@@ -61,8 +59,8 @@ class Register extends Component {
           username,
           password,
         })
-        .then((response) => {
-          console.log(response.data);
+        .then(response => {
+          // console.log(response.data.message);
           this.setState({
             messageFromServer: response.data.message,
             showError: false,
@@ -70,7 +68,7 @@ class Register extends Component {
             registerError: false,
           });
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error.response.data);
           if (error.response.data === 'username or email already taken') {
             this.setState({
