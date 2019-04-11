@@ -46,7 +46,7 @@ export default class ResetPassword extends Component {
           resetPasswordToken: this.props.match.params.token,
         },
       })
-      .then(response => {
+      .then((response) => {
         console.log(response);
         if (response.data.message === 'password reset link a-ok') {
           this.setState({
@@ -57,7 +57,7 @@ export default class ResetPassword extends Component {
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error.response.data);
         this.setState({
           updated: false,
@@ -67,13 +67,13 @@ export default class ResetPassword extends Component {
       });
   }
 
-  handleChange = name => event => {
+  handleChange = name => (event) => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-  updatePassword = e => {
+  updatePassword = (e) => {
     e.preventDefault();
     axios
       .put('http://localhost:3003/updatePasswordViaEmail', {
@@ -81,7 +81,7 @@ export default class ResetPassword extends Component {
         password: this.state.password,
         resetPasswordToken: this.props.match.params.token,
       })
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         if (response.data.message === 'password updated') {
           this.setState({
@@ -95,13 +95,15 @@ export default class ResetPassword extends Component {
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error.response.data);
       });
   };
 
   render() {
-    const { password, error, isLoading, updated } = this.state;
+    const {
+ password, error, isLoading, updated 
+} = this.state;
 
     if (error) {
       return (
