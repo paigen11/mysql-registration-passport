@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable react/destructuring-assignment */
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -40,10 +39,11 @@ export default class ResetPassword extends Component {
   }
 
   async componentDidMount() {
+    const { match: { params: { token } = {} } = {} } = this.props;
     await axios
       .get('http://localhost:3003/reset', {
         params: {
-          resetPasswordToken: this.props.match.params.token,
+          resetPasswordToken: token,
         },
       })
       .then((response) => {
@@ -75,11 +75,13 @@ export default class ResetPassword extends Component {
 
   updatePassword = (e) => {
     e.preventDefault();
+    const { username, password } = this.state;
+    const { match: { params: { token } = {} } = {} } = this.props;
     axios
       .put('http://localhost:3003/updatePasswordViaEmail', {
-        username: this.state.username,
-        password: this.state.password,
-        resetPasswordToken: this.props.match.params.token,
+        username,
+        password,
+        resetPasswordToken: token,
       })
       .then((response) => {
         console.log(response.data);

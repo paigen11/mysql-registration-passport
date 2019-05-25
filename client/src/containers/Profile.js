@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 import React, { Component } from 'react';
@@ -49,6 +48,7 @@ class Profile extends Component {
 
   async componentDidMount() {
     const accessString = localStorage.getItem('JWT');
+    const { match: { params: { username } = {} } = {} } = this.props;
     if (accessString == null) {
       this.setState({
         isLoading: false,
@@ -58,7 +58,7 @@ class Profile extends Component {
       await axios
         .get('http://localhost:3003/findUser', {
           params: {
-            username: this.props.match.params.username,
+            username,
           },
           headers: { Authorization: `JWT ${accessString}` },
         })
@@ -84,6 +84,7 @@ class Profile extends Component {
 
   deleteUser = (e) => {
     const accessString = localStorage.getItem('JWT');
+    const { match: { params: { username } = {} } = {} } = this.props;
     if (accessString === null) {
       this.setState({
         isLoading: false,
@@ -95,7 +96,7 @@ class Profile extends Component {
     axios
       .delete('http://localhost:3003/deleteUser', {
         params: {
-          username: this.props.match.params.username,
+          username,
         },
         headers: { Authorization: `JWT ${accessString}` },
       })

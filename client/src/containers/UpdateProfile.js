@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
-/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
@@ -43,7 +42,7 @@ class UpdateProfile extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ loadingUser: true });
 
     const accessString = localStorage.getItem('JWT');
@@ -53,29 +52,27 @@ class UpdateProfile extends Component {
         error: true,
       });
     }
-
-    axios
-      .get('http://localhost:3003/findUser', {
+    const { match: { params: { username } = {} } = {} } = this.props;
+    try {
+      const response = await axios.get('http://localhost:3003/findUser', {
         params: {
-          username: this.props.match.params.username,
+          username,
         },
         headers: { Authorization: `JWT ${accessString}` },
-      })
-      .then((response) => {
-        // console.log(response.data);
-        this.setState({
-          loadingUser: false,
-          first_name: response.data.first_name ? response.data.first_name : '',
-          last_name: response.data.last_name ? response.data.last_name : '',
-          email: response.data.email,
-          username: response.data.username,
-          password: response.data.password,
-          error: false,
-        });
-      })
-      .catch((error) => {
-        console.log(error.response.data);
       });
+      // console.log(response.data);
+      this.setState({
+        loadingUser: false,
+        first_name: response.data.first_name ? response.data.first_name : '',
+        last_name: response.data.last_name ? response.data.last_name : '',
+        email: response.data.email,
+        username: response.data.username,
+        password: response.data.password,
+        error: false,
+      });
+    } catch (error) {
+      console.log(error.response.data);
+    }
   }
 
   handleChange = name => (event) => {
@@ -84,7 +81,7 @@ class UpdateProfile extends Component {
     });
   };
 
-  updateUser = (e) => {
+  updateUser = async (e) => {
     const accessString = localStorage.getItem('JWT');
     if (accessString === null) {
       this.setState({
@@ -92,36 +89,36 @@ class UpdateProfile extends Component {
         error: true,
       });
     }
-
+    const {
+ first_name, last_name, email, username 
+} = this.state;
     e.preventDefault();
-    axios
-      .put(
+    try {
+      const response = await axios.put(
         'http://localhost:3003/updateUser',
         {
-          first_name: this.state.first_name,
-          last_name: this.state.last_name,
-          email: this.state.email,
-          username: this.state.username,
+          first_name,
+          last_name,
+          email,
+          username,
         },
         {
           headers: { Authorization: `JWT ${accessString}` },
         },
-      )
+      );
       // eslint-disable-next-line no-unused-vars
-      .then((response) => {
-        // console.log(response.data);
-        this.setState({
-          updated: true,
-          error: false,
-        });
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        this.setState({
-          loadingUser: false,
-          error: true,
-        });
+      // console.log(response.data);
+      this.setState({
+        updated: true,
+        error: false,
       });
+    } catch (error) {
+      console.log(error.response.data);
+      this.setState({
+        loadingUser: false,
+        error: true,
+      });
+    }
   };
 
   // eslint-disable-next-line consistent-return

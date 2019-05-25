@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable react/destructuring-assignment */
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -50,10 +49,11 @@ class UpdatePassword extends Component {
         error: true,
       });
     } else {
+      const { match: { params: { username } = {} } = {} } = this.props;
       axios
         .get('http://localhost:3003/findUser', {
           params: {
-            username: this.props.match.params.username,
+            username,
           },
           headers: { Authorization: `JWT ${accessString}` },
         })
@@ -91,12 +91,13 @@ class UpdatePassword extends Component {
       });
     } else {
       e.preventDefault();
+      const { username, password } = this.state;
       axios
         .put(
           'http://localhost:3003/updatePassword',
           {
-            username: this.state.username,
-            password: this.state.password,
+            username,
+            password,
           },
           {
             headers: { Authorization: `JWT ${accessString}` },
@@ -167,16 +168,9 @@ class UpdatePassword extends Component {
               onChange={this.handleChange('password')}
               type="password"
             />
-            <SubmitButtons
-              buttonStyle={saveButton}
-              buttonText="Save Changes"
-            />
+            <SubmitButtons buttonStyle={saveButton} buttonText="Save Changes" />
           </form>
-          <LinkButtons
-            buttonStyle={homeButton}
-            buttonText="Go Home"
-            link="/"
-          />
+          <LinkButtons buttonStyle={homeButton} buttonText="Go Home" link="/" />
           <LinkButtons
             buttonStyle={cancelButton}
             buttonText="Cancel Changes"
