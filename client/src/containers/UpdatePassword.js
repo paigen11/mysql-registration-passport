@@ -39,7 +39,7 @@ class UpdatePassword extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ loadingUser: true });
 
     const accessString = localStorage.getItem('JWT');
@@ -50,29 +50,26 @@ class UpdatePassword extends Component {
       });
     } else {
       const { match: { params: { username } = {} } = {} } = this.props;
-      axios
-        .get('http://localhost:3003/findUser', {
+      try {
+        const response = await axios.get('http://localhost:3003/findUser', {
           params: {
             username,
           },
           headers: { Authorization: `JWT ${accessString}` },
-        })
-        .then((response) => {
-          // console.log(response.data);
-          this.setState({
-            loadingUser: false,
-            username: response.data.username,
-            password: response.data.password,
-            error: false,
-          });
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-          this.setState({
-            loadingUser: false,
-            error: true,
-          });
         });
+        this.setState({
+          loadingUser: false,
+          username: response.data.username,
+          password: response.data.password,
+          error: false,
+        });
+      } catch (error) {
+        console.log(error.response.data);
+        this.setState({
+          loadingUser: false,
+          error: true,
+        });
+      }
     }
   }
 
@@ -82,7 +79,7 @@ class UpdatePassword extends Component {
     });
   };
 
-  updatePassword = (e) => {
+  updatePassword = async (e) => {
     const accessString = localStorage.getItem('JWT');
     if (accessString === null) {
       this.setState({
@@ -92,8 +89,8 @@ class UpdatePassword extends Component {
     } else {
       e.preventDefault();
       const { username, password } = this.state;
-      axios
-        .put(
+      try {
+        const response = await axios.put(
           'http://localhost:3003/updatePassword',
           {
             username,
@@ -102,24 +99,22 @@ class UpdatePassword extends Component {
           {
             headers: { Authorization: `JWT ${accessString}` },
           },
-        )
-        .then((response) => {
-          if (response.data.message === 'password updated') {
-            this.setState({
-              updated: true,
-              error: false,
-              loadingUser: false,
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(error.response.data);
+        );
+        if (response.data.message === 'password updated') {
           this.setState({
-            updated: false,
-            error: true,
+            updated: true,
+            error: false,
             loadingUser: false,
           });
+        }
+      } catch (error) {
+        console.log(error.response.data);
+        this.setState({
+          updated: false,
+          error: true,
+          loadingUser: false,
         });
+      }
     }
   };
 

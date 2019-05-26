@@ -35,15 +35,17 @@ class Register extends Component {
     };
   }
 
-  handleChange = name => event => {
+  handleChange = name => (event) => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-  registerUser = e => {
+  registerUser = async (e) => {
     e.preventDefault();
-    const { first_name, last_name, username, password, email } = this.state;
+    const {
+ first_name, last_name, username, password, email 
+} = this.state;
     if (username === '' || password === '' || email === '') {
       this.setState({
         showError: true,
@@ -51,33 +53,33 @@ class Register extends Component {
         registerError: true,
       });
     } else {
-      axios
-        .post('http://localhost:3003/registerUser', {
-          first_name,
-          last_name,
-          email,
-          username,
-          password,
-        })
-        .then(response => {
-          // console.log(response.data.message);
+      try {
+        const response = await axios.post(
+          'http://localhost:3003/registerUser',
+          {
+            first_name,
+            last_name,
+            email,
+            username,
+            password,
+          },
+        );
+        this.setState({
+          messageFromServer: response.data.message,
+          showError: false,
+          loginError: false,
+          registerError: false,
+        });
+      } catch (error) {
+        console.error(error.response.data);
+        if (error.response.data === 'username or email already taken') {
           this.setState({
-            messageFromServer: response.data.message,
-            showError: false,
-            loginError: false,
+            showError: true,
+            loginError: true,
             registerError: false,
           });
-        })
-        .catch(error => {
-          console.error(error.response.data);
-          if (error.response.data === 'username or email already taken') {
-            this.setState({
-              showError: true,
-              loginError: true,
-              registerError: false,
-            });
-          }
-        });
+        }
+      }
     }
   };
 

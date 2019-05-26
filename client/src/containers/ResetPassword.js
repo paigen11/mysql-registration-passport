@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -40,31 +39,29 @@ export default class ResetPassword extends Component {
 
   async componentDidMount() {
     const { match: { params: { token } = {} } = {} } = this.props;
-    await axios
-      .get('http://localhost:3003/reset', {
+    try {
+      const response = await axios.get('http://localhost:3003/reset', {
         params: {
           resetPasswordToken: token,
         },
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.data.message === 'password reset link a-ok') {
-          this.setState({
-            username: response.data.username,
-            updated: false,
-            isLoading: false,
-            error: false,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error.response.data);
+      });
+      console.log(response);
+      if (response.data.message === 'password reset link a-ok') {
         this.setState({
+          username: response.data.username,
           updated: false,
           isLoading: false,
-          error: true,
+          error: false,
         });
+      }
+    } catch (error) {
+      console.log(error.response.data);
+      this.setState({
+        updated: false,
+        isLoading: false,
+        error: true,
       });
+    }
   }
 
   handleChange = name => (event) => {
@@ -73,33 +70,34 @@ export default class ResetPassword extends Component {
     });
   };
 
-  updatePassword = (e) => {
+  updatePassword = async (e) => {
     e.preventDefault();
     const { username, password } = this.state;
     const { match: { params: { token } = {} } = {} } = this.props;
-    axios
-      .put('http://localhost:3003/updatePasswordViaEmail', {
-        username,
-        password,
-        resetPasswordToken: token,
-      })
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.message === 'password updated') {
-          this.setState({
-            updated: true,
-            error: false,
-          });
-        } else {
-          this.setState({
-            updated: false,
-            error: true,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-      });
+    try {
+      const response = await axios.put(
+        'http://localhost:3003/updatePasswordViaEmail',
+        {
+          username,
+          password,
+          resetPasswordToken: token,
+        },
+      );
+      console.log(response.data);
+      if (response.data.message === 'password updated') {
+        this.setState({
+          updated: true,
+          error: false,
+        });
+      } else {
+        this.setState({
+          updated: false,
+          error: true,
+        });
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
   };
 
   render() {

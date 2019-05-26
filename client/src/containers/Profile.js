@@ -55,34 +55,32 @@ class Profile extends Component {
         error: true,
       });
     } else {
-      await axios
-        .get('http://localhost:3003/findUser', {
+      try {
+        const response = await axios.get('http://localhost:3003/findUser', {
           params: {
             username,
           },
           headers: { Authorization: `JWT ${accessString}` },
-        })
-        .then((response) => {
-          this.setState({
-            first_name: response.data.first_name,
-            last_name: response.data.last_name,
-            email: response.data.email,
-            username: response.data.username,
-            password: response.data.password,
-            isLoading: false,
-            error: false,
-          });
-        })
-        .catch((error) => {
-          console.error(error.response.data);
-          this.setState({
-            error: true,
-          });
         });
+        this.setState({
+          first_name: response.data.first_name,
+          last_name: response.data.last_name,
+          email: response.data.email,
+          username: response.data.username,
+          password: response.data.password,
+          isLoading: false,
+          error: false,
+        });
+      } catch (error) {
+        console.error(error.response.data);
+        this.setState({
+          error: true,
+        });
+      }
     }
   }
 
-  deleteUser = (e) => {
+  deleteUser = async (e) => {
     const accessString = localStorage.getItem('JWT');
     const { match: { params: { username } = {} } = {} } = this.props;
     if (accessString === null) {
@@ -93,26 +91,24 @@ class Profile extends Component {
     }
 
     e.preventDefault();
-    axios
-      .delete('http://localhost:3003/deleteUser', {
+    try {
+      const response = await axios.delete('http://localhost:3003/deleteUser', {
         params: {
           username,
         },
         headers: { Authorization: `JWT ${accessString}` },
-      })
-      .then((response) => {
-        console.log(response.data);
-        localStorage.removeItem('JWT');
-        this.setState({
-          deleted: true,
-        });
-      })
-      .catch((error) => {
-        console.error(error.response.data);
-        this.setState({
-          error: true,
-        });
       });
+      console.log(response.data);
+      localStorage.removeItem('JWT');
+      this.setState({
+        deleted: true,
+      });
+    } catch (error) {
+      console.error(error.response.data);
+      this.setState({
+        error: true,
+      });
+    }
   };
 
   logout = (e) => {
