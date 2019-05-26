@@ -49,7 +49,11 @@ class UpdatePassword extends Component {
         error: true,
       });
     } else {
-      const { match: { params: { username } = {} } = {} } = this.props;
+      const {
+        match: {
+          params: { username },
+        },
+      } = this.props;
       try {
         const response = await axios.get('http://localhost:3003/findUser', {
           params: {

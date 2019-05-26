@@ -48,7 +48,12 @@ class Profile extends Component {
 
   async componentDidMount() {
     const accessString = localStorage.getItem('JWT');
-    const { match: { params: { username } = {} } = {} } = this.props;
+    const {
+      match: {
+        params: { username },
+      },
+    } = this.props;
+    console.log(username);
     if (accessString == null) {
       this.setState({
         isLoading: false,
@@ -82,7 +87,11 @@ class Profile extends Component {
 
   deleteUser = async (e) => {
     const accessString = localStorage.getItem('JWT');
-    const { match: { params: { username } = {} } = {} } = this.props;
+    const {
+      match: {
+        params: { username },
+      },
+    } = this.props;
     if (accessString === null) {
       this.setState({
         isLoading: false,

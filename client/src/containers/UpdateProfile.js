@@ -52,7 +52,11 @@ class UpdateProfile extends Component {
         error: true,
       });
     }
-    const { match: { params: { username } = {} } = {} } = this.props;
+    const {
+      match: {
+        params: { username },
+      },
+    } = this.props;
     try {
       const response = await axios.get('http://localhost:3003/findUser', {
         params: {
@@ -60,7 +64,7 @@ class UpdateProfile extends Component {
         },
         headers: { Authorization: `JWT ${accessString}` },
       });
-      // console.log(response.data);
+      console.log(response.data);
       this.setState({
         loadingUser: false,
         first_name: response.data.first_name ? response.data.first_name : '',
@@ -107,7 +111,7 @@ class UpdateProfile extends Component {
         },
       );
       // eslint-disable-next-line no-unused-vars
-      // console.log(response.data);
+      console.log(response.data);
       this.setState({
         updated: true,
         error: false,
