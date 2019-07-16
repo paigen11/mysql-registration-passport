@@ -40,7 +40,7 @@ import User from '../sequelize';
  *         description: Username and password don't match
  */
 
-module.exports = (app) => {
+module.exports = app => {
   app.post('/loginUser', (req, res, next) => {
     passport.authenticate('login', (err, users, info) => {
       if (err) {
@@ -59,8 +59,10 @@ module.exports = (app) => {
             where: {
               username: req.body.username,
             },
-          }).then((user) => {
-            const token = jwt.sign({ id: user.id }, jwtSecret.secret);
+          }).then(user => {
+            const token = jwt.sign({ id: user.id }, jwtSecret.secret, {
+              expiresIn: 60 * 60,
+            });
             res.status(200).send({
               auth: true,
               token,
