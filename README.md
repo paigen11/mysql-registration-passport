@@ -8,9 +8,9 @@ It uses a `docker-compose` file to spin up a local MySQL database, the API modul
 
 Passport local handles user authencation for the unprotected routes, which are the user registration and login routes.
 
-Once the user has logged in a JWT token is created and sent to the client and storeed in local storage along with user data, Passport JWT takes over at this point and handles all further user authentication.
+Once the user has logged in a JWT token is created and sent to the client and storeed in local storage along with user data, Passport JWT takes over at this point and handles all further user authentication for protected routes.
 
-Each request from the client to the server must include the JWT as one of its authorization headers before the route can be accessed. If the JWT is missing or corrupted, the authentication will fail and the route cannot be accessed.
+Each request from the client to the server must include the JWT as one of its authorization headers before the route can be accessed. If the JWT is missing, corrupted or expired (it has a 1 hour expiration date from the time it's created on login), the authentication will fail and the route cannot be accessed.
 
 If a user logs out or deletes their user profile, the JWT is removed from local storage and the user is dropped back at the home screen again.
 
