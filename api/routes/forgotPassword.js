@@ -56,7 +56,7 @@ module.exports = (app) => {
         const token = crypto.randomBytes(20).toString('hex');
         user.update({
           resetPasswordToken: token,
-          resetPasswordExpires: Date.now() + 360000,
+          resetPasswordExpires: Date.now() + 3600000,
         });
 
         const transporter = nodemailer.createTransport({
