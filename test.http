@@ -1,0 +1,63 @@
+# Register User
+POST http://localhost:3003/registerUser HTTP/1.1
+content-type: application/json
+
+{
+  "first_name": "Test",
+  "last_name": "User",
+  "email": "testing@email.com",
+  "username": "rest-client-tester",
+  "password": "testing123"
+}
+
+###
+# Login User 
+POST http://localhost:3003/loginUser HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "rest-client-test",
+  "password": "testing123"
+}
+
+###
+# Find User 
+GET http://localhost:3003/findUser?username=rest-client-test HTTP/1.1
+Content-Type: application/json
+Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImlhdCI6MTYwMjY5ODM2NiwiZXhwIjoxNjAyNzAxOTY2fQ.35b0StFo6pEdaZoqYx8rrn3HfCe1baTveqZQjbLraOw
+
+
+###
+# Update User 
+PUT http://localhost:3003/updateUser HTTP/1.1
+Content-Type: application/json
+Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..1hxJif-bLXux_fu6KG6Lh-dKuQgRb17Knn1R3obYxuw
+
+{
+  "username": "rest-client-test",
+  "first_name": "Tester",
+  "last_name": "User",
+  "email": "testing@email.com"
+}
+
+###
+# Forgot Password
+POST http://localhost:3003/forgotPassword HTTP/1.1
+Content-Type: application/json
+
+ {
+   "email": "testing@email.com"
+ }
+
+###
+# Reset Password
+GET http://localhost:3003/reset?resetPasswordToken=ccf288911fe45054c2cc7321d936cec78a3bdfe3 HTTP/1.1
+Content-Type: application/json
+
+###
+# Delete User 
+DELETE http://localhost:3003/deleteUser?username=rest-client-test HTTP/1.1
+Content-Type: application/json
+Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsImlhdCI6MTYwMjcwMDE5NSwiZXhwIjoxNjAyNzAzNzk1fQ.4XzNZZj_cUIySIF00Jz6DuryGjhufQDEo4tLxJZ_rkg
+
+###
