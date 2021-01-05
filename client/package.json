@@ -14,7 +14,7 @@
   "homepage": "https://github.com/paigen11/mysqlRegistration#readme",
   "dependencies": {
     "@material-ui/core": "^1.3.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
