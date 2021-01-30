@@ -25,9 +25,6 @@ passport.use(
       session: false,
     },
     (req, username, password, done) => {
-      console.log(username);
-      console.log(req.body.email);
-
       try {
         User.findOne({
           where: {
@@ -38,19 +35,19 @@ passport.use(
               { email: req.body.email },
             ],
           },
-        }).then(user => {
+        }).then((user) => {
           if (user != null) {
             console.log('username or email already taken');
             return done(null, false, {
               message: 'username or email already taken',
             });
           }
-          bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(hashedPassword => {
+          bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then((hashedPassword) => {
             User.create({
               username,
               password: hashedPassword,
               email: req.body.email,
-            }).then(user => {
+            }).then((user) => {
               console.log('user created');
               return done(null, user);
             });
@@ -77,11 +74,11 @@ passport.use(
           where: {
             username,
           },
-        }).then(user => {
+        }).then((user) => {
           if (user === null) {
             return done(null, false, { message: 'bad username' });
           }
-          bcrypt.compare(password, user.password).then(response => {
+          bcrypt.compare(password, user.password).then((response) => {
             if (response !== true) {
               console.log('passwords do not match');
               return done(null, false, { message: 'passwords do not match' });
@@ -110,7 +107,7 @@ passport.use(
         where: {
           id: jwt_payload.id,
         },
-      }).then(user => {
+      }).then((user) => {
         if (user) {
           console.log('user found in db in passport');
           done(null, user);

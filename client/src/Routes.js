@@ -4,6 +4,7 @@ import Home from './containers/Home';
 import Register from './containers/Register';
 import Login from './containers/Login';
 import Profile from './containers/Profile';
+import RefactoredProfile from './containers/RefactoredProfile';
 import UpdateProfile from './containers/UpdateProfile';
 import ForgotPassword from './containers/ForgotPassword';
 import ResetPassword from './containers/ResetPassword';
@@ -18,6 +19,11 @@ const Routes = () => (
       <Route exact path="/reset/:token" component={ResetPassword} />
       <Route exact path="/forgotPassword" component={ForgotPassword} />
       <Route exact path="/userProfile/:username" component={Profile} />
+      <Route
+        exact
+        path="/refactoredUserProfile/:username"
+        component={RefactoredProfile}
+      />
       <Route exact path="/updateUser/:username" component={UpdateProfile} />
       <Route
         exact

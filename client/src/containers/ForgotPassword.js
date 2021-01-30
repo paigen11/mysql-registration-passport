@@ -28,7 +28,7 @@ class ForgotPassword extends Component {
     };
   }
 
-  handleChange = name => (event) => {
+  handleChange = (name) => (event) => {
     this.setState({
       [name]: event.target.value,
     });
@@ -73,9 +73,7 @@ class ForgotPassword extends Component {
   };
 
   render() {
-    const {
- email, messageFromServer, showNullError, showError 
-} = this.state;
+    const { email, messageFromServer, showNullError, showError } = this.state;
 
     return (
       <div>

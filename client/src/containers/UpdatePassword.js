@@ -77,7 +77,7 @@ class UpdatePassword extends Component {
     }
   }
 
-  handleChange = name => (event) => {
+  handleChange = (name) => (event) => {
     this.setState({
       [name]: event.target.value,
     });
@@ -124,9 +124,7 @@ class UpdatePassword extends Component {
 
   // eslint-disable-next-line consistent-return
   render() {
-    const {
- username, password, updated, error, loadingUser 
-} = this.state;
+    const { username, password, updated, error, loadingUser } = this.state;
 
     if (error) {
       return (

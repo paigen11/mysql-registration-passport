@@ -77,6 +77,9 @@ require('./routes/findUsers')(app);
 require('./routes/deleteUser')(app);
 require('./routes/updateUser')(app);
 
+// refactoredRoute using React Hooks component info
+require('./routes/refactoredFindUsers.js')(app);
+
 // eslint-disable-next-line no-console
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
 

@@ -49,7 +49,6 @@ export default class ResetPassword extends Component {
           resetPasswordToken: token,
         },
       });
-      // console.log(response);
       if (response.data.message === 'password reset link a-ok') {
         this.setState({
           username: response.data.username,
@@ -68,7 +67,7 @@ export default class ResetPassword extends Component {
     }
   }
 
-  handleChange = name => (event) => {
+  handleChange = (name) => (event) => {
     this.setState({
       [name]: event.target.value,
     });
@@ -109,9 +108,7 @@ export default class ResetPassword extends Component {
   };
 
   render() {
-    const {
- password, error, isLoading, updated 
-} = this.state;
+    const { password, error, isLoading, updated } = this.state;
 
     if (error) {
       return (

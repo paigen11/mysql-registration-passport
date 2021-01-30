@@ -32,7 +32,7 @@ class Login extends Component {
     };
   }
 
-  handleChange = name => (event) => {
+  handleChange = (name) => (event) => {
     this.setState({
       [name]: event.target.value,
     });
@@ -62,8 +62,8 @@ class Login extends Component {
       } catch (error) {
         console.error(error.response.data);
         if (
-          error.response.data === 'bad username'
-          || error.response.data === 'passwords do not match'
+          error.response.data === 'bad username' ||
+          error.response.data === 'passwords do not match'
         ) {
           this.setState({
             showError: true,
@@ -133,7 +133,8 @@ class Login extends Component {
         </div>
       );
     }
-    return <Redirect to={`/userProfile/${username}`} />;
+    // return <Redirect to={`/userProfile/${username}`} />;
+    return <Redirect to={`/refactoredUserProfile/${username}`} />;
   }
 }
 

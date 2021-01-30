@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb",
+  "extends": ["airbnb", "airbnb/hooks"],
   "parser": "babel-eslint",
   "env": {
     "node": true,
@@ -11,6 +11,7 @@
     "implicit-arrow-linebreak": "off",
     "comma-dangle": "off",
     "indent": "off",
-    "no-trailing-spaces": "off"
+    "no-trailing-spaces": "off",
+    "operator-linebreak": "off"
   }
 }

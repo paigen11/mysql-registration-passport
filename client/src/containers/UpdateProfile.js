@@ -83,7 +83,7 @@ class UpdateProfile extends Component {
     }
   }
 
-  handleChange = name => (event) => {
+  handleChange = (name) => (event) => {
     this.setState({
       [name]: event.target.value,
     });
@@ -97,9 +97,7 @@ class UpdateProfile extends Component {
         error: true,
       });
     }
-    const {
- first_name, last_name, email, username 
-} = this.state;
+    const { first_name, last_name, email, username } = this.state;
     e.preventDefault();
     try {
       const response = await axios.put(
