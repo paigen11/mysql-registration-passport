@@ -53,7 +53,6 @@ class Profile extends Component {
         params: { username },
       },
     } = this.props;
-    console.log(username);
     if (accessString == null) {
       this.setState({
         isLoading: false,
@@ -107,7 +106,6 @@ class Profile extends Component {
         },
         headers: { Authorization: `JWT ${accessString}` },
       });
-      console.log(response.data);
       localStorage.removeItem('JWT');
       this.setState({
         deleted: true,
@@ -193,6 +191,7 @@ class Profile extends Component {
           </TableBody>
         </Table>
         <Button
+          id="delete-btn"
           style={deleteButton}
           variant="contained"
           color="primary"

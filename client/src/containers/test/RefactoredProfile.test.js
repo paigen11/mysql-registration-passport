@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  act,
-  screen,
-  render,
-  cleanup,
-  prettyDOM,
-} from '@testing-library/react';
+import { act, screen, render, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
@@ -65,7 +59,7 @@ describe('Testing refactored user profile with React Testing Library', () => {
     cleanup();
   });
 
-  it("should render the user profile page when a user's has sucessfully logged in", async () => {
+  it('should render the user profile page when a user has sucessfully logged in', async () => {
     let container;
     await act(async () => {
       container = render(
