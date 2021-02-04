@@ -12,6 +12,8 @@
     "comma-dangle": "off",
     "indent": "off",
     "no-trailing-spaces": "off",
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "no-undef": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }

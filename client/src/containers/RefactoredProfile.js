@@ -82,7 +82,7 @@ export const Profile = (props) => {
     }
   }, [urlUsername]);
 
-  const deleteUser = async (e, urlUsername) => {
+  const deleteUser = async (e) => {
     const accessString = localStorage.getItem('JWT');
     if (accessString == null) {
       setIsLoading(false);

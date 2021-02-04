@@ -2,20 +2,22 @@ version: '3.1'
 
 services:
   client:
+    tty: true
     build: .
     volumes:
-      - "./client:/app"
+      - './client:/app'
     ports:
-      - "3031:3000"
+      - '3031:3000'
+    stdin_open: true
     depends_on:
       - api
 
   api:
     build: .
     volumes:
-      - "./api:/app"
+      - './api:/app'
     ports:
-      - "3003:3000"
+      - '3003:3000'
     depends_on:
       - db
 
@@ -28,6 +30,6 @@ services:
       MYSQL_USER: test
       MYSQL_PASSWORD: test1234
     ports:
-      - "3307:3306"
+      - '3307:3306'
     volumes:
       - ./docker/data/db:/var/lib/mysql
