@@ -24,13 +24,22 @@ describe('Testing refactored user profile with React Testing Library', () => {
   let mockData;
 
   beforeEach(() => {
-    Object.defineProperty(window, 'localStorage', {
-      value: {
-        getItem: jest.fn(() => 'token'),
-      },
-      writable: true,
-    });
-
+    let localStorageMock = (() => {
+      var storage = {};
+      return {
+        setItem: jest.fn((key, value) => {
+          storage[key] = value || '';
+        }),
+        getItem: jest.fn((key) => {
+          return storage[key] || null;
+        }),
+        removeItem: jest.fn((key) => {
+          delete storage[key];
+        }),
+      };
+    })();
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+    window.localStorage.setItem('JWT', 'token');
     mockData = {
       'http://localhost:3003/refactoredFindUser': {
         auth: true,
@@ -41,6 +50,9 @@ describe('Testing refactored user profile with React Testing Library', () => {
         password: '1234',
         message: 'user found in db',
         deleted: false,
+      },
+      'http://localhost:3003/deleteUser': {
+        deleted: true,
       },
     };
     axios.get.mockImplementation((url) => {
@@ -64,6 +76,8 @@ describe('Testing refactored user profile with React Testing Library', () => {
     });
     expect(container).toBeTruthy();
     expect(window.localStorage.getItem).toHaveBeenCalledTimes(1);
+    expect(window.localStorage.getItem).toBeCalledWith('JWT');
+    expect(window.localStorage.getItem('JWT')).toBe('token');
     expect(await screen.findByText('Test')).toBeInTheDocument();
     expect(await screen.findByText('test@test.com')).toBeInTheDocument();
     expect(await screen.findByText('1234')).toBeInTheDocument();
@@ -74,50 +88,71 @@ describe('Testing refactored user profile with React Testing Library', () => {
   });
 
   it('should allow a user to click button to update their profile info', async () => {
-    let container;
     await act(async () => {
-      container = render(
+      render(
         <Router>
           <RefactoredProfile {...props} />
         </Router>,
       );
     });
-    // click update user button
+    userEvent.click(await screen.findByText('Update User'));
+    expect(
+      await (await screen.findByText('Update User')).closest('a'),
+    ).toHaveAttribute('href', '/updateUser/tester');
   });
 
   it('should allow a user to click button to update their password', async () => {
-    let container;
     await act(async () => {
-      container = render(
+      render(
         <Router>
           <RefactoredProfile {...props} />
         </Router>,
       );
     });
-    // click update password button
+    userEvent.click(await screen.findByText('Update Password'));
+    expect(
+      await (await screen.findByText('Update Password')).closest('a'),
+    ).toHaveAttribute('href', '/updatePassword/tester');
   });
 
   it('should allow a user to click button to log back out', async () => {
-    let container;
     await act(async () => {
-      container = render(
+      render(
         <Router>
           <RefactoredProfile {...props} />
         </Router>,
       );
     });
-    // click logout button
+    expect(window.localStorage.getItem('JWT')).toBe('token');
+    userEvent.click(await screen.findByText('Logout'));
+    expect(window.localStorage.removeItem).toBeCalledWith('JWT');
+    expect(window.localStorage.removeItem).toHaveBeenCalledTimes(1);
+    expect(window.localStorage.getItem('JWT')).toBe(null);
+    expect(
+      await (await screen.findByText('Logout')).closest('a'),
+    ).toHaveAttribute('href', '/');
   });
 
   it('should allow a user to click button to delete their profile', async () => {
-    let container;
+    const mockDeleteUser = axios.delete.mockImplementation((url, username) => {
+      return Promise.resolve({ data: { deleted: true } });
+    });
     await act(async () => {
-      container = render(
+      render(
         <Router>
-          <RefactoredProfile {...props} />
+          <RefactoredProfile {...props} deleteUser={mockDeleteUser} />
         </Router>,
       );
     });
-    // click delete user button
+    await act(async () => {
+      userEvent.click(await screen.findByText('Delete User'));
+    });
+    expect(mockDeleteUser.mock.calls.length).toBe(1);
+    expect(mockDeleteUser).toBeCalledWith('http://localhost:3003/deleteUser', {
+      headers: { Authorization: 'JWT token' },
+      params: { urlUsername: 'tester' },
+    });
+    expect(window.localStorage.removeItem).toBeCalledWith('JWT');
+    expect(window.localStorage.getItem('JWT')).toBe(null);
   });
 });

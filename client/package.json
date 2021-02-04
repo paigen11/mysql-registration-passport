@@ -30,7 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
-    "coverage": "CI=true react-scripts test --coverage",
+    "coverage": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --coverage",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

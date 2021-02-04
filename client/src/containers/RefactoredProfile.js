@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -50,7 +48,6 @@ export const Profile = (props) => {
       setError(true);
     }
     const getUserInfo = async () => {
-      console.log('url username', urlUsername);
       try {
         const { data } = await axios.get(
           'http://localhost:3003/refactoredFindUser',
