@@ -43,25 +43,24 @@ app.get('/swagger.json', (req, res) => {
 
 require('./config/passport');
 
-// const whitelist = [
-//   'http://localhost:3031',
-//   'http://localhost:3000',
-//   'http://localhost:3003',
-// ];
-// const corsOptions = {
-//   origin: (origin, callback) => {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   optionsSuccessStatus: 200,
-// };
+const whitelist = [
+  'http://localhost:3031',
+  'http://localhost:3000',
+  'http://localhost:3003',
+];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200,
+};
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-// app.use(Cors(corsOptions));
-app.use(Cors());
+app.use(Cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));

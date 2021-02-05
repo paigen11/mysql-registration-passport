@@ -100,7 +100,7 @@ class Profile extends Component {
 
     e.preventDefault();
     try {
-      const response = await axios.delete('http://localhost:3003/deleteUser', {
+      await axios.delete('http://localhost:3003/deleteUser', {
         params: {
           username,
         },
@@ -191,7 +191,6 @@ class Profile extends Component {
           </TableBody>
         </Table>
         <Button
-          id="delete-btn"
           style={deleteButton}
           variant="contained"
           color="primary"
