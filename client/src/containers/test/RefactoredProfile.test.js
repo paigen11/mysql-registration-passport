@@ -122,9 +122,6 @@ describe('Testing refactored user profile with React Testing Library', () => {
     expect(window.localStorage.removeItem).toBeCalledWith('JWT');
     expect(window.localStorage.removeItem).toHaveBeenCalledTimes(1);
     expect(window.localStorage.getItem('JWT')).toBe(null);
-    expect(
-      await (await screen.findByText('Logout')).closest('a'),
-    ).toHaveAttribute('href', '/');
   });
 
   it('should allow a user to click button to delete their profile', async () => {

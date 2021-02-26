@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Table from '@material-ui/core/Table';
 import Button from '@material-ui/core/Button';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -14,7 +14,6 @@ import {
   loginButton,
   logoutButton,
   HeaderBar,
-  linkStyle,
   forgotButton,
 } from '../components';
 
@@ -40,6 +39,7 @@ export const Profile = (props) => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     const accessString = localStorage.getItem('JWT');
@@ -104,6 +104,7 @@ export const Profile = (props) => {
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem('JWT');
+    history.push('/');
   };
 
   const {
@@ -195,9 +196,7 @@ export const Profile = (props) => {
         color="primary"
         onClick={logout}
       >
-        <Link style={linkStyle} to="/">
-          Logout
-        </Link>
+        Logout
       </Button>
     </div>
   );
